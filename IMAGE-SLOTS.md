@@ -28,3 +28,6 @@ All future images should be stored in `assets/images/`. The visible placeholders
 - `about-byforo.jpg` — landscape, 3:2
 
 When real paths are supplied, each `<figure class="image-placeholder">` can be replaced with a normal `<img>` element using the same slot name and a descriptive `alt` attribute.
+
+
+All paths above are now loaded by real `<img>` elements. Keep the filenames and extensions exactly as listed.
