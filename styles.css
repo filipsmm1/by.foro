@@ -337,3 +337,30 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .hero + .image-placeholder,
   .hero.compact + .image-placeholder { margin-bottom: 68px; }
 }
+
+/* Final editorial images on Studio and About pages */
+.editorial-image {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  display: block;
+  background: var(--surface);
+}
+.editorial-image > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.editorial-image--landscape { aspect-ratio: 16 / 9; }
+.editorial-image--wide { aspect-ratio: 3 / 2; }
+.hero + .editorial-image,
+.hero.compact + .editorial-image {
+  margin-bottom: clamp(64px, 8vw, 110px);
+}
+@media (max-width: 720px) {
+  .hero + .editorial-image,
+  .hero.compact + .editorial-image { margin-bottom: 68px; }
+}
