@@ -1,17 +1,23 @@
 # by.foro static website
 
-Complete GitHub Pages-ready editorial site.
+GitHub Pages-ready editorial website for by.foro.
+
+## Current content state
+
+- Fabricated/demo article pages have been removed.
+- Category pages clearly state that no stories are published yet.
+- Typography has been reduced across desktop and mobile layouts.
+- Image placeholders are included throughout the homepage, category pages, About page and Studio page.
+- All future image files belong in `assets/images/`.
+- See `IMAGE-SLOTS.md` for every placeholder filename and recommended image ratio.
 
 ## Before launch
-1. Replace `hello@byforo.com`, `studio@byforo.com`, and `corrections@byforo.com` if those inboxes do not exist.
-2. Replace `https://byforo.com/` in `robots.txt` and `sitemap.xml` with the final domain.
-3. Connect a real newsletter provider before claiming subscriptions are collected.
-4. Review legal pages for the final business entity, country, analytics, advertising, affiliate and email tools.
-5. Replace the generated editorial SVG artwork with licensed photography when ready.
+
+1. Add real images to `assets/images/` and replace each placeholder with its matching `<img>` element.
+2. Publish only researched and edited articles, then add them to category pages and `sitemap.xml`.
+3. Replace `hello@byforo.com`, `studio@byforo.com`, and `corrections@byforo.com` if those inboxes do not exist.
+4. Replace `https://byforo.com/` in `robots.txt` and `sitemap.xml` if the final domain differs.
+5. Connect a real newsletter provider before collecting subscriptions.
+6. Review legal pages for the final business entity, country, analytics, advertising, affiliate and email tools.
 
 Open `index.html` locally or deploy the folder to GitHub Pages.
-
-
-## Text-only version
-
-Editorial content images have been removed for now. The favicon remains in `assets/icons/`. Add images later by restoring `<img>` elements and placing the files in an assets folder.
