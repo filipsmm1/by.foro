@@ -36,9 +36,6 @@
 .studio-banner__image{clip-path:polygon(0 0,96% 0,100% 100%,4% 100%)}
 .process-panel__image{clip-path:polygon(0 5%,100% 0,96% 100%,5% 95%)}
 .full-bleed-image{width:min(calc(100% - 4vw),1540px);margin-inline:auto;clip-path:polygon(2% 0,100% 3%,98% 100%,0 96%)}
-.article-hero-image{clip-path:polygon(0 3%,97% 0,100% 95%,3% 100%)}
-.article-inline-image:nth-of-type(odd){clip-path:polygon(0 0,96% 4%,100% 100%,3% 96%);transform:translateX(-2.5vw)}
-.article-inline-image:nth-of-type(even){clip-path:polygon(4% 0,100% 3%,96% 100%,0 96%);transform:translateX(2.5vw)}
 
 /* More varied magazine rhythm across repeated cards. */
 .story-grid--journal .story-card:nth-child(2n) .story-image{aspect-ratio:4/5;clip-path:polygon(0 3%,100% 0,96% 100%,4% 96%)}
@@ -69,8 +66,7 @@
 }
 
 @media(max-width:760px){
-  .home-hero__image,.category-hero__image,.feature-story__image,.category-manifesto__image,.studio-banner__image,.process-panel__image,.full-bleed-image,.article-hero-image{clip-path:polygon(0 2%,98% 0,100% 98%,2% 100%);transform:none}
-  .article-inline-image:nth-of-type(odd),.article-inline-image:nth-of-type(even){transform:none;clip-path:polygon(0 2%,98% 0,100% 98%,2% 100%)}
+  .home-hero__image,.category-hero__image,.feature-story__image,.category-manifesto__image,.studio-banner__image,.process-panel__image,.full-bleed-image{clip-path:polygon(0 2%,98% 0,100% 98%,2% 100%);transform:none}
   .department-card:nth-child(2),.department-card:nth-child(3){margin-top:0}
   [data-zoom-media]{cursor:default}
   .home-hero__image::before,.category-hero__image::before{font-size:.5rem}
@@ -80,3 +76,8 @@
   [data-zoom-media],.department-card,.story-card .story-image{transform:none!important;transition:none!important}
   [data-zoom-media] img,.story-card img,.department-card img{transform:none!important}
 }
+
+/* Blog articles stay calm and conventional: no cursor zoom, parallax, angled crop or hover movement. */
+.article-hero-image,.article-inline-image{clip-path:none!important;transform:none!important;cursor:default!important;box-shadow:none!important}
+.article-hero-image img,.article-inline-image img{transform:none!important;transform-origin:center!important;transition:none!important}
+.article-hero-image::after,.article-inline-image::after{background:none!important;opacity:0!important}

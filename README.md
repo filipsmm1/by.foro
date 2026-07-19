@@ -20,3 +20,7 @@ Original JPEG files are retained for social previews. Responsive WebP variants a
 ## Publishing
 
 Add new stories under `blogs/<department>/`, then update `journal.html`, the relevant department page, `sitemap.xml` and `rss.xml`. Every story should include a unique title, description, canonical URL, Open Graph image, publication date, BlogPosting schema, breadcrumbs, alt text and a visible update date when materially revised.
+
+## Blog image behavior
+
+Blog article hero and inline images are intentionally static and rectangular. Dynamic cursor zoom and sculpted crops remain on landing, category, studio and journal pages only.
