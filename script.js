@@ -10,6 +10,44 @@ document.querySelectorAll('[data-copy-link]').forEach(btn=>btn.addEventListener(
 async function submitForm(form){const status=form.querySelector('.form-status');const button=form.querySelector('button[type=submit]');const original=button?.textContent;if(form.querySelector('input[name=_honey]')?.value)return;button&&(button.disabled=true,button.textContent='Sending…');status&&(status.textContent='');try{const endpoint=form.action.replace('formsubmit.co/','formsubmit.co/ajax/');const response=await fetch(endpoint,{method:'POST',headers:{Accept:'application/json'},body:new FormData(form)});if(!response.ok)throw new Error('Submission failed');form.reset();status&&(status.textContent=form.dataset.formKind==='newsletter'?'You are on the request list. Check your inbox when the first letter is sent.':'Thank you. Your message has been sent.')}catch(error){status&&(status.innerHTML='The form could not send. Email <a href="mailto:hello@byforo.com">hello@byforo.com</a> instead.')}finally{button&&(button.disabled=false,button.textContent=original)}}
 document.querySelectorAll('[data-ajax-form]').forEach(form=>form.addEventListener('submit',e=>{e.preventDefault();if(form.reportValidity())submitForm(form)}));
 
+// Cookie consent. Optional scripts must use type="text/plain" and
+// data-cookie-category="optional"; they are activated only after acceptance.
+(()=>{
+  const cookieName='byforo_cookie_consent';
+  const maxAge=60*60*24*180;
+  const readChoice=()=>document.cookie.split('; ').find(row=>row.startsWith(`${cookieName}=`))?.split('=')[1]||null;
+  const writeChoice=choice=>{document.cookie=`${cookieName}=${choice}; Max-Age=${maxAge}; Path=/; SameSite=Lax; Secure`};
+  const activateOptionalScripts=()=>document.querySelectorAll('script[type="text/plain"][data-cookie-category="optional"]').forEach(blocked=>{
+    if(blocked.dataset.cookieActivated)return;
+    const script=document.createElement('script');
+    [...blocked.attributes].forEach(({name,value})=>{if(!['type','data-cookie-category'].includes(name))script.setAttribute(name,value)});
+    script.text=blocked.textContent;
+    blocked.dataset.cookieActivated='true';
+    blocked.after(script);
+  });
+  const announce=choice=>{
+    document.documentElement.dataset.cookieConsent=choice;
+    window.byForoConsent={choice,optional:choice==='accepted'};
+    window.dispatchEvent(new CustomEvent('byforo:consent',{detail:window.byForoConsent}));
+    if(choice==='accepted')activateOptionalScripts();
+  };
+  const closePanel=()=>document.querySelector('[data-cookie-panel]')?.remove();
+  const save=choice=>{writeChoice(choice);announce(choice);closePanel()};
+  const openPanel=()=>{
+    closePanel();
+    const panel=document.createElement('section');
+    panel.className='cookie-panel';panel.dataset.cookiePanel='';panel.setAttribute('role','dialog');panel.setAttribute('aria-modal','true');panel.setAttribute('aria-labelledby','cookie-title');
+    panel.innerHTML='<div class="cookie-panel__copy"><p class="kicker">Your privacy</p><h2 id="cookie-title">Cookie preferences</h2><p>We use one necessary cookie to remember your choice. Optional cookies and scripts stay off unless you accept them. No analytics or advertising tools are currently active.</p><a href="/cookies/">Read the cookie policy</a></div><div class="cookie-panel__actions"><button class="button button--dark" data-cookie-accept type="button">Accept optional</button><button class="button" data-cookie-reject type="button">Reject optional</button></div>';
+    document.body.append(panel);
+    panel.querySelector('[data-cookie-accept]').addEventListener('click',()=>save('accepted'));
+    panel.querySelector('[data-cookie-reject]').addEventListener('click',()=>save('rejected'));
+    panel.querySelector('button').focus();
+  };
+  document.addEventListener('click',event=>{if(event.target.closest('[data-cookie-settings]'))openPanel()});
+  const choice=readChoice();
+  if(choice==='accepted'||choice==='rejected')announce(choice);else openPanel();
+})();
+
 // Dynamic editorial image interaction: cursor-position zoom and subtle parallax.
 (()=>{
   const finePointer=window.matchMedia('(hover: hover) and (pointer: fine)');

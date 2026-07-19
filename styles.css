@@ -77,6 +77,10 @@
   [data-zoom-media] img,.story-card img,.department-card img{transform:none!important}
 }
 
+/* Cookie consent and legal data tables */
+.legal-copy a{text-decoration:underline;text-underline-offset:.18em}.cookie-settings-link{border:0;border-bottom:1px solid;background:transparent;padding:.2rem 0}.cookie-table-wrap{overflow-x:auto;margin:1.5rem 0}.cookie-table{width:100%;border-collapse:collapse;min-width:650px}.cookie-table th,.cookie-table td{padding:1rem;text-align:left;vertical-align:top;border:1px solid var(--line)}.cookie-table th{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase}.cookie-table td{color:var(--muted)}.cookie-panel{position:fixed;z-index:1000;left:50%;bottom:1.25rem;width:min(940px,calc(100% - 2.5rem));transform:translateX(-50%);display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:end;padding:clamp(1.5rem,3vw,2.5rem);background:var(--white);border:1px solid var(--ink);box-shadow:0 25px 80px rgba(23,21,18,.24)}.cookie-panel__copy{max-width:640px}.cookie-panel h2{margin:.25rem 0 .65rem;font-size:clamp(2rem,4vw,3.5rem);line-height:.95}.cookie-panel p:not(.kicker){margin-bottom:.7rem;color:var(--muted)}.cookie-panel a{text-decoration:underline;text-underline-offset:.2em;font-size:.82rem}.cookie-panel__actions{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:flex-end}.cookie-panel__actions .button{white-space:nowrap}
+@media(max-width:760px){.cookie-panel{bottom:.65rem;width:calc(100% - 1.3rem);grid-template-columns:1fr;gap:1.2rem;max-height:calc(100vh - 1.3rem);overflow:auto}.cookie-panel__actions{justify-content:stretch}.cookie-panel__actions .button{flex:1}.cookie-panel h2{font-size:2.35rem}}
+
 /* Blog articles stay calm and conventional: no cursor zoom, parallax, angled crop or hover movement. */
 .article-hero-image,.article-inline-image{clip-path:none!important;transform:none!important;cursor:default!important;box-shadow:none!important}
 .article-hero-image img,.article-inline-image img{transform:none!important;transform-origin:center!important;transition:none!important}
