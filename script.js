@@ -15,6 +15,7 @@ document.querySelectorAll('[data-ajax-form]').forEach(form=>form.addEventListene
 (()=>{
   const cookieName='byforo_cookie_consent';
   const maxAge=60*60*24*180;
+  const googleAnalyticsId='G-NG228C73TN';
   const readChoice=()=>document.cookie.split('; ').find(row=>row.startsWith(`${cookieName}=`))?.split('=')[1]||null;
   const writeChoice=choice=>{document.cookie=`${cookieName}=${choice}; Max-Age=${maxAge}; Path=/; SameSite=Lax; Secure`};
   const activateOptionalScripts=()=>document.querySelectorAll('script[type="text/plain"][data-cookie-category="optional"]').forEach(blocked=>{
@@ -25,11 +26,23 @@ document.querySelectorAll('[data-ajax-form]').forEach(form=>form.addEventListene
     blocked.dataset.cookieActivated='true';
     blocked.after(script);
   });
+  const activateGoogleAnalytics=()=>{
+    if(document.querySelector(`script[data-google-analytics="${googleAnalyticsId}"]`))return;
+    window.dataLayer=window.dataLayer||[];
+    window.gtag=window.gtag||function(){window.dataLayer.push(arguments)};
+    window.gtag('js',new Date());
+    window.gtag('config',googleAnalyticsId,{anonymize_ip:true});
+    const script=document.createElement('script');
+    script.async=true;
+    script.src=`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(googleAnalyticsId)}`;
+    script.dataset.googleAnalytics=googleAnalyticsId;
+    document.head.append(script);
+  };
   const announce=choice=>{
     document.documentElement.dataset.cookieConsent=choice;
     window.byForoConsent={choice,optional:choice==='accepted'};
     window.dispatchEvent(new CustomEvent('byforo:consent',{detail:window.byForoConsent}));
-    if(choice==='accepted')activateOptionalScripts();
+    if(choice==='accepted'){activateOptionalScripts();activateGoogleAnalytics()}
   };
   const closePanel=()=>document.querySelector('[data-cookie-panel]')?.remove();
   const save=choice=>{writeChoice(choice);announce(choice);closePanel()};
@@ -37,7 +50,7 @@ document.querySelectorAll('[data-ajax-form]').forEach(form=>form.addEventListene
     closePanel();
     const panel=document.createElement('section');
     panel.className='cookie-panel';panel.dataset.cookiePanel='';panel.setAttribute('role','dialog');panel.setAttribute('aria-modal','true');panel.setAttribute('aria-labelledby','cookie-title');
-    panel.innerHTML='<div class="cookie-panel__copy"><p class="kicker">Your privacy</p><h2 id="cookie-title">Cookie preferences</h2><p>We use one necessary cookie to remember your choice. Optional cookies and scripts stay off unless you accept them. No analytics or advertising tools are currently active.</p><a href="/cookies/">Read the cookie policy</a></div><div class="cookie-panel__actions"><button class="button button--dark" data-cookie-accept type="button">Accept optional</button><button class="button" data-cookie-reject type="button">Reject optional</button></div>';
+    panel.innerHTML='<div class="cookie-panel__copy"><p class="kicker">Your privacy</p><h2 id="cookie-title">Cookie preferences</h2><p>We use one necessary cookie to remember your choice. With permission, Google Analytics helps us understand visits and improve the journal. Analytics stays off unless you accept optional cookies.</p><a href="/cookies/">Read the cookie policy</a></div><div class="cookie-panel__actions"><button class="button button--dark" data-cookie-accept type="button">Accept optional</button><button class="button" data-cookie-reject type="button">Reject optional</button></div>';
     document.body.append(panel);
     panel.querySelector('[data-cookie-accept]').addEventListener('click',()=>save('accepted'));
     panel.querySelector('[data-cookie-reject]').addEventListener('click',()=>save('rejected'));
