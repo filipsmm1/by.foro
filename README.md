@@ -1,25 +1,22 @@
-# by.foro static website
+# by.foro website
 
-GitHub Pages-ready editorial website for by.foro.
+Production-ready static website for GitHub Pages and the custom domain `byforo.com`.
 
-## Current content state
+## Publish
 
-- Fabricated/demo article pages have been removed.
-- Real articles are organised under `blogs/<category>/`.
-- The first Home article is published and listed on `home.html`.
-- Typography has been reduced across desktop and mobile layouts.
-- Image placeholders are included throughout the homepage, category pages, About page and Studio page.
-- All future image files belong in `assets/images/`.
-- See `IMAGE-SLOTS.md` for general page images.
-- See `BLOG-WORKFLOW.md` for the article folder structure, card template and publishing steps.
+1. Upload every file in this folder to the root of the GitHub Pages repository.
+2. Keep `CNAME` in the repository root.
+3. In GitHub Pages settings, confirm the custom domain is `byforo.com` and enable HTTPS.
+4. Submit `https://byforo.com/sitemap.xml` in Google Search Console.
 
-## Before launch
+## Forms
 
-1. Add real images to `assets/images/` and replace each placeholder with its matching `<img>` element.
-2. Publish researched articles inside `blogs/<category>/`, then add their cards to the relevant category page and their URLs to `sitemap.xml`.
-3. Replace `hello@byforo.com`, `studio@byforo.com`, and `corrections@byforo.com` if those inboxes do not exist.
-4. Replace `https://byforo.com/` in `robots.txt` and `sitemap.xml` if the final domain differs.
-5. Connect a real newsletter provider before collecting subscriptions.
-6. Review legal pages for the final business entity, country, analytics, advertising, affiliate and email tools.
+Contact and newsletter requests are sent through FormSubmit to `hello@byforo.com`. On the first live submission, FormSubmit sends an activation email to that address. Open it and approve the form endpoint. If the brand uses another inbox, replace `hello@byforo.com` in `contact.html`, all newsletter forms, `script.js`, and the policy pages.
 
-Open `index.html` locally or deploy the folder to GitHub Pages.
+## Image system
+
+Original JPEG files are retained for social previews. Responsive WebP variants are used in-page through `<picture>` and `srcset`. Add future images to `assets/images`, export a high-quality JPEG, and create 640, 960 and 1280 pixel WebP variants.
+
+## Publishing
+
+Add new stories under `blogs/<department>/`, then update `journal.html`, the relevant department page, `sitemap.xml` and `rss.xml`. Every story should include a unique title, description, canonical URL, Open Graph image, publication date, BlogPosting schema, breadcrumbs, alt text and a visible update date when materially revised.

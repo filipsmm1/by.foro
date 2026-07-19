@@ -1,38 +1,11 @@
-const toggle = document.querySelector('.menu-toggle');
-const nav = document.querySelector('.main-nav');
-if (toggle && nav) {
-  toggle.addEventListener('click', () => {
-    const open = nav.classList.toggle('is-open');
-    toggle.setAttribute('aria-expanded', String(open));
-    toggle.textContent = open ? 'Close' : 'Menu';
-  });
-  nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
-    nav.classList.remove('is-open');
-    toggle.setAttribute('aria-expanded', 'false');
-    toggle.textContent = 'Menu';
-  }));
-}
 
-document.querySelectorAll('[data-newsletter-form]').forEach(form => {
-  form.addEventListener('submit', event => {
-    event.preventDefault();
-    const status = form.parentElement.querySelector('.form-status');
-    if (status) status.textContent = 'The FORO Letter is opening soon. Your address has not been stored.';
-    form.reset();
-  });
-});
-
-const contactForm = document.querySelector('[data-contact-form]');
-if (contactForm) {
-  contactForm.addEventListener('submit', event => {
-    event.preventDefault();
-    const data = new FormData(contactForm);
-    const subject = encodeURIComponent(`[by.foro] ${data.get('topic')} enquiry from ${data.get('name')}`);
-    const body = encodeURIComponent(`Name: ${data.get('name')}\nEmail: ${data.get('email')}\nCompany: ${data.get('company') || 'Not provided'}\n\n${data.get('message')}`);
-    window.location.href = `mailto:hello@byforo.com?subject=${subject}&body=${body}`;
-    const status = contactForm.querySelector('.form-status');
-    if (status) status.textContent = 'Your email app should open now. Replace hello@byforo.com in script.js if you use another address.';
-  });
-}
-
-document.querySelectorAll('[data-year]').forEach(el => el.textContent = new Date().getFullYear());
+const root=document.documentElement;root.classList.add('reveal-ready');
+const header=document.querySelector('[data-header]');const toggle=document.querySelector('.menu-toggle');const nav=document.querySelector('.site-nav');
+const closeMenu=()=>{if(!nav||!toggle)return;nav.classList.remove('is-open');document.body.classList.remove('menu-open');toggle.setAttribute('aria-expanded','false');toggle.querySelector('span').textContent='Menu'};
+if(toggle&&nav){toggle.addEventListener('click',()=>{const open=nav.classList.toggle('is-open');document.body.classList.toggle('menu-open',open);toggle.setAttribute('aria-expanded',String(open));toggle.querySelector('span').textContent=open?'Close':'Menu'});nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()})}
+const onScroll=()=>header?.classList.toggle('is-scrolled',window.scrollY>24);onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;const reveals=document.querySelectorAll('[data-reveal]');if(reduce||!('IntersectionObserver'in window)){reveals.forEach(x=>x.classList.add('is-visible'))}else{const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -40px'});reveals.forEach(x=>io.observe(x))}
+document.querySelectorAll('[data-year]').forEach(el=>el.textContent=new Date().getFullYear());
+document.querySelectorAll('[data-copy-link]').forEach(btn=>btn.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(location.href);btn.textContent='Link copied'}catch{btn.textContent='Copy failed'}}));
+async function submitForm(form){const status=form.querySelector('.form-status');const button=form.querySelector('button[type=submit]');const original=button?.textContent;if(form.querySelector('input[name=_honey]')?.value)return;button&&(button.disabled=true,button.textContent='Sending…');status&&(status.textContent='');try{const endpoint=form.action.replace('formsubmit.co/','formsubmit.co/ajax/');const response=await fetch(endpoint,{method:'POST',headers:{Accept:'application/json'},body:new FormData(form)});if(!response.ok)throw new Error('Submission failed');form.reset();status&&(status.textContent=form.dataset.formKind==='newsletter'?'You are on the request list. Check your inbox when the first letter is sent.':'Thank you. Your message has been sent.')}catch(error){status&&(status.innerHTML='The form could not send. Email <a href="mailto:hello@byforo.com">hello@byforo.com</a> instead.')}finally{button&&(button.disabled=false,button.textContent=original)}}
+document.querySelectorAll('[data-ajax-form]').forEach(form=>form.addEventListener('submit',e=>{e.preventDefault();if(form.reportValidity())submitForm(form)}));

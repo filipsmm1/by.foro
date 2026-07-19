@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://byforo.com/</loc></url>
-<url><loc>https://byforo.com/fashion.html</loc></url>
-<url><loc>https://byforo.com/home.html</loc></url>
-<url><loc>https://byforo.com/beauty.html</loc></url>
-<url><loc>https://byforo.com/culture.html</loc></url>
-<url><loc>https://byforo.com/studio.html</loc></url>
-<url><loc>https://byforo.com/about.html</loc></url>
-<url><loc>https://byforo.com/contact.html</loc></url>
-<url><loc>https://byforo.com/editorial-policy.html</loc></url>
-<url><loc>https://byforo.com/affiliate-disclosure.html</loc></url>
-<url><loc>https://byforo.com/accessibility.html</loc></url>
-<url><loc>https://byforo.com/terms.html</loc></url>
-<url><loc>https://byforo.com/privacy.html</loc></url>
-<url><loc>https://byforo.com/cookies.html</loc></url>
-<url><loc>https://byforo.com/blogs/home/most-beautiful-kitchen-colour-combinations.html</loc><lastmod>2026-07-13</lastmod></url>
+<url><loc>https://byforo.com/</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+<url><loc>https://byforo.com/journal.html</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://byforo.com/fashion.html</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://byforo.com/home.html</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://byforo.com/beauty.html</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://byforo.com/culture.html</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://byforo.com/studio.html</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+<url><loc>https://byforo.com/about.html</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+<url><loc>https://byforo.com/contact.html</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+<url><loc>https://byforo.com/editorial-policy.html</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+<url><loc>https://byforo.com/affiliate-disclosure.html</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+<url><loc>https://byforo.com/accessibility.html</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+<url><loc>https://byforo.com/privacy.html</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+<url><loc>https://byforo.com/cookies.html</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+<url><loc>https://byforo.com/terms.html</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+<url><loc>https://byforo.com/blogs/fashion/dressing-with-intention.html</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+<url><loc>https://byforo.com/blogs/beauty/the-vanity-table-as-still-life.html</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+<url><loc>https://byforo.com/blogs/culture/how-taste-is-built.html</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+<url><loc>https://byforo.com/blogs/home/most-beautiful-kitchen-colour-combinations.html</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
 </urlset>
