@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://byforo.com/</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
-<url><loc>https://byforo.com/journal/</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-<url><loc>https://byforo.com/fashion/</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-<url><loc>https://byforo.com/home/</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-<url><loc>https://byforo.com/beauty/</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-<url><loc>https://byforo.com/culture/</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://byforo.com/</loc><lastmod>2026-07-20</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+<url><loc>https://byforo.com/journal/</loc><lastmod>2026-07-20</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://byforo.com/fashion/</loc><lastmod>2026-07-20</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://byforo.com/home/</loc><lastmod>2026-07-20</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://byforo.com/beauty/</loc><lastmod>2026-07-20</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://byforo.com/culture/</loc><lastmod>2026-07-20</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
 <url><loc>https://byforo.com/studio/</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
 <url><loc>https://byforo.com/about/</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
 <url><loc>https://byforo.com/contact/</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
@@ -15,8 +15,13 @@
 <url><loc>https://byforo.com/privacy/</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
 <url><loc>https://byforo.com/cookies/</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
 <url><loc>https://byforo.com/terms/</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
-<url><loc>https://byforo.com/blogs/fashion/dressing-with-intention/</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
-<url><loc>https://byforo.com/blogs/beauty/the-vanity-table-as-still-life/</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
-<url><loc>https://byforo.com/blogs/culture/how-taste-is-built/</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
-<url><loc>https://byforo.com/blogs/home/most-beautiful-kitchen-colour-combinations/</loc><lastmod>2026-07-19</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+<url><loc>https://byforo.com/blogs/fashion/fall-2026-fashion-trends-worth-wearing/</loc><lastmod>2026-07-20</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://byforo.com/blogs/fashion/literary-chic-without-the-costume/</loc><lastmod>2026-07-20</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://byforo.com/blogs/home/whimsical-interiors-without-the-theme/</loc><lastmod>2026-07-20</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://byforo.com/blogs/culture/how-to-create-an-analogue-listening-room/</loc><lastmod>2026-07-20</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://byforo.com/blogs/beauty/skin-scent-perfume-guide/</loc><lastmod>2026-07-20</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://byforo.com/blogs/fashion/dressing-with-intention/</loc><lastmod>2026-07-19</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+<url><loc>https://byforo.com/blogs/beauty/the-vanity-table-as-still-life/</loc><lastmod>2026-07-19</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+<url><loc>https://byforo.com/blogs/culture/how-taste-is-built/</loc><lastmod>2026-07-19</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+<url><loc>https://byforo.com/blogs/home/most-beautiful-kitchen-colour-combinations/</loc><lastmod>2026-07-19</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
 </urlset>
