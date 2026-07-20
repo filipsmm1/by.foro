@@ -20,40 +20,9 @@
 [data-zoom-media]:focus-visible{outline:2px solid var(--wine);outline-offset:7px}
 [data-zoom-media]:focus-visible img{transform:scale(1.08)}
 
-/* Sculpted editorial crops instead of repeated square boxes. */
-.home-hero__image{aspect-ratio:4/5;clip-path:polygon(7% 0,100% 4%,94% 100%,0 94%);transform:rotate(.6deg)}
-.home-hero__image::before{content:"01 / THE EDIT";position:absolute;z-index:4;left:1.15rem;bottom:1rem;padding:.42rem .58rem;background:rgba(242,238,231,.88);backdrop-filter:blur(8px);font-size:.57rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
-.home-hero__image:hover{clip-path:polygon(2% 2%,98% 0,100% 97%,4% 100%);transform:rotate(0)}
-
-.category-hero__image{clip-path:polygon(0 5%,92% 0,100% 94%,8% 100%);transform:translateY(1.25rem)}
-.category-hero__image::before{content:"FORO / VISUAL NOTE";position:absolute;z-index:4;right:1rem;top:1rem;writing-mode:vertical-rl;padding:.65rem .38rem;background:rgba(23,21,18,.78);color:var(--white);font-size:.55rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
-.category-hero__image:hover{clip-path:polygon(5% 0,100% 5%,95% 100%,0 94%)}
-
-.feature-story__image{clip-path:polygon(0 0,96% 4%,100% 94%,4% 100%)}
-.feature-story__image::before{content:"FEATURE";position:absolute;z-index:4;left:0;top:0;padding:.7rem 1rem;background:var(--paper);font-size:.58rem;font-weight:700;letter-spacing:.18em}
-
-.category-manifesto__image{clip-path:polygon(4% 0,100% 0,95% 100%,0 94%)}
-.studio-banner__image{clip-path:polygon(0 0,96% 0,100% 100%,4% 100%)}
-.process-panel__image{clip-path:polygon(0 5%,100% 0,96% 100%,5% 95%)}
-.full-bleed-image{width:min(calc(100% - 4vw),1540px);margin-inline:auto;clip-path:polygon(2% 0,100% 3%,98% 100%,0 96%)}
-
-/* More varied magazine rhythm across repeated cards. */
-.story-grid--journal .story-card:nth-child(2n) .story-image{aspect-ratio:4/5;clip-path:polygon(0 3%,100% 0,96% 100%,4% 96%)}
-.story-grid--journal .story-card:nth-child(3n) .story-image{aspect-ratio:5/4;clip-path:polygon(3% 0,100% 5%,97% 100%,0 95%)}
-.story-grid--editorial .story-card:first-child .story-image{clip-path:polygon(0 0,95% 3%,100% 96%,5% 100%)}
-.story-grid--editorial .story-card:nth-child(2) .story-image{clip-path:polygon(7% 0,100% 5%,94% 100%,0 93%)}
-.story-grid--editorial .story-card:nth-child(3) .story-image{clip-path:polygon(0 5%,94% 0,100% 93%,6% 100%)}
-.story-grid--editorial .story-card:nth-child(4) .story-image{clip-path:polygon(5% 0,100% 0,95% 100%,0 94%)}
-
-.department-card:nth-child(1) .department-card__image{aspect-ratio:3/4;clip-path:polygon(0 0,94% 4%,100% 100%,6% 96%)}
-.department-card:nth-child(2) .department-card__image{aspect-ratio:1/1.18;clip-path:polygon(5% 0,100% 4%,95% 100%,0 96%)}
-.department-card:nth-child(3) .department-card__image{aspect-ratio:4/5;clip-path:polygon(0 5%,95% 0,100% 94%,4% 100%)}
-.department-card:nth-child(4) .department-card__image{aspect-ratio:16/7;clip-path:polygon(2% 0,100% 5%,98% 100%,0 95%)}
-.department-card{transition:transform .55s var(--image-ease)}
-.department-card:nth-child(2){margin-top:7vw}
-.department-card:nth-child(3){margin-top:2vw}
-.department-card:hover{transform:translateY(-8px)}
-
+/* Straight, repeatable editorial frames. Shape comes from proportion, not crooked masks. */
+.home-hero__image,.category-hero__image,.feature-story__image,.category-manifesto__image,.studio-banner__image,.process-panel__image,.full-bleed-image,.story-image,.department-card__image{clip-path:none;transform:none}
+.department-card:nth-child(2),.department-card:nth-child(3){margin-top:0}
 /* Animated gloss follows cursor on premium large frames. */
 [data-zoom-media]::after{background:radial-gradient(circle at var(--zoom-x,50%) var(--zoom-y,50%),rgba(255,255,255,.22),rgba(255,255,255,0) 28%);opacity:0;transition:opacity .45s var(--image-ease)}
 [data-zoom-media].is-zooming::after{opacity:.72}
@@ -61,12 +30,12 @@
 /* Soft depth for pointer devices only; mobile stays calm and stable. */
 @media (hover:hover) and (pointer:fine){
   .story-card .story-image,.department-card__image{transition:transform .55s var(--image-ease),clip-path .7s var(--image-ease)}
-  .story-card:hover .story-image{transform:translateY(-5px) rotate(.25deg)}
+  .story-card:hover .story-image{transform:none}
   .story-card:hover .story-image img,.department-card:hover img{transform:scale(1.07)}
 }
 
 @media(max-width:760px){
-  .home-hero__image,.category-hero__image,.feature-story__image,.category-manifesto__image,.studio-banner__image,.process-panel__image,.full-bleed-image{clip-path:polygon(0 2%,98% 0,100% 98%,2% 100%);transform:none}
+  .home-hero__image,.category-hero__image,.feature-story__image,.category-manifesto__image,.studio-banner__image,.process-panel__image,.full-bleed-image{clip-path:none;transform:none}
   .department-card:nth-child(2),.department-card:nth-child(3){margin-top:0}
   [data-zoom-media]{cursor:default}
   .home-hero__image::before,.category-hero__image::before{font-size:.5rem}
@@ -85,3 +54,43 @@
 .article-hero-image,.article-inline-image{clip-path:none!important;transform:none!important;cursor:default!important;box-shadow:none!important}
 .article-hero-image img,.article-inline-image img{transform:none!important;transform-origin:center!important;transition:none!important}
 .article-hero-image::after,.article-inline-image::after{background:none!important;opacity:0!important}
+
+/* Searchable, structured Journal library */
+.page-hero--journal{padding-top:clamp(4rem,7vw,7rem);padding-bottom:clamp(2.5rem,4vw,4rem)}
+.page-hero--journal h1{font-size:clamp(4rem,7.4vw,7.5rem)}
+.journal-library{width:min(calc(100% - 7vw),var(--max));margin:0 auto;padding:clamp(3rem,6vw,6rem) 0 1.5rem;border-bottom:1px solid var(--line);scroll-margin-top:100px}
+.journal-library__heading{display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:end;padding-bottom:2rem}
+.journal-library__heading h2{max-width:850px;margin:0;font-size:clamp(3rem,5.5vw,5.8rem);line-height:.9}
+.journal-status{margin:0;color:var(--muted);font-size:.72rem;font-weight:650;letter-spacing:.1em;text-transform:uppercase}
+.journal-search-row{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:end;padding:1.4rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.journal-search{display:grid;gap:.45rem}.journal-search span,.journal-filter-group>span{font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.journal-search input{width:100%;padding:.35rem 0 .65rem;border:0;background:transparent;outline:0;font-family:var(--serif);font-size:clamp(1.45rem,2.5vw,2.4rem);line-height:1.2}
+.journal-search input::placeholder{color:rgba(100,94,85,.55)}.journal-search input:focus{box-shadow:0 1px 0 var(--ink)}
+.journal-clear{padding:.6rem 0;border:0;border-bottom:1px solid;background:transparent;font-size:.67rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.journal-filter-group{display:grid;grid-template-columns:120px 1fr;gap:1.4rem;padding:1.25rem 0;border-bottom:1px solid var(--line);align-items:start}
+.journal-filter-group>div{display:flex;gap:.55rem;flex-wrap:wrap}
+.journal-filter-group button{display:inline-flex;align-items:center;gap:.45rem;min-height:38px;padding:.5rem .75rem;border:1px solid var(--line);background:transparent;font-size:.67rem;font-weight:650;letter-spacing:.08em;text-transform:uppercase}
+.journal-filter-group button small{font-size:.58rem;color:var(--muted)}.journal-filter-group button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--white)}.journal-filter-group button[aria-pressed=true] small{color:rgba(255,255,255,.7)}
+.journal-filter-group button:hover{border-color:var(--ink)}.journal-filter-group button[hidden]{display:none}
+.story-grid--journal{grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(2rem,3.2vw,3.5rem) clamp(1.2rem,2.2vw,2.4rem);padding-top:3rem}
+.story-grid--journal .story-card:first-child{grid-column:auto}.story-grid--journal .story-card:first-child a{display:block}.story-grid--journal .story-card .story-image{aspect-ratio:3/2!important;clip-path:none!important;transform:none!important}
+.story-grid--journal .story-card h3,.story-grid--journal .story-card:not(.story-card--featured) h3{font-size:clamp(1.8rem,2.4vw,2.65rem);line-height:.98}
+.story-grid--journal .story-card p:not(.kicker){font-size:.92rem}.story-grid--journal .story-card[hidden]{display:none}
+.story-date{margin-top:-.35rem!important;font-size:.65rem!important;font-weight:650;letter-spacing:.09em;text-transform:uppercase}
+.journal-empty{width:min(calc(100% - 7vw),var(--max));margin:0 auto clamp(5rem,9vw,9rem);padding:clamp(3rem,6vw,6rem);text-align:center;background:var(--paper-2)}
+.journal-empty h2{margin:.4rem auto 1rem;font-size:clamp(2.8rem,5vw,5.2rem);line-height:.92}.journal-empty p:not(.kicker){color:var(--muted)}
+.journal-noscript{width:min(calc(100% - 7vw),var(--max));margin:0 auto;padding:1rem;background:var(--paper-2)}
+
+/* Department topic shortcuts */
+.department-topics{width:min(calc(100% - 7vw),var(--max));margin:0 auto;padding:1.15rem 0;display:grid;grid-template-columns:150px 1fr;gap:1.5rem;align-items:start;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.department-topics>span{padding-top:.45rem;font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.department-topics nav{display:flex;gap:.6rem;flex-wrap:wrap}.department-topics a{padding:.45rem .7rem;border:1px solid var(--line);font-size:.66rem;font-weight:650;letter-spacing:.09em;text-transform:uppercase}.department-topics a:hover{background:var(--ink);border-color:var(--ink);color:var(--white)}
+
+@media(max-width:1080px){.story-grid--journal{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){
+  .page-hero--journal{padding-top:3.5rem}.page-hero--journal h1{font-size:clamp(3.7rem,16vw,5.5rem)}
+  .journal-library,.story-grid--journal,.journal-empty,.journal-noscript,.department-topics{width:90%}
+  .journal-library__heading{grid-template-columns:1fr}.journal-search-row{grid-template-columns:1fr}.journal-clear{justify-self:start}
+  .journal-filter-group,.department-topics{grid-template-columns:1fr;gap:.7rem}.journal-filter-group>div,.department-topics nav{flex-wrap:nowrap;overflow-x:auto;padding-bottom:.35rem}
+  .journal-filter-group button,.department-topics a{flex:0 0 auto}.story-grid--journal{grid-template-columns:1fr}
+}

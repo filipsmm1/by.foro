@@ -1,65 +1,39 @@
-# by.foro blog workflow
+# by.foro article system
 
-The site now uses category folders inside `blogs/`:
+Every article has one canonical folder, one catalogue entry and one image folder.
 
 ```text
-blogs/
-├── fashion/
-├── home/
-├── beauty/
-├── culture/
-└── _template/
-    └── article-template.html
+blogs/<department>/<article-slug>/index.html
+assets/images/blogs/<department>/<article-slug>/<article-slug>-hero.webp
+assets/images/blogs/<department>/<article-slug>/<article-slug>-hero.jpg
+content/articles.json
 ```
 
-## Publish a new blog
+Departments are `fashion`, `home`, `beauty` and `culture`. Topics are narrower and use lowercase hyphenated names such as `personal-style`, `kitchens`, `living-rooms`, `fragrance`, `music` and `essays`.
 
-1. Duplicate `blogs/_template/article-template.html`.
-2. Put the copy inside the correct category folder.
-3. Rename it with a lowercase URL slug, for example:
-   `blogs/home/how-to-style-open-kitchen-shelves.html`
-4. Put its images in:
-   `assets/images/blogs/home/how-to-style-open-kitchen-shelves/`
-5. Because an article sits two folders below the site root, use `../../` for root files. Examples:
-   - `../../styles.css`
-   - `../../home.html`
-   - `../../assets/images/...`
-6. Add the article URL to `sitemap.xml`.
-7. Add a card only to the page where you want the article promoted.
+## Image rule
 
-## Add a card to a category page
-
-For a Home article, open `home.html` and paste this block inside the `<section class="stories">` element:
+Use a `<picture>` element with WebP first and an optimised JPEG fallback:
 
 ```html
-<article class="story-card">
-  <a href="blogs/home/ARTICLE-SLUG.html">
-    <img src="assets/images/blogs/home/ARTICLE-SLUG/card.jpg"
-         alt="DESCRIPTIVE IMAGE ALT TEXT"
-         width="1200" height="1500" loading="lazy" decoding="async">
-    <p class="category">Home · SUBCATEGORY</p>
-    <h2>ARTICLE TITLE</h2>
-    <p class="story-description">ONE-SENTENCE ARTICLE DESCRIPTION.</p>
-  </a>
-</article>
+<picture>
+  <source type="image/webp" srcset="/assets/images/blogs/home/example/example-hero.webp">
+  <img src="/assets/images/blogs/home/example/example-hero.jpg"
+       alt="Specific description of the image"
+       width="1536" height="1024" loading="lazy" decoding="async">
+</picture>
 ```
 
-Use the same pattern in:
+JPEG is the fallback instead of PNG because photographs are dramatically smaller in JPEG and every browser that can display the site supports it. Keep hero images near 3:2, normally 1536 × 1024. Aim for WebP below 150 KB and fallback JPEG below 350 KB.
 
-- `fashion.html` for files in `blogs/fashion/`
-- `home.html` for files in `blogs/home/`
-- `beauty.html` for files in `blogs/beauty/`
-- `culture.html` for files in `blogs/culture/`
-- `index.html` only when you also want a story featured on the homepage
+## Publish checklist
 
-## Important limitation
+1. Copy `blogs/_template/article-template.html` into `blogs/<department>/<slug>/index.html`.
+2. Put the WebP and JPEG image pair in the matching `assets/images/blogs/<department>/<slug>/` folder.
+3. Add one record to `content/articles.json` with department, topic, date, URL and both image paths.
+4. Add the story card to `journal/index.html` with matching `data-department`, `data-topic` and `data-search` values.
+5. Add the URL to `sitemap.xml` and the item to `rss.xml`.
+6. Point the relevant department’s latest-story feature at the new article when appropriate.
+7. Check search, filters, image fallback and mobile layout locally before publishing.
 
-This is a static GitHub Pages website. Merely placing an HTML file inside `blogs/home/` does not automatically create a card on `home.html`. You must add the card block to the listing page, or later move the site to a generator such as Eleventy, Astro or Jekyll.
-
-## Current example
-
-The first article is stored at:
-
-`blogs/home/most-beautiful-kitchen-colour-combinations.html`
-
-Its card is already added to `home.html`, and its URL is already added to `sitemap.xml`.
+Legacy `.html` redirect files remain beside newer article folders only to preserve old inbound links. New canonical content always lives in the folder URL ending with `/`.
