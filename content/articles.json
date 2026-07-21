@@ -1,11 +1,150 @@
 [
-  {"title":"The Fall 2026 Fashion Trends Worth Wearing","department":"fashion","topic":"trends","published":"2026-07-20","readingMinutes":6,"url":"/blogs/fashion/fall-2026-fashion-trends-worth-wearing/","image":{"webp":"/assets/images/blogs/fashion/fall-2026-fashion-trends-worth-wearing/fall-2026-fashion-trends-hero.webp","fallback":"/assets/images/blogs/fashion/fall-2026-fashion-trends-worth-wearing/fall-2026-fashion-trends-hero.jpg","width":1536,"height":1024}},
-  {"title":"Literary Chic Without the Costume","department":"fashion","topic":"trends","published":"2026-07-20","readingMinutes":5,"url":"/blogs/fashion/literary-chic-without-the-costume/","image":{"webp":"/assets/images/blogs/fashion/literary-chic-without-the-costume/literary-chic-hero.webp","fallback":"/assets/images/blogs/fashion/literary-chic-without-the-costume/literary-chic-hero.jpg","width":1536,"height":1024}},
-  {"title":"Whimsical Interiors Without the Theme","department":"home","topic":"living-rooms","published":"2026-07-20","readingMinutes":5,"url":"/blogs/home/whimsical-interiors-without-the-theme/","image":{"webp":"/assets/images/blogs/home/whimsical-interiors-without-the-theme/whimsical-interiors-hero.webp","fallback":"/assets/images/blogs/home/whimsical-interiors-without-the-theme/whimsical-interiors-hero.jpg","width":1536,"height":1024}},
-  {"title":"The Room That Asks You to Listen","department":"culture","topic":"music","published":"2026-07-20","readingMinutes":5,"url":"/blogs/culture/how-to-create-an-analogue-listening-room/","image":{"webp":"/assets/images/blogs/culture/how-to-create-an-analogue-listening-room/analogue-listening-room-hero.webp","fallback":"/assets/images/blogs/culture/how-to-create-an-analogue-listening-room/analogue-listening-room-hero.jpg","width":1536,"height":1024}},
-  {"title":"The Perfume That Stays Close","department":"beauty","topic":"fragrance","published":"2026-07-20","readingMinutes":5,"url":"/blogs/beauty/skin-scent-perfume-guide/","image":{"webp":"/assets/images/blogs/beauty/skin-scent-perfume-guide/skin-scent-perfume-hero.webp","fallback":"/assets/images/blogs/beauty/skin-scent-perfume-guide/skin-scent-perfume-hero.jpg","width":1536,"height":1024}},
-  {"title":"The Most Beautiful Kitchen Colour Combinations Right Now","department":"home","topic":"kitchens","published":"2026-07-19","readingMinutes":12,"url":"/blogs/home/most-beautiful-kitchen-colour-combinations/","image":{"webp":"/assets/images/blogs/home/most-beautiful-kitchen-colour-combinations/kitchen-colour-combinations-hero.webp","fallback":"/assets/images/blogs/home/most-beautiful-kitchen-colour-combinations/kitchen-colour-combinations-hero.jpg","width":1448,"height":1086}},
-  {"title":"Dressing With Intention, Not Urgency","department":"fashion","topic":"personal-style","published":"2026-07-19","readingMinutes":6,"url":"/blogs/fashion/dressing-with-intention/","image":{"webp":"/assets/images/blogs/fashion/dressing-with-intention/dressing-with-intention-hero.webp","fallback":"/assets/images/blogs/fashion/dressing-with-intention/dressing-with-intention-hero.jpg","width":1672,"height":941}},
-  {"title":"The Vanity Table as a Still Life","department":"beauty","topic":"beauty-objects","published":"2026-07-19","readingMinutes":5,"url":"/blogs/beauty/the-vanity-table-as-still-life/","image":{"webp":"/assets/images/blogs/beauty/the-vanity-table-as-still-life/vanity-table-hero.webp","fallback":"/assets/images/blogs/beauty/the-vanity-table-as-still-life/vanity-table-hero.jpg","width":1672,"height":941}},
-  {"title":"Taste Is Built, Not Found","department":"culture","topic":"essays","published":"2026-07-19","readingMinutes":6,"url":"/blogs/culture/how-taste-is-built/","image":{"webp":"/assets/images/blogs/culture/how-taste-is-built/taste-is-built-hero.webp","fallback":"/assets/images/blogs/culture/how-taste-is-built/taste-is-built-hero.jpg","width":1672,"height":941}}
+  {
+    "title": "The Fall 2026 Fashion Trends Worth Wearing",
+    "department": "fashion",
+    "topic": "trends",
+    "published": "2026-07-20",
+    "readingMinutes": 6,
+    "url": "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
+    "excerpt": "Five runway ideas with life beyond the runway: precise tailoring, useful shirts, velvet and colour with consequence.",
+    "image": {
+      "webp": "/assets/images/blogs/fashion/fall-2026-fashion-trends-worth-wearing/fall-2026-fashion-trends-hero.webp",
+      "fallback": "/assets/images/blogs/fashion/fall-2026-fashion-trends-worth-wearing/fall-2026-fashion-trends-hero.jpg",
+      "alt": "Cropped Fall 2026 tailoring in oxblood, charcoal and cream with no face visible",
+      "width": 1536,
+      "height": 1024
+    }
+  },
+  {
+    "title": "Literary Chic Without the Costume",
+    "department": "fashion",
+    "topic": "trends",
+    "published": "2026-07-20",
+    "readingMinutes": 5,
+    "url": "/blogs/fashion/literary-chic-without-the-costume/",
+    "excerpt": "A sharper, less literal way to wear the current bookish fashion mood.",
+    "image": {
+      "webp": "/assets/images/blogs/fashion/literary-chic-without-the-costume/literary-chic-hero.webp",
+      "fallback": "/assets/images/blogs/fashion/literary-chic-without-the-costume/literary-chic-hero.jpg",
+      "alt": "Cropped charcoal tailoring in an old library, with no face visible",
+      "width": 1536,
+      "height": 1024
+    }
+  },
+  {
+    "title": "Whimsical Interiors Without the Theme",
+    "department": "home",
+    "topic": "living-rooms",
+    "published": "2026-07-20",
+    "readingMinutes": 5,
+    "url": "/blogs/home/whimsical-interiors-without-the-theme/",
+    "excerpt": "How to add wit and character without turning a home into a set.",
+    "image": {
+      "webp": "/assets/images/blogs/home/whimsical-interiors-without-the-theme/whimsical-interiors-hero.webp",
+      "fallback": "/assets/images/blogs/home/whimsical-interiors-without-the-theme/whimsical-interiors-hero.jpg",
+      "alt": "Whimsical European living room with a moss sofa and sculptural lamp",
+      "width": 1536,
+      "height": 1024
+    }
+  },
+  {
+    "title": "The Room That Asks You to Listen",
+    "department": "culture",
+    "topic": "music",
+    "published": "2026-07-20",
+    "readingMinutes": 5,
+    "url": "/blogs/culture/how-to-create-an-analogue-listening-room/",
+    "excerpt": "Good sound, low light and a record collection you actually play.",
+    "image": {
+      "webp": "/assets/images/blogs/culture/how-to-create-an-analogue-listening-room/analogue-listening-room-hero.webp",
+      "fallback": "/assets/images/blogs/culture/how-to-create-an-analogue-listening-room/analogue-listening-room-hero.jpg",
+      "alt": "Analogue listening room with turntable, speakers and leather chairs",
+      "width": 1536,
+      "height": 1024
+    }
+  },
+  {
+    "title": "The Perfume That Stays Close",
+    "department": "beauty",
+    "topic": "fragrance",
+    "published": "2026-07-20",
+    "readingMinutes": 5,
+    "url": "/blogs/beauty/skin-scent-perfume-guide/",
+    "excerpt": "What skin scent means, which notes create it and how to wear one.",
+    "image": {
+      "webp": "/assets/images/blogs/beauty/skin-scent-perfume-guide/skin-scent-perfume-hero.webp",
+      "fallback": "/assets/images/blogs/beauty/skin-scent-perfume-guide/skin-scent-perfume-hero.jpg",
+      "alt": "Frosted perfume bottle on a lived-in limestone bathroom shelf",
+      "width": 1536,
+      "height": 1024
+    }
+  },
+  {
+    "title": "The Most Beautiful Kitchen Colour Combinations Right Now",
+    "department": "home",
+    "topic": "kitchens",
+    "published": "2026-07-13",
+    "updated": "2026-07-19",
+    "readingMinutes": 12,
+    "url": "/blogs/home/most-beautiful-kitchen-colour-combinations/",
+    "excerpt": "Ten palettes that give cabinetry, stone and timber more depth and permanence.",
+    "image": {
+      "webp": "/assets/images/blogs/home/most-beautiful-kitchen-colour-combinations/kitchen-colour-combinations-hero.webp",
+      "fallback": "/assets/images/blogs/home/most-beautiful-kitchen-colour-combinations/kitchen-colour-combinations-hero.jpg",
+      "alt": "Burgundy and warm cream kitchen with marble and dark timber",
+      "width": 1448,
+      "height": 1086
+    }
+  },
+  {
+    "title": "Dressing With Intention, Not Urgency",
+    "department": "fashion",
+    "topic": "personal-style",
+    "published": "2026-07-19",
+    "updated": "2026-07-21",
+    "readingMinutes": 7,
+    "url": "/blogs/fashion/dressing-with-intention/",
+    "excerpt": "A quieter approach to personal style built around proportion, repetition and self-knowledge.",
+    "image": {
+      "webp": "/assets/images/blogs/fashion/dressing-with-intention/dressing-with-intention-hero.webp",
+      "fallback": "/assets/images/blogs/fashion/dressing-with-intention/dressing-with-intention-hero.jpg",
+      "alt": "Tailored blazer, ivory shirt, oxblood loafers and a dark leather bag in a lived-in dressing room",
+      "width": 1672,
+      "height": 941
+    }
+  },
+  {
+    "title": "The Vanity Table as a Still Life",
+    "department": "beauty",
+    "topic": "beauty-objects",
+    "published": "2026-07-19",
+    "updated": "2026-07-21",
+    "readingMinutes": 7,
+    "url": "/blogs/beauty/the-vanity-table-as-still-life/",
+    "excerpt": "Why the objects we keep close can be useful, intimate and visually exact at once.",
+    "image": {
+      "webp": "/assets/images/blogs/beauty/the-vanity-table-as-still-life/vanity-table-hero.webp",
+      "fallback": "/assets/images/blogs/beauty/the-vanity-table-as-still-life/vanity-table-hero.jpg",
+      "alt": "A restrained vanity table arranged with glass, metal and powder",
+      "width": 1672,
+      "height": 941
+    }
+  },
+  {
+    "title": "Taste Is Built, Not Found",
+    "department": "culture",
+    "topic": "essays",
+    "published": "2026-07-19",
+    "updated": "2026-07-21",
+    "readingMinutes": 7,
+    "url": "/blogs/culture/how-taste-is-built/",
+    "excerpt": "A case for looking longer, collecting references and resisting instant certainty.",
+    "image": {
+      "webp": "/assets/images/blogs/culture/how-taste-is-built/taste-is-built-hero.webp",
+      "fallback": "/assets/images/blogs/culture/how-taste-is-built/taste-is-built-hero.jpg",
+      "alt": "A working reference table with books, postcards and handwritten notes",
+      "width": 1672,
+      "height": 941
+    }
+  }
 ]

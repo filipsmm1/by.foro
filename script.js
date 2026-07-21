@@ -1,13 +1,18 @@
 
 const root=document.documentElement;root.classList.add('reveal-ready');
 const header=document.querySelector('[data-header]');const toggle=document.querySelector('.menu-toggle');const nav=document.querySelector('.site-nav');
-const closeMenu=()=>{if(!nav||!toggle)return;nav.classList.remove('is-open');document.body.classList.remove('menu-open');toggle.setAttribute('aria-expanded','false');toggle.querySelector('span').textContent='Menu'};
-if(toggle&&nav){toggle.addEventListener('click',()=>{const open=nav.classList.toggle('is-open');document.body.classList.toggle('menu-open',open);toggle.setAttribute('aria-expanded',String(open));toggle.querySelector('span').textContent=open?'Close':'Menu'});nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()})}
+let menuReturnFocus=null;
+const menuFocusable=()=>[toggle,...nav.querySelectorAll('a[href],button:not([disabled])')].filter(Boolean);
+const closeMenu=(restoreFocus=false)=>{if(!nav||!toggle)return;const wasOpen=nav.classList.contains('is-open');nav.classList.remove('is-open');document.body.classList.remove('menu-open');toggle.setAttribute('aria-expanded','false');toggle.querySelector('span').textContent='Menu';if(wasOpen&&restoreFocus)(menuReturnFocus||toggle).focus()};
+const openMenu=()=>{if(!nav||!toggle)return;menuReturnFocus=document.activeElement;nav.classList.add('is-open');document.body.classList.add('menu-open');toggle.setAttribute('aria-expanded','true');toggle.querySelector('span').textContent='Close';requestAnimationFrame(()=>nav.querySelector('a')?.focus())};
+if(toggle&&nav){toggle.addEventListener('click',()=>nav.classList.contains('is-open')?closeMenu(true):openMenu());nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>closeMenu(false)));document.addEventListener('keydown',e=>{if(!nav.classList.contains('is-open'))return;if(e.key==='Escape'){e.preventDefault();closeMenu(true);return}if(e.key!=='Tab')return;const items=menuFocusable();const first=items[0];const last=items.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}});window.matchMedia('(min-width: 1081px)').addEventListener('change',event=>{if(event.matches)closeMenu(false)})}
 const onScroll=()=>header?.classList.toggle('is-scrolled',window.scrollY>24);onScroll();window.addEventListener('scroll',onScroll,{passive:true});
 const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;const reveals=document.querySelectorAll('[data-reveal]');if(reduce||!('IntersectionObserver'in window)){reveals.forEach(x=>x.classList.add('is-visible'))}else{const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -40px'});reveals.forEach(x=>io.observe(x))}
 document.querySelectorAll('[data-year]').forEach(el=>el.textContent=new Date().getFullYear());
-document.querySelectorAll('[data-copy-link]').forEach(btn=>btn.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(location.href);btn.textContent='Link copied'}catch{btn.textContent='Copy failed'}}));
-async function submitForm(form){const status=form.querySelector('.form-status');const button=form.querySelector('button[type=submit]');const original=button?.textContent;if(form.querySelector('input[name=_honey]')?.value)return;button&&(button.disabled=true,button.textContent='Sending…');status&&(status.textContent='');try{const endpoint=form.action.replace('formsubmit.co/','formsubmit.co/ajax/');const response=await fetch(endpoint,{method:'POST',headers:{Accept:'application/json'},body:new FormData(form)});if(!response.ok)throw new Error('Submission failed');form.reset();status&&(status.textContent=form.dataset.formKind==='newsletter'?'You are on the request list. Check your inbox when the first letter is sent.':'Thank you. Your message has been sent.')}catch(error){status&&(status.innerHTML='The form could not send. Email <a href="mailto:hello@byforo.com">hello@byforo.com</a> instead.')}finally{button&&(button.disabled=false,button.textContent=original)}}
+const setTemporaryLabel=(button,label)=>{const original=button.textContent;button.textContent=label;window.setTimeout(()=>button.textContent=original,2200)};
+document.querySelectorAll('[data-copy-link]').forEach(btn=>btn.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(location.href);setTemporaryLabel(btn,'Link copied')}catch{setTemporaryLabel(btn,'Copy failed')}}));
+document.querySelectorAll('[data-share-story]').forEach(btn=>btn.addEventListener('click',async()=>{const shareData={title:btn.dataset.shareTitle||document.title,url:location.href};try{if(navigator.share){await navigator.share(shareData)}else{await navigator.clipboard.writeText(location.href);setTemporaryLabel(btn,'Link copied')}}catch(error){if(error?.name!=='AbortError')setTemporaryLabel(btn,'Share unavailable')}}));
+async function submitForm(form){const status=form.querySelector('.form-status');const button=form.querySelector('button[type=submit]');const original=button?.textContent;if(form.querySelector('input[name=_honey]')?.value)return;button&&(button.disabled=true,button.textContent='Sending…');status&&(status.textContent='');try{const endpoint=form.action.replace('formsubmit.co/','formsubmit.co/ajax/');const response=await fetch(endpoint,{method:'POST',headers:{Accept:'application/json'},body:new FormData(form)});if(!response.ok)throw new Error('Submission failed');form.reset();status&&(status.textContent=form.dataset.formKind==='newsletter'?"Your request is in. We'll email you when the first issue is ready.":'Thank you. Your message has been sent.')}catch(error){status&&(status.innerHTML='The form could not send. Email <a href="mailto:hello@byforo.com">hello@byforo.com</a> instead.')}finally{button&&(button.disabled=false,button.textContent=original)}}
 document.querySelectorAll('[data-ajax-form]').forEach(form=>form.addEventListener('submit',e=>{e.preventDefault();if(form.reportValidity())submitForm(form)}));
 
 // Cookie consent. Optional scripts must use type="text/plain" and
@@ -44,19 +49,21 @@ document.querySelectorAll('[data-ajax-form]').forEach(form=>form.addEventListene
     window.dispatchEvent(new CustomEvent('byforo:consent',{detail:window.byForoConsent}));
     if(choice==='accepted'){activateOptionalScripts();activateGoogleAnalytics()}
   };
-  const closePanel=()=>document.querySelector('[data-cookie-panel]')?.remove();
-  const save=choice=>{writeChoice(choice);announce(choice);closePanel()};
-  const openPanel=()=>{
-    closePanel();
+  let cookieReturnFocus=null;
+  const closePanel=(restoreFocus=false)=>{document.querySelector('[data-cookie-panel]')?.remove();if(restoreFocus)cookieReturnFocus?.focus()};
+  const save=choice=>{writeChoice(choice);announce(choice);closePanel(true)};
+  const openPanel=(opener=null)=>{
+    closePanel();cookieReturnFocus=opener;
     const panel=document.createElement('section');
-    panel.className='cookie-panel';panel.dataset.cookiePanel='';panel.setAttribute('role','dialog');panel.setAttribute('aria-modal','true');panel.setAttribute('aria-labelledby','cookie-title');
-    panel.innerHTML='<div class="cookie-panel__copy"><p class="kicker">Your privacy</p><h2 id="cookie-title">Cookie preferences</h2><p>We use one necessary cookie to remember your choice. With permission, Google Analytics helps us understand visits and improve the journal. Analytics stays off unless you accept optional cookies.</p><a href="/cookies/">Read the cookie policy</a></div><div class="cookie-panel__actions"><button class="button button--dark" data-cookie-accept type="button">Accept optional</button><button class="button" data-cookie-reject type="button">Reject optional</button></div>';
+    panel.className='cookie-panel';panel.dataset.cookiePanel='';panel.setAttribute('role','dialog');panel.setAttribute('aria-modal','true');panel.setAttribute('aria-labelledby','cookie-title');panel.setAttribute('aria-describedby','cookie-description');
+    panel.innerHTML='<div class="cookie-panel__copy"><p class="kicker">Your privacy</p><h2 id="cookie-title">Cookie preferences</h2><p id="cookie-description">We use one necessary cookie to remember your choice. With permission, Google Analytics helps us understand visits and improve the journal. Analytics stays off unless you accept optional cookies.</p><a href="/cookies/">Read the cookie policy</a></div><div class="cookie-panel__actions"><button class="button button--dark" data-cookie-accept type="button">Accept optional</button><button class="button" data-cookie-reject type="button">Reject optional</button></div>';
     document.body.append(panel);
     panel.querySelector('[data-cookie-accept]').addEventListener('click',()=>save('accepted'));
     panel.querySelector('[data-cookie-reject]').addEventListener('click',()=>save('rejected'));
+    panel.addEventListener('keydown',event=>{const items=[...panel.querySelectorAll('a[href],button:not([disabled])')];const first=items[0];const last=items.at(-1);if(event.key==='Escape'&&readChoice()){event.preventDefault();closePanel(true)}else if(event.key==='Tab'&&event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus()}else if(event.key==='Tab'&&!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus()}});
     panel.querySelector('button').focus();
   };
-  document.addEventListener('click',event=>{if(event.target.closest('[data-cookie-settings]'))openPanel()});
+  document.addEventListener('click',event=>{const opener=event.target.closest('[data-cookie-settings]');if(opener){event.preventDefault();openPanel(opener)}});
   const choice=readChoice();
   if(choice==='accepted'||choice==='rejected')announce(choice);else openPanel();
 })();
