@@ -83,11 +83,19 @@ TOPIC_LABELS = {
     "luxury-decor": "Luxury decor",
     "reading-nooks": "Reading nooks",
     "kitchens": "Kitchens",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "entryways": "Entryways",
+    "outdoor-living": "Outdoor living",
     "living-rooms": "Living rooms",
     "fragrance": "Fragrance",
+    "beauty-routines": "Beauty routines",
     "beauty-objects": "Beauty objects",
     "music": "Music",
     "essays": "Essays",
+    "celebrity-style": "Celebrity style",
+    "hosting": "Hosting",
+    "objects": "Objects",
 }
 
 MONTHS = (
@@ -379,7 +387,20 @@ def journal_library() -> str:
 def article_modules(article: dict) -> str:
     slug = article["url"].strip("/").split("/")[-1]
     department = article["department"].title()
-    related = [BY_URL[url] for url in RELATED[article["url"]]]
+    related_urls = RELATED.get(article["url"])
+    if not related_urls:
+        related_urls = [
+            item["url"]
+            for item in ARTICLES
+            if item["url"] != article["url"] and item["department"] == article["department"]
+        ][:3]
+        if len(related_urls) < 3:
+            related_urls += [
+                item["url"]
+                for item in ARTICLES
+                if item["url"] != article["url"] and item["url"] not in related_urls
+            ][: 3 - len(related_urls)]
+    related = [BY_URL[url] for url in related_urls[:3]]
     cards = "".join(story_card(item, "related-card") for item in related)
     title = esc(article["title"])
     page_url = f'https://byforo.com{article["url"]}'
@@ -410,7 +431,20 @@ def add_further_reading(text: str, article: dict) -> str:
             text,
             flags=re.S,
         )
-    related = [BY_URL[url] for url in RELATED[article["url"]][:2]]
+    related_urls = RELATED.get(article["url"])
+    if not related_urls:
+        related_urls = [
+            item["url"]
+            for item in ARTICLES
+            if item["url"] != article["url"] and item["department"] == article["department"]
+        ][:2]
+        if len(related_urls) < 2:
+            related_urls += [
+                item["url"]
+                for item in ARTICLES
+                if item["url"] != article["url"] and item["url"] not in related_urls
+            ][: 2 - len(related_urls)]
+    related = [BY_URL[url] for url in related_urls[:2]]
     links = " and ".join(
         f'<a href="{esc(item["url"])}">{esc(item["title"])}</a>' for item in related
     )

@@ -1,5 +1,165 @@
 [
   {
+    "title": "How to Make a Home Look Expensive Without Making It Cold",
+    "department": "home",
+    "topic": "luxury-decor",
+    "published": "2026-07-25",
+    "readingMinutes": 10,
+    "url": "/blogs/home/how-to-make-a-home-look-expensive/",
+    "excerpt": "The materials, scale, lighting and editing moves that make a home feel expensive without draining the life out of it.",
+    "image": {
+      "webp": "/assets/images/blogs/home/how-to-make-a-home-look-expensive/how-to-make-a-home-look-expensive-hero.webp",
+      "fallback": "/assets/images/blogs/home/how-to-make-a-home-look-expensive/how-to-make-a-home-look-expensive-hero.jpg",
+      "alt": "Warm plaster living room with linen sofa, walnut table and limestone fireplace",
+      "width": 1536,
+      "height": 1024
+    }
+  },
+  {
+    "title": "The Warm Minimalist Bedroom: Calm, Not Empty",
+    "department": "home",
+    "topic": "bedrooms",
+    "published": "2026-07-25",
+    "readingMinutes": 10,
+    "url": "/blogs/home/warm-minimalist-bedroom/",
+    "excerpt": "A practical guide to creating a warm minimalist bedroom with texture, soft lighting, better storage and richer neutrals.",
+    "image": {
+      "webp": "/assets/images/blogs/home/warm-minimalist-bedroom/warm-minimalist-bedroom-hero.webp",
+      "fallback": "/assets/images/blogs/home/warm-minimalist-bedroom/warm-minimalist-bedroom-hero.jpg",
+      "alt": "Warm minimalist bedroom with linen bedding, walnut bedside table and paper shade lamp",
+      "width": 1536,
+      "height": 1024
+    }
+  },
+  {
+    "title": "Bathroom Ideas That Feel Like a Private Hotel Suite",
+    "department": "home",
+    "topic": "bathrooms",
+    "published": "2026-07-25",
+    "readingMinutes": 10,
+    "url": "/blogs/home/bathroom-that-feels-like-a-hotel/",
+    "excerpt": "How to make a bathroom feel more luxurious with better light, warmer materials, edited products and hotel-level rituals.",
+    "image": {
+      "webp": "/assets/images/blogs/home/bathroom-that-feels-like-a-hotel/bathroom-that-feels-like-a-hotel-hero.webp",
+      "fallback": "/assets/images/blogs/home/bathroom-that-feels-like-a-hotel/bathroom-that-feels-like-a-hotel-hero.jpg",
+      "alt": "Luxury bathroom with limestone, warm plaster, fluted glass and no visible people",
+      "width": 1536,
+      "height": 1024
+    }
+  },
+  {
+    "title": "Small Entryway Ideas That Make the Whole Home Feel Better",
+    "department": "home",
+    "topic": "entryways",
+    "published": "2026-07-25",
+    "readingMinutes": 10,
+    "url": "/blogs/home/small-entryway-that-looks-expensive/",
+    "excerpt": "How to make a tiny entryway feel organised, elegant and more expensive with better storage, lighting, scent and scale.",
+    "image": {
+      "webp": "/assets/images/blogs/home/small-entryway-that-looks-expensive/small-entryway-that-looks-expensive-hero.webp",
+      "fallback": "/assets/images/blogs/home/small-entryway-that-looks-expensive/small-entryway-that-looks-expensive-hero.jpg",
+      "alt": "Small entryway with antique mirror, narrow console, stone dish and warm wall light",
+      "width": 1536,
+      "height": 1024
+    }
+  },
+  {
+    "title": "How to Make an Outdoor Space Feel Expensive This Summer",
+    "department": "home",
+    "topic": "outdoor-living",
+    "published": "2026-07-25",
+    "readingMinutes": 10,
+    "url": "/blogs/home/outdoor-space-that-feels-expensive/",
+    "excerpt": "Patio and balcony ideas for a more luxurious outdoor space, from shade and lighting to furniture layout and planting.",
+    "image": {
+      "webp": "/assets/images/blogs/home/outdoor-space-that-feels-expensive/outdoor-space-that-feels-expensive-hero.webp",
+      "fallback": "/assets/images/blogs/home/outdoor-space-that-feels-expensive/outdoor-space-that-feels-expensive-hero.jpg",
+      "alt": "Elegant patio with linen cushions, stone table, olive tree and warm evening lights",
+      "width": 1536,
+      "height": 1024
+    }
+  },
+  {
+    "title": "How to Wear Colour Again Without Feeling Overdressed",
+    "department": "fashion",
+    "topic": "trends",
+    "published": "2026-07-25",
+    "readingMinutes": 10,
+    "url": "/blogs/fashion/how-to-wear-colour-again/",
+    "excerpt": "A chic, practical guide to wearing colour again, informed by the 2026 return of richer shades and less timid wardrobes.",
+    "image": {
+      "webp": "/assets/images/blogs/fashion/how-to-wear-colour-again/how-to-wear-colour-again-hero.webp",
+      "fallback": "/assets/images/blogs/fashion/how-to-wear-colour-again/how-to-wear-colour-again-hero.jpg",
+      "alt": "Cropped outfit with oxblood knit, ivory trouser and chocolate leather bag with no face visible",
+      "width": 1536,
+      "height": 1024
+    }
+  },
+  {
+    "title": "Summer Loafers Are the Chicest Way to Stop Wearing Sandals",
+    "department": "fashion",
+    "topic": "personal-style",
+    "published": "2026-07-25",
+    "readingMinutes": 10,
+    "url": "/blogs/fashion/summer-loafers-outfit-guide/",
+    "excerpt": "How to style summer loafers with linen trousers, dresses, shorts and denim without making the outfit feel heavy.",
+    "image": {
+      "webp": "/assets/images/blogs/fashion/summer-loafers-outfit-guide/summer-loafers-outfit-guide-hero.webp",
+      "fallback": "/assets/images/blogs/fashion/summer-loafers-outfit-guide/summer-loafers-outfit-guide-hero.jpg",
+      "alt": "Cropped summer outfit with chocolate loafers, linen trousers and woven bag no face visible",
+      "width": 1536,
+      "height": 1024
+    }
+  },
+  {
+    "title": "Celebrity Style Is Getting Personal Again",
+    "department": "fashion",
+    "topic": "celebrity-style",
+    "published": "2026-07-25",
+    "readingMinutes": 10,
+    "url": "/blogs/fashion/celebrity-style-is-getting-personal/",
+    "excerpt": "A current read on why the best celebrity style in 2026 feels less algorithmic and more personal, specific and lived-in.",
+    "image": {
+      "webp": "/assets/images/blogs/fashion/celebrity-style-is-getting-personal/celebrity-style-is-getting-personal-hero.webp",
+      "fallback": "/assets/images/blogs/fashion/celebrity-style-is-getting-personal/celebrity-style-is-getting-personal-hero.jpg",
+      "alt": "Editorial still life of red carpet inspired satin, tailoring and jewellery with no faces visible",
+      "width": 1536,
+      "height": 1024
+    }
+  },
+  {
+    "title": "How to Build a Perfume Wardrobe by Mood, Not Occasion",
+    "department": "beauty",
+    "topic": "fragrance",
+    "published": "2026-07-25",
+    "readingMinutes": 10,
+    "url": "/blogs/beauty/perfume-wardrobe-by-mood/",
+    "excerpt": "A practical perfume wardrobe guide with scent moods, note families, storage tips and a more personal way to choose fragrance.",
+    "image": {
+      "webp": "/assets/images/blogs/beauty/perfume-wardrobe-by-mood/perfume-wardrobe-by-mood-hero.webp",
+      "fallback": "/assets/images/blogs/beauty/perfume-wardrobe-by-mood/perfume-wardrobe-by-mood-hero.jpg",
+      "alt": "Perfume bottles on travertine with linen and green stems, no people",
+      "width": 1536,
+      "height": 1024
+    }
+  },
+  {
+    "title": "Coffee Table Styling That Looks Collected, Not Staged",
+    "department": "home",
+    "topic": "objects",
+    "published": "2026-07-25",
+    "readingMinutes": 10,
+    "url": "/blogs/home/coffee-table-styling-that-looks-collected/",
+    "excerpt": "A detailed guide to coffee table styling with books, trays, flowers, candles and personal objects that still leave room for life.",
+    "image": {
+      "webp": "/assets/images/blogs/home/coffee-table-styling-that-looks-collected/coffee-table-styling-that-looks-collected-hero.webp",
+      "fallback": "/assets/images/blogs/home/coffee-table-styling-that-looks-collected/coffee-table-styling-that-looks-collected-hero.jpg",
+      "alt": "Collected coffee table with art books, ceramic bowl, candle and low flowers",
+      "width": 1536,
+      "height": 1024
+    }
+  },
+  {
     "title": "37 Reading Nook Ideas That Make You Want to Stay Home",
     "department": "home",
     "topic": "reading-nooks",
