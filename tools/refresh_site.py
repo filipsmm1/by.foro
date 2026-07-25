@@ -105,6 +105,29 @@ MONTHS = (
     "December",
 )
 
+EDITION_BAR = (
+    '<div class="edition-bar"><span>Independent editorial</span>'
+    '<span>Edition 01 &middot; 2026</span>'
+    '<span>Fashion &middot; Home &middot; Beauty &middot; Culture</span></div>'
+)
+
+PRIMARY_NAV = (
+    ("Start here", "/start-here/"),
+    ("Journal", "/journal/"),
+    ("The Edit", "/the-edit/"),
+    ("Home", "/home/"),
+    ("Fashion", "/fashion/"),
+    ("Beauty", "/beauty/"),
+    ("Culture", "/culture/"),
+)
+
+NAV_DRAWER = """<div class="nav-drawer" aria-label="Editorial index">
+  <div><span>Begin</span><a href="/start-here/">Where to start</a><a href="/the-edit/">The current edit</a><a href="/journal/">Search all stories</a></div>
+  <div><span>Home</span><a href="/journal/?department=home&amp;topic=reading-nooks">Reading nooks</a><a href="/journal/?department=home&amp;topic=luxury-decor">Luxury decor</a><a href="/journal/?department=home&amp;topic=kitchens">Kitchens</a><a href="/journal/?department=home&amp;q=small%20spaces">Small spaces</a></div>
+  <div><span>Style and beauty</span><a href="/journal/?department=fashion">Fashion</a><a href="/journal/?department=beauty&amp;topic=fragrance">Fragrance</a><a href="/journal/?department=beauty&amp;topic=beauty-objects">Beauty objects</a><a href="/journal/?q=personal%20style">Personal style</a></div>
+  <div><span>Reference</span><a href="/journal/?department=culture">Culture</a><a href="/about/">About by.foro</a><a href="/studio/">FORO Studio</a><a href="/contact/">Contact</a></div>
+</div>"""
+
 CONTENT_EXPANSIONS = {
     "/blogs/fashion/dressing-with-intention/": {
         "toc": "<li><a href=\"#section-5\">Inventory before aspiration</a></li><li><a href=\"#section-6\">A rule for the next purchase</a></li>",
@@ -123,6 +146,44 @@ CONTENT_EXPANSIONS = {
 
 def esc(value: str) -> str:
     return html.escape(str(value), quote=True)
+
+
+def route_for_path(path: Path) -> str:
+    if path.name == "404.html":
+        return "/404.html"
+    relative = path.relative_to(ROOT)
+    if relative == Path("index.html"):
+        return "/"
+    if relative.name == "index.html":
+        return "/" + "/".join(relative.parts[:-1]) + "/"
+    return "/" + "/".join(relative.parts)
+
+
+def active_for(current: str, href: str) -> bool:
+    if current == href:
+        return True
+    if href in ("/home/", "/fashion/", "/beauty/", "/culture/"):
+        department = href.strip("/")
+        return current.startswith(f"/blogs/{department}/")
+    return False
+
+
+def site_header(current: str) -> str:
+    parts = []
+    for label, href in PRIMARY_NAV:
+        current_attr = ' aria-current="page"' if active_for(current, href) else ""
+        parts.append(f'<a href="{href}"{current_attr}>{label}</a>')
+    links = "".join(parts)
+    return (
+        '<header class="site-header" data-header><a class="wordmark" href="/" '
+        'aria-label="by.foro homepage">by.foro</a><button class="menu-toggle" type="button" '
+        'aria-controls="site-nav" aria-expanded="false"><span>Menu</span></button>'
+        f'<nav class="site-nav" id="site-nav" aria-label="Main navigation">{links}{NAV_DRAWER}</nav></header>'
+    )
+
+
+def site_footer() -> str:
+    return """<footer class="site-footer"><div class="footer-lead"><a class="footer-wordmark" href="/">by.foro</a><p>A point of view on fashion, interiors, beauty and contemporary culture.</p></div><div class="footer-grid"><div><h2>Begin</h2><a href="/start-here/">Start Here</a><a href="/the-edit/">The Edit</a><a href="/journal/">Journal</a></div><div><h2>Departments</h2><a href="/home/">Home</a><a href="/fashion/">Fashion</a><a href="/beauty/">Beauty</a><a href="/culture/">Culture</a></div><div><h2>Work</h2><a href="/studio/">FORO Studio</a><a href="/contact/">Contact</a><a href="/about/">About</a></div><div><h2>Standards</h2><a href="/editorial-policy/">Editorial policy</a><a href="/affiliate-disclosure/">Affiliate disclosure</a><a href="/accessibility/">Accessibility</a><a href="/privacy/">Privacy</a><a href="/cookies/">Cookies</a><a href="/terms/">Terms</a></div></div><div class="footer-bottom"><p>&copy; <span data-year>2026</span> by.foro</p><p>Curated by people, not an algorithm.</p></div></footer>"""
 
 
 def article_path(article: dict) -> Path:
@@ -203,6 +264,30 @@ def homepage_story_grid() -> str:
     return f'<section class="story-grid story-grid--editorial">{cards}</section>'
 
 
+def homepage_entry_panel() -> str:
+    return """<!-- HOMEPAGE-ENTRY:START -->
+<section class="luxury-ledger" aria-label="by.foro orientation" data-reveal>
+  <a href="/start-here/"><span>New here</span><strong>Start with the five stories that explain the point of view.</strong></a>
+  <a href="/the-edit/"><span>The Edit</span><strong>Browse the current mood, collections and essential reads.</strong></a>
+  <a href="/journal/"><span>Search</span><strong>Find stories by room, object, style, problem or department.</strong></a>
+</section>
+<!-- HOMEPAGE-ENTRY:END -->"""
+
+
+def homepage_collections() -> str:
+    return """<!-- HOMEPAGE-COLLECTIONS:START -->
+<section class="collection-strip" aria-labelledby="homepage-collections-title" data-reveal>
+  <div><p class="kicker">Collections</p><h2 id="homepage-collections-title">Curated routes through the archive.</h2></div>
+  <div class="collection-strip__grid">
+    <a href="/journal/?department=home&amp;q=expensive"><span>01</span><strong>The Expensive-Looking Home</strong><p>Stone, lighting, vintage pieces and rooms with weight.</p></a>
+    <a href="/journal/?department=home&amp;topic=reading-nooks"><span>02</span><strong>The Reading Room</strong><p>Small private corners, shelves and places to pause.</p></a>
+    <a href="/journal/?department=fashion"><span>03</span><strong>Wardrobe With Intention</strong><p>Trends, proportion and dressing without urgency.</p></a>
+    <a href="/journal/?department=beauty"><span>04</span><strong>Beauty Objects</strong><p>Fragrance, vanity tables and daily ritual.</p></a>
+  </div>
+</section>
+<!-- HOMEPAGE-COLLECTIONS:END -->"""
+
+
 def journal_card(article: dict) -> str:
     department = article["department"]
     topic = article["topic"]
@@ -220,7 +305,8 @@ def journal_card(article: dict) -> str:
     date = f'Updated {display_date(article["updated"])}' if article.get("updated") else display_date(article["published"])
     return (
         f'<article class="story-card" data-department="{esc(department)}" data-topic="{esc(topic)}" '
-        f'data-search="{esc(search)}"><a href="{esc(article["url"])}">'
+        f'data-date="{esc(article.get("updated", article["published"]))}" data-minutes="{article["readingMinutes"]}" '
+        f'data-title="{esc(article["title"])}" data-search="{esc(search)}"><a href="{esc(article["url"])}">'
         f'<figure class="media story-image"><picture><source type="image/webp" srcset="{esc(webp_srcset(article))}" '
         'sizes="(max-width: 760px) 90vw, (max-width: 1080px) 45vw, 31vw">'
         f'<img alt="{esc(image["alt"])}" decoding="async" height="{image["height"]}" loading="lazy" '
@@ -278,6 +364,16 @@ def journal_story_grid() -> str:
         + "".join(journal_card(article) for article in ARTICLES)
         + "</section>"
     )
+
+
+def journal_library() -> str:
+    return f'''<section class="journal-library" aria-labelledby="journal-library-title" data-journal-library>
+  <div class="journal-library__heading"><div><p class="kicker">All stories</p><h2 id="journal-library-title">Browse the Journal.</h2></div><p class="journal-status" data-journal-status aria-live="polite">Showing all {len(ARTICLES)} stories</p></div>
+  <div class="journal-search-row"><label class="journal-search" for="journal-search"><span>Search the Journal</span><input id="journal-search" type="search" inputmode="search" autocomplete="off" placeholder="Try reading nooks, perfume, kitchens or personal style" data-journal-search></label><label class="journal-sort" for="journal-sort"><span>Sort</span><select id="journal-sort" data-journal-sort><option value="newest">Newest first</option><option value="longest">Long reads</option><option value="shortest">Quick reads</option><option value="az">A to Z</option></select></label><button class="journal-clear" type="button" data-journal-clear hidden>Clear search</button></div>
+  <div class="journal-quick-search" aria-label="Popular searches"><span>Popular searches</span><div><button type="button" data-journal-query="reading nook">Reading nook</button><button type="button" data-journal-query="kitchen colour">Kitchen colour</button><button type="button" data-journal-query="quiet luxury">Quiet luxury</button><button type="button" data-journal-query="perfume">Perfume</button><button type="button" data-journal-query="personal style">Personal style</button></div></div>
+  {journal_department_filters()}
+  {journal_topic_filters()}
+</section>'''
 
 
 def article_modules(article: dict) -> str:
@@ -413,6 +509,19 @@ def department_modules(department: str) -> tuple[str, str]:
     return topics, more
 
 
+def home_compass() -> str:
+    return """<!-- HOME-COMPASS:START -->
+<section class="home-compass" aria-labelledby="home-compass-title" data-reveal>
+  <div class="home-compass__intro"><p class="kicker">Interiors index</p><h2 id="home-compass-title">Find the room, the mood, or the problem.</h2><p>Home stories are organised by how people actually search: the room they are changing, the atmosphere they want, or the issue they need solved.</p></div>
+  <div class="home-compass__columns">
+    <div><span>By room</span><a href="/journal/?department=home&amp;topic=kitchens">Kitchen</a><a href="/journal/?department=home&amp;q=bedroom">Bedroom</a><a href="/journal/?department=home&amp;q=bathroom">Bathroom</a><a href="/journal/?department=home&amp;topic=living-rooms">Living room</a><a href="/journal/?department=home&amp;topic=reading-nooks">Reading nook</a><a href="/journal/?department=home&amp;q=exterior">Exterior</a></div>
+    <div><span>By style</span><a href="/journal/?department=home&amp;topic=luxury-decor">Quiet luxury</a><a href="/journal/?department=home&amp;topic=living-rooms">Whimsical interiors</a><a href="/journal/?department=home&amp;q=traditional">Traditional</a><a href="/journal/?department=home&amp;q=rustic">Modern rustic</a><a href="/journal/?department=home&amp;q=parisian">Parisian</a><a href="/journal/?department=home&amp;q=mediterranean">Mediterranean</a></div>
+    <div><span>By problem</span><a href="/journal/?department=home&amp;q=expensive">Make it look expensive</a><a href="/journal/?department=home&amp;q=small%20space">Small spaces</a><a href="/journal/?department=home&amp;q=colour">Colour ideas</a><a href="/journal/?department=home&amp;q=lighting">Lighting</a><a href="/journal/?department=home&amp;q=storage">Storage</a><a href="/journal/?department=home&amp;q=rental">Rental friendly</a></div>
+  </div>
+</section>
+<!-- HOME-COMPASS:END -->"""
+
+
 def refresh_departments() -> None:
     for department in ("fashion", "home", "beauty", "culture"):
         path = ROOT / department / "index.html"
@@ -428,6 +537,17 @@ def refresh_departments() -> None:
             flags=re.S,
         )
         text = re.sub(r'<section class="department-topics".*?</section>', topics, text, count=1, flags=re.S)
+        if department == "home":
+            if "<!-- HOME-COMPASS:START -->" in text:
+                text = re.sub(
+                    r'<!-- HOME-COMPASS:START -->.*?<!-- HOME-COMPASS:END -->',
+                    home_compass(),
+                    text,
+                    count=1,
+                    flags=re.S,
+                )
+            else:
+                text = text.replace(topics, topics + "\n" + home_compass(), 1)
         text = re.sub(
             r'<section class="feature-story".*?</section>(?=<!-- DEPARTMENT-STORIES:START -->)',
             feature,
@@ -458,12 +578,58 @@ def refresh_homepage() -> None:
     path = ROOT / "index.html"
     text = path.read_text(encoding="utf-8")
     text = re.sub(
+        r'<div class="hero-actions">.*?</div>',
+        '<div class="hero-actions"><a class="button button--dark" href="/start-here/">Start here</a><a class="text-link" href="/the-edit/">See the edit</a></div>',
+        text,
+        count=1,
+        flags=re.S,
+    )
+    text = re.sub(
+        r'<section aria-label="by\.foro editorial themes" class="marquee">.*?</section>',
+        '<section aria-label="by.foro editorial themes" class="marquee"><div>Personal style &middot; Characterful rooms &middot; Beautiful objects &middot; Visual culture &middot; Personal style &middot; Characterful rooms &middot; Beautiful objects &middot; Visual culture</div></section>',
+        text,
+        count=1,
+        flags=re.S,
+    )
+    if "<!-- HOMEPAGE-ENTRY:START -->" in text:
+        text = re.sub(
+            r'<!-- HOMEPAGE-ENTRY:START -->.*?<!-- HOMEPAGE-ENTRY:END -->',
+            homepage_entry_panel(),
+            text,
+            count=1,
+            flags=re.S,
+        )
+    else:
+        text = re.sub(
+            r'(<section aria-label="by\.foro editorial themes" class="marquee">.*?</section>)',
+            rf'\g<1>{homepage_entry_panel()}',
+            text,
+            count=1,
+            flags=re.S,
+        )
+    text = re.sub(
         r'<section class="story-grid story-grid--editorial">.*?</section>',
         homepage_story_grid(),
         text,
         count=1,
         flags=re.S,
     )
+    if "<!-- HOMEPAGE-COLLECTIONS:START -->" in text:
+        text = re.sub(
+            r'<!-- HOMEPAGE-COLLECTIONS:START -->.*?<!-- HOMEPAGE-COLLECTIONS:END -->',
+            homepage_collections(),
+            text,
+            count=1,
+            flags=re.S,
+        )
+    else:
+        text = re.sub(
+            r'(</section>\s*)(?=<section class="foro-index")',
+            rf'\g<1>{homepage_collections()}',
+            text,
+            count=1,
+            flags=re.S,
+        )
     path.write_text(text, encoding="utf-8", newline="\n")
 
 
@@ -502,6 +668,13 @@ def refresh_journal() -> None:
     text = text.replace('<h2 id="journal-library-title">Find what you want to read.</h2>', '<h2 id="journal-library-title">Browse the Journal.</h2>')
     text = re.sub(r'Browse all (?:\d+|\w+) stories', f'Browse all {len(ARTICLES)} stories', text)
     text = re.sub(r'Showing all \d+ stories', f'Showing all {len(ARTICLES)} stories', text)
+    text = re.sub(
+        r'<section class="journal-library".*?</section>\s*(?=<section class="story-grid story-grid--journal")',
+        journal_library() + "\n\n",
+        text,
+        count=1,
+        flags=re.S,
+    )
     text = re.sub(r'(?:Updated )+19 July 2026 &middot; 12 min', 'Updated 19 July 2026 &middot; 12 min', text)
     text = text.replace('<p class="story-date">19 July 2026 &middot; 12 min', '<p class="story-date">Updated 19 July 2026 &middot; 12 min')
     text = text.replace('<p class="story-date">19 July 2026 &middot; 6 min', '<p class="story-date">Updated 21 July 2026 &middot; 7 min')
@@ -638,6 +811,30 @@ def refresh_newsletter_language() -> None:
         path.write_text(text, encoding="utf-8", newline="\n")
 
 
+def refresh_navigation() -> None:
+    paths = list(ROOT.rglob("index.html")) + [ROOT / "404.html"]
+    for path in paths:
+        if not path.exists():
+            continue
+        route = route_for_path(path)
+        text = path.read_text(encoding="utf-8")
+        text = re.sub(
+            r'<div class="edition-bar">.*?</div>\s*<header class="site-header".*?</header>',
+            EDITION_BAR + site_header(route),
+            text,
+            count=1,
+            flags=re.S,
+        )
+        text = re.sub(
+            r'<footer class="site-footer">.*?</footer>',
+            site_footer(),
+            text,
+            count=1,
+            flags=re.S,
+        )
+        path.write_text(text, encoding="utf-8", newline="\n")
+
+
 def main() -> None:
     refresh_articles()
     refresh_departments()
@@ -646,6 +843,7 @@ def main() -> None:
     refresh_metadata()
     refresh_newsletter_language()
     refresh_image_markup()
+    refresh_navigation()
     print(f"Refreshed {len(ARTICLES)} articles, four departments and the Journal.")
 
 
