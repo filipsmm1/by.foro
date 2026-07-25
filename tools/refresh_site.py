@@ -20,6 +20,16 @@ ARTICLES = json.loads((ROOT / "content" / "articles.json").read_text(encoding="u
 BY_URL = {article["url"]: article for article in ARTICLES}
 
 RELATED = {
+    "/blogs/home/reading-nook-ideas/": [
+        "/blogs/home/quietly-dramatic-home-decor/",
+        "/blogs/home/whimsical-interiors-without-the-theme/",
+        "/blogs/home/most-beautiful-kitchen-colour-combinations/",
+    ],
+    "/blogs/home/quietly-dramatic-home-decor/": [
+        "/blogs/home/reading-nook-ideas/",
+        "/blogs/home/whimsical-interiors-without-the-theme/",
+        "/blogs/home/most-beautiful-kitchen-colour-combinations/",
+    ],
     "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/": [
         "/blogs/fashion/dressing-with-intention/",
         "/blogs/fashion/literary-chic-without-the-costume/",
@@ -36,13 +46,13 @@ RELATED = {
         "/blogs/culture/how-taste-is-built/",
     ],
     "/blogs/home/whimsical-interiors-without-the-theme/": [
+        "/blogs/home/quietly-dramatic-home-decor/",
         "/blogs/home/most-beautiful-kitchen-colour-combinations/",
-        "/blogs/beauty/the-vanity-table-as-still-life/",
         "/blogs/culture/how-taste-is-built/",
     ],
     "/blogs/home/most-beautiful-kitchen-colour-combinations/": [
+        "/blogs/home/quietly-dramatic-home-decor/",
         "/blogs/home/whimsical-interiors-without-the-theme/",
-        "/blogs/beauty/the-vanity-table-as-still-life/",
         "/blogs/culture/how-to-create-an-analogue-listening-room/",
     ],
     "/blogs/beauty/skin-scent-perfume-guide/": [
@@ -70,6 +80,8 @@ RELATED = {
 TOPIC_LABELS = {
     "trends": "Trends",
     "personal-style": "Personal style",
+    "luxury-decor": "Luxury decor",
+    "reading-nooks": "Reading nooks",
     "kitchens": "Kitchens",
     "living-rooms": "Living rooms",
     "fragrance": "Fragrance",
@@ -77,6 +89,21 @@ TOPIC_LABELS = {
     "music": "Music",
     "essays": "Essays",
 }
+
+MONTHS = (
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+)
 
 CONTENT_EXPANSIONS = {
     "/blogs/fashion/dressing-with-intention/": {
@@ -126,6 +153,130 @@ def story_card(article: dict, css_class: str = "story-card") -> str:
         f'<div class="story-copy"><p class="kicker">{esc(department)} &middot; {esc(topic)}</p>'
         f'<h3>{esc(article["title"])}</h3><p>{esc(article["excerpt"])}</p>'
         f'<span class="read-link">Read story <span aria-hidden="true">&nearr;</span></span></div></a></article>'
+    )
+
+
+def display_date(value: str) -> str:
+    year, month, day = value.split("-")
+    return f"{int(day)} {MONTHS[int(month) - 1]} {year}"
+
+
+def feature_story(article: dict) -> str:
+    department = article["department"].title()
+    topic = TOPIC_LABELS[article["topic"]]
+    image = article["image"]
+    return (
+        '<section class="feature-story" data-reveal="">'
+        '<figure class="media feature-story__image" data-zoom-media="">'
+        f'<picture><source type="image/webp" srcset="{esc(webp_srcset(article))}" '
+        'sizes="(max-width: 760px) 90vw, 55vw">'
+        f'<img alt="{esc(image["alt"])}" decoding="async" height="{image["height"]}" loading="lazy" '
+        f'src="{esc(image["fallback"])}" width="{image["width"]}"></picture></figure>'
+        f'<div><p class="kicker">Latest &middot; {esc(department)} &middot; {esc(topic)}</p>'
+        f'<h2>{esc(article["title"])}</h2><p>{esc(article["excerpt"])}</p>'
+        f'<div class="story-meta"><span>{display_date(article["published"])}</span>'
+        f'<span>{article["readingMinutes"]} min</span></div>'
+        f'<a class="button button--dark" href="{esc(article["url"])}">Read the story</a></div></section>'
+    )
+
+
+def homepage_card(article: dict, index: int) -> str:
+    css_class = "story-card story-card--featured" if index == 0 else "story-card"
+    zoom = ' data-zoom-media=""' if index == 0 else ""
+    department = article["department"].title()
+    topic = TOPIC_LABELS[article["topic"]]
+    image = article["image"]
+    return (
+        f'<article class="{css_class}" data-reveal=""><a href="{esc(article["url"])}">'
+        f'<figure class="media story-image"{zoom}><picture><source type="image/webp" '
+        f'srcset="{esc(webp_srcset(article))}" sizes="(max-width: 760px) 90vw, (max-width: 1080px) 45vw, 31vw">'
+        f'<img alt="{esc(image["alt"])}" decoding="async" height="{image["height"]}" loading="lazy" '
+        f'src="{esc(image["fallback"])}" width="{image["width"]}"></picture></figure>'
+        f'<div class="story-copy"><p class="kicker">{esc(department)} &middot; {esc(topic)}</p>'
+        f'<h3>{esc(article["title"])}</h3><p>{esc(article["excerpt"])}</p>'
+        '<span class="read-link">Read story <span aria-hidden="true">&nearr;</span></span></div></a></article>'
+    )
+
+
+def homepage_story_grid() -> str:
+    cards = "".join(homepage_card(article, index) for index, article in enumerate(ARTICLES[:4]))
+    return f'<section class="story-grid story-grid--editorial">{cards}</section>'
+
+
+def journal_card(article: dict) -> str:
+    department = article["department"]
+    topic = article["topic"]
+    image = article["image"]
+    search = " ".join(
+        [
+            article["title"],
+            article["excerpt"],
+            department,
+            TOPIC_LABELS[topic],
+            topic.replace("-", " "),
+        ]
+    ).lower()
+    search = re.sub(r"\s+", " ", search)
+    date = f'Updated {display_date(article["updated"])}' if article.get("updated") else display_date(article["published"])
+    return (
+        f'<article class="story-card" data-department="{esc(department)}" data-topic="{esc(topic)}" '
+        f'data-search="{esc(search)}"><a href="{esc(article["url"])}">'
+        f'<figure class="media story-image"><picture><source type="image/webp" srcset="{esc(webp_srcset(article))}" '
+        'sizes="(max-width: 760px) 90vw, (max-width: 1080px) 45vw, 31vw">'
+        f'<img alt="{esc(image["alt"])}" decoding="async" height="{image["height"]}" loading="lazy" '
+        f'src="{esc(image["fallback"])}" width="{image["width"]}"></picture></figure>'
+        f'<div class="story-copy"><p class="kicker">{esc(department.title())} &middot; {esc(TOPIC_LABELS[topic])}</p>'
+        f'<h3>{esc(article["title"])}</h3><p>{esc(article["excerpt"])}</p>'
+        f'<p class="story-date">{esc(date)} &middot; {article["readingMinutes"]} min</p>'
+        '<span class="read-link">Read story <span aria-hidden="true">&nearr;</span></span></div></a></article>'
+    )
+
+
+def journal_department_filters() -> str:
+    counts = {department: 0 for department in ("fashion", "home", "beauty", "culture")}
+    for article in ARTICLES:
+        counts[article["department"]] += 1
+    buttons = [
+        f'<button type="button" data-department="all" aria-pressed="true">All <small data-department-count="all">{len(ARTICLES)}</small></button>'
+    ]
+    for department in ("fashion", "home", "beauty", "culture"):
+        buttons.append(
+            f'<button type="button" data-department="{department}" aria-pressed="false">{department.title()} '
+            f'<small data-department-count="{department}">{counts[department]}</small></button>'
+        )
+    return (
+        '<div class="journal-filter-group" role="group" aria-label="Filter by department">'
+        f'<span>Department</span><div>{"".join(buttons)}</div></div>'
+    )
+
+
+def journal_topic_filters() -> str:
+    counts: dict[str, int] = {}
+    departments: dict[str, set[str]] = {}
+    for article in ARTICLES:
+        topic = article["topic"]
+        counts[topic] = counts.get(topic, 0) + 1
+        departments.setdefault(topic, set()).add(article["department"])
+    buttons = [f'<button type="button" data-topic="all" aria-pressed="true">All topics <small>{len(ARTICLES)}</small></button>']
+    for topic, label in TOPIC_LABELS.items():
+        if topic not in counts:
+            continue
+        department_list = " ".join(sorted(departments[topic]))
+        buttons.append(
+            f'<button type="button" data-topic="{esc(topic)}" data-departments="{esc(department_list)}" '
+            f'data-has-stories="true" aria-pressed="false">{esc(label)} <small>{counts[topic]}</small></button>'
+        )
+    return (
+        '<div class="journal-filter-group journal-topic-group" role="group" aria-label="Filter by topic">'
+        f'<span>Topic</span><div>{"".join(buttons)}</div></div>'
+    )
+
+
+def journal_story_grid() -> str:
+    return (
+        '<section class="story-grid story-grid--journal" data-journal-results aria-label="Journal stories">'
+        + "".join(journal_card(article) for article in ARTICLES)
+        + "</section>"
     )
 
 
@@ -267,7 +418,23 @@ def refresh_departments() -> None:
         path = ROOT / department / "index.html"
         text = path.read_text(encoding="utf-8")
         topics, more = department_modules(department)
+        stories = [item for item in ARTICLES if item["department"] == department]
+        feature = feature_story(stories[0])
+        text = re.sub(
+            r'(<section class="category-hero">.*?<a class="text-link" href=")[^"]+(">\s*Read the latest story</a>)',
+            rf'\g<1>{stories[0]["url"]}\g<2>',
+            text,
+            count=1,
+            flags=re.S,
+        )
         text = re.sub(r'<section class="department-topics".*?</section>', topics, text, count=1, flags=re.S)
+        text = re.sub(
+            r'<section class="feature-story".*?</section>(?=<!-- DEPARTMENT-STORIES:START -->)',
+            feature,
+            text,
+            count=1,
+            flags=re.S,
+        )
         if "<!-- DEPARTMENT-STORIES:START -->" in text:
             text = re.sub(
                 r'<!-- DEPARTMENT-STORIES:START -->.*?<!-- DEPARTMENT-STORIES:END -->',
@@ -285,6 +452,19 @@ def refresh_departments() -> None:
                 flags=re.S,
             )
         path.write_text(text, encoding="utf-8", newline="\n")
+
+
+def refresh_homepage() -> None:
+    path = ROOT / "index.html"
+    text = path.read_text(encoding="utf-8")
+    text = re.sub(
+        r'<section class="story-grid story-grid--editorial">.*?</section>',
+        homepage_story_grid(),
+        text,
+        count=1,
+        flags=re.S,
+    )
+    path.write_text(text, encoding="utf-8", newline="\n")
 
 
 def journal_schema() -> str:
@@ -320,6 +500,8 @@ def refresh_journal() -> None:
         '<main id="main"><section class="page-hero page-hero--journal"><div data-reveal><p class="kicker">The complete Journal</p><h1>Find your <em>next story.</em></h1></div><div class="journal-hero__intro" data-reveal><p>Search the archive or browse the active departments and topics.</p><a class="text-link" href="#journal-library-title">Browse all nine stories</a></div></section>',
     )
     text = text.replace('<h2 id="journal-library-title">Find what you want to read.</h2>', '<h2 id="journal-library-title">Browse the Journal.</h2>')
+    text = re.sub(r'Browse all (?:\d+|\w+) stories', f'Browse all {len(ARTICLES)} stories', text)
+    text = re.sub(r'Showing all \d+ stories', f'Showing all {len(ARTICLES)} stories', text)
     text = re.sub(r'(?:Updated )+19 July 2026 &middot; 12 min', 'Updated 19 July 2026 &middot; 12 min', text)
     text = text.replace('<p class="story-date">19 July 2026 &middot; 12 min', '<p class="story-date">Updated 19 July 2026 &middot; 12 min')
     text = text.replace('<p class="story-date">19 July 2026 &middot; 6 min', '<p class="story-date">Updated 21 July 2026 &middot; 7 min')
@@ -329,6 +511,27 @@ def refresh_journal() -> None:
         text = re.sub(r'<script id="journal-collection-schema".*?</script>', schema, text, count=1, flags=re.S)
     else:
         text = text.replace('</head>', f'{schema}</head>', 1)
+    text = re.sub(
+        r'<div class="journal-filter-group" role="group" aria-label="Filter by department">.*?</div></div>(?=\s*<div class="journal-filter-group journal-topic-group")',
+        journal_department_filters(),
+        text,
+        count=1,
+        flags=re.S,
+    )
+    text = re.sub(
+        r'<div class="journal-filter-group journal-topic-group" role="group" aria-label="Filter by topic">.*?</div></div>(?=\s*</section>)',
+        journal_topic_filters(),
+        text,
+        count=1,
+        flags=re.S,
+    )
+    text = re.sub(
+        r'<section class="story-grid story-grid--journal" data-journal-results aria-label="Journal stories">.*?</section>',
+        journal_story_grid(),
+        text,
+        count=1,
+        flags=re.S,
+    )
     path.write_text(text, encoding="utf-8", newline="\n")
 
 
@@ -438,6 +641,7 @@ def refresh_newsletter_language() -> None:
 def main() -> None:
     refresh_articles()
     refresh_departments()
+    refresh_homepage()
     refresh_journal()
     refresh_metadata()
     refresh_newsletter_language()

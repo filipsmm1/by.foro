@@ -1,5 +1,37 @@
 [
   {
+    "title": "37 Reading Nook Ideas That Make You Want to Stay Home",
+    "department": "home",
+    "topic": "reading-nooks",
+    "published": "2026-07-25",
+    "readingMinutes": 15,
+    "url": "/blogs/home/reading-nook-ideas/",
+    "excerpt": "Window seats, bedroom corners, bookshelf walls and tiny reading spots that feel warm, useful and expensive-looking.",
+    "image": {
+      "webp": "/assets/images/blogs/home/reading-nook-ideas/reading-nook-ideas-hero.webp",
+      "fallback": "/assets/images/blogs/home/reading-nook-ideas/reading-nook-ideas-hero.jpg",
+      "alt": "Luxury reading nook with arched window, linen armchair and walnut bookshelves",
+      "width": 1122,
+      "height": 1402
+    }
+  },
+  {
+    "title": "The Quietly Dramatic Home",
+    "department": "home",
+    "topic": "luxury-decor",
+    "published": "2026-07-23",
+    "readingMinutes": 15,
+    "url": "/blogs/home/quietly-dramatic-home-decor/",
+    "excerpt": "How to make a house look expensive with stone, light, vintage pieces and one serious gesture per room.",
+    "image": {
+      "webp": "/assets/images/blogs/home/quietly-dramatic-home-decor/quietly-dramatic-home-decor-hero.webp",
+      "fallback": "/assets/images/blogs/home/quietly-dramatic-home-decor/quietly-dramatic-home-decor-hero.jpg",
+      "alt": "Warm stone living room with linen sofa, rustic timber and late afternoon light",
+      "width": 1536,
+      "height": 864
+    }
+  },
+  {
     "title": "The Fall 2026 Fashion Trends Worth Wearing",
     "department": "fashion",
     "topic": "trends",
