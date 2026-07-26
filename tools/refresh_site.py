@@ -31,49 +31,99 @@ RELATED = {
         "/blogs/home/most-beautiful-kitchen-colour-combinations/",
     ],
     "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/": [
+        "/blogs/fashion/how-to-wear-colour-again/",
         "/blogs/fashion/dressing-with-intention/",
-        "/blogs/fashion/literary-chic-without-the-costume/",
-        "/blogs/culture/how-taste-is-built/",
+        "/blogs/fashion/summer-loafers-outfit-guide/",
     ],
     "/blogs/fashion/literary-chic-without-the-costume/": [
         "/blogs/fashion/dressing-with-intention/",
         "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
-        "/blogs/culture/how-taste-is-built/",
+        "/blogs/fashion/how-to-wear-colour-again/",
     ],
     "/blogs/fashion/dressing-with-intention/": [
         "/blogs/fashion/literary-chic-without-the-costume/",
         "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
-        "/blogs/culture/how-taste-is-built/",
+        "/blogs/fashion/how-to-wear-colour-again/",
     ],
     "/blogs/home/whimsical-interiors-without-the-theme/": [
         "/blogs/home/quietly-dramatic-home-decor/",
         "/blogs/home/most-beautiful-kitchen-colour-combinations/",
-        "/blogs/culture/how-taste-is-built/",
+        "/blogs/home/coffee-table-styling-that-looks-collected/",
     ],
     "/blogs/home/most-beautiful-kitchen-colour-combinations/": [
+        "/blogs/home/how-to-make-a-home-look-expensive/",
         "/blogs/home/quietly-dramatic-home-decor/",
         "/blogs/home/whimsical-interiors-without-the-theme/",
-        "/blogs/culture/how-to-create-an-analogue-listening-room/",
     ],
     "/blogs/beauty/skin-scent-perfume-guide/": [
+        "/blogs/beauty/perfume-wardrobe-by-mood/",
         "/blogs/beauty/the-vanity-table-as-still-life/",
-        "/blogs/fashion/dressing-with-intention/",
-        "/blogs/culture/how-taste-is-built/",
+        "/blogs/home/coffee-table-styling-that-looks-collected/",
     ],
     "/blogs/beauty/the-vanity-table-as-still-life/": [
+        "/blogs/beauty/perfume-wardrobe-by-mood/",
         "/blogs/beauty/skin-scent-perfume-guide/",
-        "/blogs/home/whimsical-interiors-without-the-theme/",
-        "/blogs/culture/how-taste-is-built/",
+        "/blogs/home/coffee-table-styling-that-looks-collected/",
     ],
     "/blogs/culture/how-to-create-an-analogue-listening-room/": [
         "/blogs/culture/how-taste-is-built/",
+        "/blogs/home/coffee-table-styling-that-looks-collected/",
         "/blogs/home/whimsical-interiors-without-the-theme/",
-        "/blogs/home/most-beautiful-kitchen-colour-combinations/",
     ],
     "/blogs/culture/how-taste-is-built/": [
         "/blogs/culture/how-to-create-an-analogue-listening-room/",
         "/blogs/fashion/literary-chic-without-the-costume/",
         "/blogs/fashion/dressing-with-intention/",
+    ],
+    "/blogs/home/how-to-make-a-home-look-expensive/": [
+        "/blogs/home/coffee-table-styling-that-looks-collected/",
+        "/blogs/home/small-entryway-that-looks-expensive/",
+        "/blogs/home/bathroom-that-feels-like-a-hotel/",
+    ],
+    "/blogs/home/warm-minimalist-bedroom/": [
+        "/blogs/home/how-to-make-a-home-look-expensive/",
+        "/blogs/home/reading-nook-ideas/",
+        "/blogs/home/bathroom-that-feels-like-a-hotel/",
+    ],
+    "/blogs/home/bathroom-that-feels-like-a-hotel/": [
+        "/blogs/home/how-to-make-a-home-look-expensive/",
+        "/blogs/home/warm-minimalist-bedroom/",
+        "/blogs/home/small-entryway-that-looks-expensive/",
+    ],
+    "/blogs/home/small-entryway-that-looks-expensive/": [
+        "/blogs/home/how-to-make-a-home-look-expensive/",
+        "/blogs/home/coffee-table-styling-that-looks-collected/",
+        "/blogs/home/outdoor-space-that-feels-expensive/",
+    ],
+    "/blogs/home/outdoor-space-that-feels-expensive/": [
+        "/blogs/home/how-to-make-a-home-look-expensive/",
+        "/blogs/home/most-beautiful-kitchen-colour-combinations/",
+        "/blogs/home/quietly-dramatic-home-decor/",
+    ],
+    "/blogs/home/coffee-table-styling-that-looks-collected/": [
+        "/blogs/home/how-to-make-a-home-look-expensive/",
+        "/blogs/home/quietly-dramatic-home-decor/",
+        "/blogs/home/whimsical-interiors-without-the-theme/",
+    ],
+    "/blogs/fashion/how-to-wear-colour-again/": [
+        "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
+        "/blogs/fashion/dressing-with-intention/",
+        "/blogs/fashion/summer-loafers-outfit-guide/",
+    ],
+    "/blogs/fashion/summer-loafers-outfit-guide/": [
+        "/blogs/fashion/dressing-with-intention/",
+        "/blogs/fashion/how-to-wear-colour-again/",
+        "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
+    ],
+    "/blogs/fashion/celebrity-style-is-getting-personal/": [
+        "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
+        "/blogs/fashion/how-to-wear-colour-again/",
+        "/blogs/fashion/dressing-with-intention/",
+    ],
+    "/blogs/beauty/perfume-wardrobe-by-mood/": [
+        "/blogs/beauty/skin-scent-perfume-guide/",
+        "/blogs/beauty/the-vanity-table-as-still-life/",
+        "/blogs/home/coffee-table-styling-that-looks-collected/",
     ],
 }
 
