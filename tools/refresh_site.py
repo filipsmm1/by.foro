@@ -854,6 +854,8 @@ def refresh_image_markup() -> None:
 
             text = pattern.sub(update_alt, text)
         text = FIGURE_PICTURE.sub(responsive_picture, text)
+        if "/blogs/" in path.as_posix():
+            text = re.sub(r"\s*<figcaption\b[^>]*>.*?</figcaption>", "", text, flags=re.S)
         path.write_text(text, encoding="utf-8", newline="\n")
 
 
