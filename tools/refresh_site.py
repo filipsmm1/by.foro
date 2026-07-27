@@ -11,6 +11,8 @@ from __future__ import annotations
 import html
 import json
 import re
+from datetime import datetime, timedelta, timezone
+from email.utils import format_datetime
 from pathlib import Path
 from urllib.parse import quote
 
@@ -537,14 +539,74 @@ def expand_article(text: str, article: dict) -> str:
     return text
 
 
-def update_word_count(text: str) -> str:
-    match = re.search(r'<(?:div|article) class="article-body">(.*?)</(?:div|article)>\s*</div>', text, re.S)
-    if not match:
+def polish_public_copy(text: str) -> str:
+    """Keep internal production language out of published articles."""
+    text = re.sub(
+        r'<p>\s*For searchers comparing ideas quickly,.*?</p>',
+        "",
+        text,
+        flags=re.S,
+    )
+    text = re.sub(
+        r'<section class="summary-box seo-upgrade"[^>]*>.*?</section>',
+        "",
+        text,
+        flags=re.S,
+    )
+    text = re.sub(
+        r'<section id="(?:upgrade|detail)-how-to-use-this-guide"[^>]*>.*?</section>',
+        "",
+        text,
+        flags=re.S,
+    )
+    text = re.sub(
+        r'<section id="(?:upgrade|detail)-common-mistakes"[^>]*>.*?</section>',
+        "",
+        text,
+        flags=re.S,
+    )
+    text = text.replace("<!-- SEO-UPGRADE:START -->", "<!-- EDITORIAL-EXPANSION:START -->")
+    text = text.replace("<!-- SEO-UPGRADE:END -->", "<!-- EDITORIAL-EXPANSION:END -->")
+    text = text.replace('id="upgrade-', 'id="detail-')
+    text = text.replace("<h2>Suggested internal reading</h2>", "<h2>More from by.foro</h2>")
+    text = text.replace("<h2>Sources and reading notes</h2>", "<h2>Further reading</h2>")
+    text = text.replace(
+        "Factual and current trend references were checked against recent editorial sources before publication.",
+        "These sources offer useful context and practical detail related to this story.",
+    )
+    text = text.replace(
+        '<section id="detail-search-intent-answered" data-reveal><h2>Search intent answered</h2>',
+        '<section id="detail-style-in-one-sentence" data-reveal><h2>The style in one sentence</h2>',
+    )
+    return text
+
+
+def update_word_count(text: str, article: dict) -> str:
+    start = re.search(r'<(?:div|article) class="article-body">', text)
+    if not start:
         return text
-    visible = re.sub(r'<script.*?</script>|<style.*?</style>', ' ', match.group(1), flags=re.S)
+    ends = [
+        position
+        for marker in ("<!-- ARTICLE-AFTERWORD:START -->", "</main>")
+        if (position := text.find(marker, start.end())) != -1
+    ]
+    if not ends:
+        return text
+    article_html = text[start.end() : min(ends)]
+    visible = re.sub(r'<script.*?</script>|<style.*?</style>', ' ', article_html, flags=re.S)
     visible = html.unescape(re.sub(r'<[^>]+>', ' ', visible))
     count = len(re.findall(r"\b[\w’-]+\b", visible, flags=re.UNICODE))
-    return re.sub(r'("wordCount":)\d+', rf'\g<1>{count}', text, count=1)
+    minutes = max(5, (count + 179) // 180)
+    article["readingMinutes"] = minutes
+    text = re.sub(r'("wordCount":\s*)\d+', rf'\g<1>{count}', text, count=1)
+    text = re.sub(
+        r'(<div class="article-meta">.*?<span>)\d+\s+min read(</span></div>)',
+        rf"\g<1>{minutes} min read\g<2>",
+        text,
+        count=1,
+        flags=re.S,
+    )
+    return text
 
 
 def refresh_articles() -> None:
@@ -552,6 +614,7 @@ def refresh_articles() -> None:
         path = article_path(article)
         text = path.read_text(encoding="utf-8")
         text = expand_article(text, article)
+        text = polish_public_copy(text)
         text = add_further_reading(text, article)
         modules = article_modules(article)
         if "<!-- ARTICLE-AFTERWORD:START -->" in text:
@@ -562,8 +625,16 @@ def refresh_articles() -> None:
                 flags=re.S,
             )
         else:
-            text = re.sub(r'<section class="next-story">.*?</section>', modules, text, count=1, flags=re.S)
-        text = update_word_count(text)
+            text, replaced = re.subn(
+                r'<section class="next-story">.*?</section>',
+                modules,
+                text,
+                count=1,
+                flags=re.S,
+            )
+            if not replaced:
+                text = text.replace("</main>", f"</main>{modules}", 1)
+        text = update_word_count(text, article)
         path.write_text(text, encoding="utf-8", newline="\n")
 
 
@@ -860,6 +931,38 @@ def refresh_image_markup() -> None:
 
 
 def refresh_metadata() -> None:
+    for article in ARTICLES:
+        page = article_path(article)
+        text = page.read_text(encoding="utf-8")
+        description = article.get("metaDescription", article["excerpt"])
+        escaped = esc(description)
+        text = re.sub(
+            r'<meta\b(?=[^>]*\bname="description")[^>]*>',
+            f'<meta name="description" content="{escaped}">',
+            text,
+            count=1,
+        )
+        text = re.sub(
+            r'<meta\b(?=[^>]*\bproperty="og:description")[^>]*>',
+            f'<meta property="og:description" content="{escaped}">',
+            text,
+            count=1,
+        )
+        text = re.sub(
+            r'<meta\b(?=[^>]*\bname="twitter:description")[^>]*>',
+            f'<meta name="twitter:description" content="{escaped}">',
+            text,
+            count=1,
+        )
+        schema_description = json.dumps(description, ensure_ascii=False)[1:-1]
+        text = re.sub(
+            r'("description"\s*:\s*")[^"]*(")',
+            rf"\g<1>{schema_description}\g<2>",
+            text,
+            count=1,
+        )
+        page.write_text(text, encoding="utf-8", newline="\n")
+
     path = ROOT / "404.html"
     text = path.read_text(encoding="utf-8")
     text = re.sub(
@@ -921,6 +1024,90 @@ def refresh_navigation() -> None:
         path.write_text(text, encoding="utf-8", newline="\n")
 
 
+def refresh_discovery_files() -> None:
+    latest_article_date = max(
+        article.get("updated", article["published"]) for article in ARTICLES
+    )
+    static_routes = [
+        ("/", latest_article_date, "weekly", "1.0"),
+        ("/start-here/", latest_article_date, "monthly", "0.8"),
+        ("/the-edit/", latest_article_date, "weekly", "0.8"),
+        ("/journal/", latest_article_date, "weekly", "0.9"),
+        ("/fashion/", latest_article_date, "weekly", "0.8"),
+        ("/home/", latest_article_date, "weekly", "0.8"),
+        ("/beauty/", latest_article_date, "weekly", "0.8"),
+        ("/culture/", latest_article_date, "weekly", "0.8"),
+        ("/studio/", "2026-07-19", "monthly", "0.5"),
+        ("/about/", "2026-07-19", "yearly", "0.5"),
+        ("/contact/", "2026-07-19", "yearly", "0.4"),
+        ("/editorial-policy/", "2026-07-19", "yearly", "0.4"),
+        ("/affiliate-disclosure/", "2026-07-19", "yearly", "0.3"),
+        ("/accessibility/", "2026-07-21", "yearly", "0.3"),
+        ("/privacy/", "2026-07-19", "yearly", "0.3"),
+        ("/cookies/", "2026-07-19", "yearly", "0.3"),
+        ("/terms/", "2026-07-21", "yearly", "0.3"),
+    ]
+    sitemap_entries = [
+        (
+            f"<url><loc>https://byforo.com{route}</loc><lastmod>{lastmod}</lastmod>"
+            f"<changefreq>{frequency}</changefreq><priority>{priority}</priority></url>"
+        )
+        for route, lastmod, frequency, priority in static_routes
+    ]
+    for article in ARTICLES:
+        lastmod = article.get("updated", article["published"])
+        sitemap_entries.append(
+            f'<url><loc>https://byforo.com{article["url"]}</loc><lastmod>{lastmod}</lastmod>'
+            "<changefreq>monthly</changefreq><priority>0.7</priority></url>"
+        )
+    sitemap = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        + "\n".join(sitemap_entries)
+        + "\n</urlset>\n"
+    )
+    (ROOT / "sitemap.xml").write_text(sitemap, encoding="utf-8", newline="\n")
+
+    tz = timezone(timedelta(hours=2))
+    ordered = sorted(ARTICLES, key=lambda item: item["published"], reverse=True)
+    latest = datetime.strptime(
+        max(article.get("updated", article["published"]) for article in ARTICLES),
+        "%Y-%m-%d",
+    ).replace(hour=12, tzinfo=tz)
+    items = []
+    for article in ordered:
+        published = datetime.strptime(article["published"], "%Y-%m-%d").replace(
+            hour=12,
+            tzinfo=tz,
+        )
+        title = html.escape(article["title"])
+        excerpt = html.escape(article["excerpt"])
+        url = f'https://byforo.com{article["url"]}'
+        items.append(
+            f"<item><title>{title}</title><link>{url}</link><guid>{url}</guid>"
+            f"<description>{excerpt}</description><pubDate>{format_datetime(published)}</pubDate></item>"
+        )
+    rss = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<rss version="2.0"><channel><title>by.foro Journal</title>'
+        '<link>https://byforo.com/</link>'
+        '<description>Fashion, interiors, beauty and culture selected by by.foro.</description>'
+        f"<language>en-gb</language><lastBuildDate>{format_datetime(latest)}</lastBuildDate>\n"
+        + "\n".join(items)
+        + "\n</channel></rss>\n"
+    )
+    (ROOT / "rss.xml").write_text(rss, encoding="utf-8", newline="\n")
+
+
+def save_catalog() -> None:
+    payload = json.dumps(ARTICLES, ensure_ascii=False, indent=2) + "\n"
+    (ROOT / "content" / "articles.json").write_text(
+        payload,
+        encoding="utf-8",
+        newline="\n",
+    )
+
+
 def main() -> None:
     refresh_articles()
     refresh_departments()
@@ -930,6 +1117,8 @@ def main() -> None:
     refresh_newsletter_language()
     refresh_image_markup()
     refresh_navigation()
+    refresh_discovery_files()
+    save_catalog()
     print(f"Refreshed {len(ARTICLES)} articles, four departments and the Journal.")
 
 

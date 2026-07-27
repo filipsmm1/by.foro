@@ -5,7 +5,10 @@ Usage: python tools/check_site.py
 
 from __future__ import annotations
 
+import html
 import json
+import re
+import xml.etree.ElementTree as ET
 from collections import Counter
 from html.parser import HTMLParser
 from pathlib import Path
@@ -143,6 +146,77 @@ def main() -> None:
             article_links = {urlsplit(link).path for link in parser.links if urlsplit(link).path.startswith("/blogs/")}
             if len(article_links) < 3:
                 errors.append(f"{relative}: fewer than three internal article links")
+            if not 35 <= len(parser.title.strip()) <= 60:
+                errors.append(f"{relative}: article title length is {len(parser.title.strip())}, expected 35-60")
+            if not 140 <= len(parser.description.strip()) <= 160:
+                errors.append(
+                    f"{relative}: article description length is {len(parser.description.strip())}, expected 140-160"
+                )
+            raw = path.read_text(encoding="utf-8")
+            if re.search(r'<meta\b(?=[^>]*name="robots")[^>]*noindex', raw, flags=re.I):
+                errors.append(f"{relative}: article is marked noindex")
+            if "<figcaption" in raw:
+                errors.append(f"{relative}: public image caption remains")
+            disallowed = (
+                "editorial upgrade",
+                "arriving from google",
+                "search intent answered",
+                "rank-worthy",
+                "ranking value",
+                "keyword ",
+                "optimized for reach",
+                "optimised for reach",
+            )
+            lowered = raw.casefold()
+            for phrase in disallowed:
+                if phrase in lowered:
+                    errors.append(f'{relative}: internal production phrase remains: "{phrase}"')
+
+            body_start = re.search(r'<(?:div|article) class="article-body">', raw)
+            body_end = raw.find("<!-- ARTICLE-AFTERWORD:START -->", body_start.end() if body_start else 0)
+            if not body_start or body_end == -1:
+                errors.append(f"{relative}: article body or afterword boundary missing")
+            else:
+                body_html = raw[body_start.end() : body_end]
+                visible = html.unescape(re.sub(r"<[^>]+>", " ", body_html))
+                word_count = len(re.findall(r"\b[\w’'-]+\b", visible, flags=re.UNICODE))
+                if word_count < 900:
+                    errors.append(f"{relative}: article body has only {word_count} words")
+
+                structured_count = None
+                for block in parser.json_blocks:
+                    try:
+                        payload = json.loads(block)
+                    except json.JSONDecodeError:
+                        continue
+                    if payload.get("@type") == "BlogPosting":
+                        structured_count = int(payload.get("wordCount", 0))
+                        break
+                if structured_count is None:
+                    errors.append(f"{relative}: missing BlogPosting structured data")
+                elif abs(word_count - structured_count) > 30:
+                    errors.append(
+                        f"{relative}: visible word count {word_count} differs from structured count {structured_count}"
+                    )
+
+            department = relative.parts[1]
+            slug = relative.parts[2]
+            expected_image_prefix = f"/assets/images/blogs/{department}/{slug}/"
+            article_figures = re.findall(
+                r'<figure\b[^>]*class="[^"]*\barticle-(?:hero|inline)-image\b[^"]*"[^>]*>.*?</figure>',
+                raw,
+                flags=re.S,
+            )
+            article_images = [
+                source
+                for figure in article_figures
+                for source in re.findall(r'<img\b[^>]*\bsrc="([^"]+)"', figure)
+            ]
+            if len(article_images) < 3:
+                errors.append(f"{relative}: fewer than three article images")
+            for source in article_images:
+                if not source.startswith(expected_image_prefix):
+                    errors.append(f"{relative}: mismatched article image {source}")
 
     for label, records in (("title", titles), ("description", descriptions)):
         grouped: dict[str, list[Path]] = {}
@@ -164,6 +238,37 @@ def main() -> None:
     if 'data-has-stories="false"' in journal:
         errors.append("Journal exposes empty topic filters")
 
+    expected_urls = set()
+    blog_urls = set()
+    for path in canonical_pages():
+        parser = PageParser()
+        parser.feed(path.read_text(encoding="utf-8"))
+        expected_urls.add(parser.canonical)
+        if "blogs" in path.relative_to(ROOT).parts:
+            blog_urls.add(parser.canonical)
+
+    sitemap_root = ET.parse(ROOT / "sitemap.xml").getroot()
+    sitemap_urls = {
+        node.text
+        for node in sitemap_root.findall("{http://www.sitemaps.org/schemas/sitemap/0.9}url/{http://www.sitemaps.org/schemas/sitemap/0.9}loc")
+        if node.text
+    }
+    if sitemap_urls != expected_urls:
+        missing = sorted(expected_urls - sitemap_urls)
+        extra = sorted(sitemap_urls - expected_urls)
+        errors.append(f"sitemap mismatch; missing={missing}, extra={extra}")
+
+    rss_root = ET.parse(ROOT / "rss.xml").getroot()
+    rss_urls = {
+        node.text
+        for node in rss_root.findall("./channel/item/link")
+        if node.text
+    }
+    if rss_urls != blog_urls:
+        missing = sorted(blog_urls - rss_urls)
+        extra = sorted(rss_urls - blog_urls)
+        errors.append(f"RSS mismatch; missing={missing}, extra={extra}")
+
     if errors:
         print(f"Site check failed with {len(errors)} issue(s):")
         for error in errors:
@@ -172,7 +277,7 @@ def main() -> None:
 
     print(
         f"Site check passed: {len(canonical_pages())} canonical pages, unique metadata, "
-        "valid JSON-LD, responsive images and no broken local targets."
+        "complete discovery feeds, polished article copy, responsive images and no broken local targets."
     )
 
 

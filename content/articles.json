@@ -4,7 +4,7 @@
     "department": "home",
     "topic": "luxury-decor",
     "published": "2026-07-25",
-    "readingMinutes": 10,
+    "readingMinutes": 7,
     "url": "/blogs/home/how-to-make-a-home-look-expensive/",
     "excerpt": "How to make a home look expensive with better lighting, scale, materials, storage and styling choices that feel luxurious but livable.",
     "image": {
@@ -13,14 +13,15 @@
       "alt": "Warm plaster living room with linen sofa, walnut table and limestone fireplace",
       "width": 1536,
       "height": 1024
-    }
+    },
+    "metaDescription": "Learn how to make a home look expensive through lighting, scale, natural materials, storage and vintage details without making rooms feel cold or staged."
   },
   {
     "title": "The Warm Minimalist Bedroom: Calm, Not Empty",
     "department": "home",
     "topic": "bedrooms",
     "published": "2026-07-25",
-    "readingMinutes": 10,
+    "readingMinutes": 6,
     "url": "/blogs/home/warm-minimalist-bedroom/",
     "excerpt": "Warm minimalist bedroom ideas for a calm, expensive-looking room with linen, wool, walnut, soft lighting and practical storage.",
     "image": {
@@ -29,14 +30,15 @@
       "alt": "Warm minimalist bedroom with linen bedding, walnut bedside table and paper shade lamp",
       "width": 1536,
       "height": 1024
-    }
+    },
+    "metaDescription": "Create a warm minimalist bedroom with layered neutrals, natural materials, practical storage, softer lighting and a layout designed for better rest."
   },
   {
     "title": "Bathroom Ideas That Feel Like a Private Hotel Suite",
     "department": "home",
     "topic": "bathrooms",
     "published": "2026-07-25",
-    "readingMinutes": 10,
+    "readingMinutes": 6,
     "url": "/blogs/home/bathroom-that-feels-like-a-hotel/",
     "excerpt": "Luxury bathroom ideas for a private hotel-suite feel, from warmer lighting and better towels to storage, scent and stone details.",
     "image": {
@@ -45,14 +47,15 @@
       "alt": "Luxury bathroom with limestone, warm plaster, fluted glass and no visible people",
       "width": 1536,
       "height": 1024
-    }
+    },
+    "metaDescription": "Make any bathroom feel like a private hotel suite with gentler lighting, edited storage, better towels, natural texture and a more considered shower."
   },
   {
     "title": "Small Entryway Ideas That Make the Whole Home Feel Better",
     "department": "home",
     "topic": "entryways",
     "published": "2026-07-25",
-    "readingMinutes": 10,
+    "readingMinutes": 6,
     "url": "/blogs/home/small-entryway-that-looks-expensive/",
     "excerpt": "Small entryway ideas that look expensive, with smart storage, mirrors, lighting, scent and drop-zone styling for narrow spaces.",
     "image": {
@@ -61,14 +64,15 @@
       "alt": "Small entryway with antique mirror, narrow console, stone dish and warm wall light",
       "width": 1536,
       "height": 1024
-    }
+    },
+    "metaDescription": "Design a small entryway that feels polished and expensive using better proportions, warm lighting, useful storage, a strong mirror and a weekly reset."
   },
   {
     "title": "How to Make an Outdoor Space Feel Expensive This Summer",
     "department": "home",
     "topic": "outdoor-living",
     "published": "2026-07-25",
-    "readingMinutes": 10,
+    "readingMinutes": 6,
     "url": "/blogs/home/outdoor-space-that-feels-expensive/",
     "excerpt": "Expensive-looking patio ideas for summer: shade, outdoor seating, lighting, planting and dining details that feel polished.",
     "image": {
@@ -77,14 +81,15 @@
       "alt": "Elegant patio with linen cushions, stone table, olive tree and warm evening lights",
       "width": 1536,
       "height": 1024
-    }
+    },
+    "metaDescription": "Make a patio, balcony or garden feel expensive with a clear layout, durable furniture, generous planting, warm lighting and practical weather planning."
   },
   {
     "title": "How to Wear Colour Again Without Feeling Overdressed",
     "department": "fashion",
     "topic": "trends",
     "published": "2026-07-25",
-    "readingMinutes": 10,
+    "readingMinutes": 6,
     "url": "/blogs/fashion/how-to-wear-colour-again/",
     "excerpt": "How to wear colour in a chic wardrobe, using oxblood, olive, butter yellow and rich neutrals without feeling overdressed.",
     "image": {
@@ -93,14 +98,15 @@
       "alt": "Cropped outfit with oxblood knit, ivory trouser and chocolate leather bag with no face visible",
       "width": 1536,
       "height": 1024
-    }
+    },
+    "metaDescription": "Learn how to wear colour with confidence using oxblood, olive, butter yellow and rich neutrals, with practical advice on proportion, fabric and light."
   },
   {
     "title": "Summer Loafers Are the Chicest Way to Stop Wearing Sandals",
     "department": "fashion",
     "topic": "personal-style",
     "published": "2026-07-25",
-    "readingMinutes": 10,
+    "readingMinutes": 6,
     "url": "/blogs/fashion/summer-loafers-outfit-guide/",
     "excerpt": "Summer loafers outfit ideas with linen trousers, dresses, shorts and denim, plus styling rules for a polished warm-weather wardrobe.",
     "image": {
@@ -109,14 +115,15 @@
       "alt": "Cropped summer outfit with chocolate loafers, linen trousers and woven bag no face visible",
       "width": 1536,
       "height": 1024
-    }
+    },
+    "metaDescription": "Style summer loafers with linen trousers, dresses, shorts and denim, plus practical guidance on fit, sock choices, proportions, break-in and shoe care."
   },
   {
     "title": "Celebrity Style Is Getting Personal Again",
     "department": "fashion",
     "topic": "celebrity-style",
     "published": "2026-07-25",
-    "readingMinutes": 10,
+    "readingMinutes": 7,
     "url": "/blogs/fashion/celebrity-style-is-getting-personal/",
     "excerpt": "Celebrity style trends 2026, decoded through personal codes, colour, off-duty polish and red-carpet styling without copying looks.",
     "image": {
@@ -125,14 +132,15 @@
       "alt": "Editorial still life of red carpet inspired satin, tailoring and jewellery with no faces visible",
       "width": 1536,
       "height": 1024
-    }
+    },
+    "metaDescription": "Explore why celebrity style feels more personal again, what red-carpet images can really teach us and how to translate references without copying them."
   },
   {
     "title": "How to Build a Perfume Wardrobe by Mood, Not Occasion",
     "department": "beauty",
     "topic": "fragrance",
     "published": "2026-07-25",
-    "readingMinutes": 10,
+    "readingMinutes": 6,
     "url": "/blogs/beauty/perfume-wardrobe-by-mood/",
     "excerpt": "A perfume wardrobe guide organised by mood, with clean, warm, green, sensual and bright scents plus testing and storage advice.",
     "image": {
@@ -141,14 +149,15 @@
       "alt": "Perfume bottles on travertine with linen and green stems, no people",
       "width": 1536,
       "height": 1024
-    }
+    },
+    "metaDescription": "Build a perfume wardrobe around clean, warm, green, sensual and bright moods, with practical advice on sampling, storage, editing and choosing bottle size."
   },
   {
     "title": "Coffee Table Styling That Looks Collected, Not Staged",
     "department": "home",
     "topic": "objects",
     "published": "2026-07-25",
-    "readingMinutes": 10,
+    "readingMinutes": 6,
     "url": "/blogs/home/coffee-table-styling-that-looks-collected/",
     "excerpt": "Coffee table styling ideas that look collected, using books, trays, ceramics, flowers, candles and negative space with restraint.",
     "image": {
@@ -157,7 +166,8 @@
       "alt": "Collected coffee table with art books, ceramic bowl, candle and low flowers",
       "width": 1536,
       "height": 1024
-    }
+    },
+    "metaDescription": "Style a coffee table that looks collected, not staged, using books, trays, flowers, candles, varied materials and enough clear space for everyday life."
   },
   {
     "title": "37 Reading Nook Ideas That Make You Want to Stay Home",
@@ -173,14 +183,15 @@
       "alt": "Luxury reading nook with arched window, linen armchair and walnut bookshelves",
       "width": 1122,
       "height": 1402
-    }
+    },
+    "metaDescription": "Explore 37 reading nook ideas for windows, bedrooms, libraries and small corners, with detailed advice on seating, lighting, storage and atmosphere."
   },
   {
     "title": "The Quietly Dramatic Home",
     "department": "home",
     "topic": "luxury-decor",
     "published": "2026-07-23",
-    "readingMinutes": 15,
+    "readingMinutes": 19,
     "url": "/blogs/home/quietly-dramatic-home-decor/",
     "excerpt": "Quiet luxury home decor ideas with warm stone, vintage furniture, richer lighting, texture and one dramatic gesture per room.",
     "image": {
@@ -189,14 +200,15 @@
       "alt": "Warm stone living room with linen sofa, rustic timber and late afternoon light",
       "width": 1536,
       "height": 864
-    }
+    },
+    "metaDescription": "Create quietly dramatic interiors with better scale, richer lighting, warm stone, vintage furniture, deep colour and one confident gesture in each room."
   },
   {
     "title": "The Fall 2026 Fashion Trends Worth Wearing",
     "department": "fashion",
     "topic": "trends",
     "published": "2026-07-20",
-    "readingMinutes": 9,
+    "readingMinutes": 7,
     "url": "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
     "excerpt": "Fall 2026 fashion trends with real wardrobe value: tailoring, colour, velvet, shirts and styling ideas worth wearing.",
     "image": {
@@ -206,14 +218,15 @@
       "width": 1536,
       "height": 1024
     },
-    "updated": "2026-07-25"
+    "updated": "2026-07-25",
+    "metaDescription": "Discover the Fall 2026 fashion trends worth wearing, with practical advice on tailoring, velvet, rich colour, wardrobe trials and buying pieces that last."
   },
   {
     "title": "Literary Chic Without the Costume",
     "department": "fashion",
     "topic": "trends",
     "published": "2026-07-20",
-    "readingMinutes": 9,
+    "readingMinutes": 7,
     "url": "/blogs/fashion/literary-chic-without-the-costume/",
     "excerpt": "How to wear literary chic in a modern way with texture, tailoring, bookish references and restraint without costume.",
     "image": {
@@ -223,14 +236,15 @@
       "width": 1536,
       "height": 1024
     },
-    "updated": "2026-07-25"
+    "updated": "2026-07-25",
+    "metaDescription": "Learn how to dress literary chic without looking like a costume through texture, precise tailoring, worn leather, modern interruptions and careful editing."
   },
   {
     "title": "Whimsical Interiors Without the Theme",
     "department": "home",
     "topic": "living-rooms",
     "published": "2026-07-20",
-    "readingMinutes": 9,
+    "readingMinutes": 7,
     "url": "/blogs/home/whimsical-interiors-without-the-theme/",
     "excerpt": "Whimsical interiors that feel elegant, using colour, odd objects, scale and restraint for rooms with wit but no theme.",
     "image": {
@@ -240,14 +254,15 @@
       "width": 1536,
       "height": 1024
     },
-    "updated": "2026-07-25"
+    "updated": "2026-07-25",
+    "metaDescription": "Create whimsical interiors without turning the room into a theme, using serious materials, calm backgrounds and one or two well-chosen moments of surprise."
   },
   {
     "title": "The Room That Asks You to Listen",
     "department": "culture",
     "topic": "music",
     "published": "2026-07-20",
-    "readingMinutes": 9,
+    "readingMinutes": 7,
     "url": "/blogs/culture/how-to-create-an-analogue-listening-room/",
     "excerpt": "How to create an analogue listening room with better sound, lighting, seating, records and atmosphere without a theme.",
     "image": {
@@ -257,14 +272,15 @@
       "width": 1536,
       "height": 1024
     },
-    "updated": "2026-07-25"
+    "updated": "2026-07-25",
+    "metaDescription": "Create an analogue listening room with thoughtful speaker placement, comfortable seating, record storage, acoustic softness and low, practical evening light."
   },
   {
     "title": "The Perfume That Stays Close",
     "department": "beauty",
     "topic": "fragrance",
     "published": "2026-07-20",
-    "readingMinutes": 9,
+    "readingMinutes": 7,
     "url": "/blogs/beauty/skin-scent-perfume-guide/",
     "excerpt": "A skin scent perfume guide covering what skin scents smell like, who they suit, how to test them and how to wear them.",
     "image": {
@@ -274,7 +290,8 @@
       "width": 1536,
       "height": 1024
     },
-    "updated": "2026-07-25"
+    "updated": "2026-07-25",
+    "metaDescription": "Understand what skin scent perfume means, which notes create the effect and how to test projection, improve wear and choose the right bottle or travel size."
   },
   {
     "title": "The Most Beautiful Kitchen Colour Combinations Right Now",
@@ -282,7 +299,7 @@
     "topic": "kitchens",
     "published": "2026-07-13",
     "updated": "2026-07-19",
-    "readingMinutes": 12,
+    "readingMinutes": 11,
     "url": "/blogs/home/most-beautiful-kitchen-colour-combinations/",
     "excerpt": "Kitchen colour combinations with depth: burgundy, cream, olive, walnut, blue and stone palettes for expensive-looking cabinetry.",
     "image": {
@@ -291,7 +308,8 @@
       "alt": "Layered luxury kitchen with blue-grey island, dark oak cabinetry and warm ivory plaster",
       "width": 1536,
       "height": 1024
-    }
+    },
+    "metaDescription": "Explore ten beautiful kitchen colour combinations using burgundy, olive, butter yellow, pale blue, timber and stone, with practical palette advice."
   },
   {
     "title": "Dressing With Intention, Not Urgency",
@@ -299,7 +317,7 @@
     "topic": "personal-style",
     "published": "2026-07-19",
     "updated": "2026-07-25",
-    "readingMinutes": 9,
+    "readingMinutes": 7,
     "url": "/blogs/fashion/dressing-with-intention/",
     "excerpt": "A practical guide to dressing with intention through wardrobe editing, outfit formulas, proportion and better buying discipline.",
     "image": {
@@ -308,7 +326,8 @@
       "alt": "Tailored blazer, ivory shirt, oxblood loafers and a dark leather bag in a lived-in dressing room",
       "width": 1672,
       "height": 941
-    }
+    },
+    "metaDescription": "Build personal style through outfit formulas, wardrobe evidence, better proportions and a two-week wear record that separates real needs from shopping urgency."
   },
   {
     "title": "The Vanity Table as a Still Life",
@@ -316,7 +335,7 @@
     "topic": "beauty-objects",
     "published": "2026-07-19",
     "updated": "2026-07-25",
-    "readingMinutes": 9,
+    "readingMinutes": 7,
     "url": "/blogs/beauty/the-vanity-table-as-still-life/",
     "excerpt": "How to style and organise a vanity table so beauty objects feel useful, personal, elegant and never cluttered.",
     "image": {
@@ -325,7 +344,8 @@
       "alt": "A restrained vanity table arranged with glass, metal and powder",
       "width": 1672,
       "height": 941
-    }
+    },
+    "metaDescription": "Style and organise a vanity table that feels elegant and personal, with practical advice on daily-use zones, lighting, storage, surface care and editing."
   },
   {
     "title": "Taste Is Built, Not Found",
@@ -333,7 +353,7 @@
     "topic": "essays",
     "published": "2026-07-19",
     "updated": "2026-07-25",
-    "readingMinutes": 9,
+    "readingMinutes": 6,
     "url": "/blogs/culture/how-taste-is-built/",
     "excerpt": "How to build taste through looking, editing, references and practice for a slower approach to personal style and interiors.",
     "image": {
@@ -342,6 +362,7 @@
       "alt": "A working reference table with books, postcards and handwritten notes",
       "width": 1672,
       "height": 941
-    }
+    },
+    "metaDescription": "Learn how to build taste through active looking, better reference notes, cross-category research, monthly editing and decisions grounded in real evidence."
   }
 ]
