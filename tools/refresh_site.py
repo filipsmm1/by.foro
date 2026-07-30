@@ -282,6 +282,178 @@ def display_date(value: str) -> str:
     return f"{int(day)} {MONTHS[int(month) - 1]} {year}"
 
 
+JSON_LD_BLOCK = re.compile(
+    r'(<script\b(?=[^>]*\btype="application/ld\+json")[^>]*>)(.*?)(</script>)',
+    re.S,
+)
+
+
+def upsert_json_ld(text: str, schema_type: str, payload: dict, element_id: str) -> str:
+    found = False
+
+    def replace(match: re.Match[str]) -> str:
+        nonlocal found
+        try:
+            current = json.loads(match.group(2))
+        except json.JSONDecodeError:
+            return match.group(0)
+        if current.get("@type") != schema_type:
+            return match.group(0)
+        if found:
+            return ""
+        found = True
+        return (
+            f'<script id="{element_id}" type="application/ld+json">'
+            + json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
+            + "</script>"
+        )
+
+    text = JSON_LD_BLOCK.sub(replace, text)
+    if not found:
+        block = (
+            f'<script id="{element_id}" type="application/ld+json">'
+            + json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
+            + "</script>"
+        )
+        text = text.replace("</head>", f"{block}</head>", 1)
+    return text
+
+
+def json_ld_payload(text: str, schema_type: str) -> dict | None:
+    for match in JSON_LD_BLOCK.finditer(text):
+        try:
+            payload = json.loads(match.group(2))
+        except json.JSONDecodeError:
+            continue
+        if payload.get("@type") == schema_type:
+            return payload
+    return None
+
+
+def replace_meta_content(text: str, attribute: str, value: str, content: str) -> str:
+    pattern = re.compile(
+        rf'<meta\b(?=[^>]*\b{re.escape(attribute)}="{re.escape(value)}")[^>]*>'
+    )
+    replacement = f'<meta {attribute}="{esc(value)}" content="{esc(content)}">'
+    return pattern.sub(replacement, text, count=1)
+
+
+def sync_article_search_markup(text: str, article: dict) -> str:
+    blog_schema = json_ld_payload(text, "BlogPosting")
+    if blog_schema is None:
+        raise RuntimeError(f'Missing BlogPosting schema for {article["url"]}')
+
+    description = article.get("metaDescription", article["excerpt"])
+    published_datetime = blog_schema.get(
+        "datePublished",
+        f'{article["published"]}T12:00:00+02:00',
+    )
+    modified_datetime = (
+        f'{article["updated"]}T12:00:00+02:00'
+        if article.get("updated")
+        else published_datetime
+    )
+    page_url = f'https://byforo.com{article["url"]}'
+    image_url = f'https://byforo.com{article["image"]["fallback"]}'
+
+    blog_schema.update(
+        {
+            "mainEntityOfPage": {"@type": "WebPage", "@id": page_url},
+            "headline": article["title"],
+            "description": description,
+            "image": [image_url],
+            "datePublished": published_datetime,
+            "dateModified": modified_datetime,
+            "author": {
+                "@type": "Organization",
+                "name": "by.foro Editorial",
+                "url": "https://byforo.com/about/",
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "by.foro",
+                "url": "https://byforo.com/",
+            },
+            "articleSection": article["department"].title(),
+            "inLanguage": "en-GB",
+        }
+    )
+    text = upsert_json_ld(text, "BlogPosting", blog_schema, "article-schema")
+
+    breadcrumb = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "by.foro",
+                "item": "https://byforo.com/",
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": article["department"].title(),
+                "item": f'https://byforo.com/{article["department"]}/',
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": article["title"],
+                "item": page_url,
+            },
+        ],
+    }
+    text = upsert_json_ld(
+        text,
+        "BreadcrumbList",
+        breadcrumb,
+        "article-breadcrumb-schema",
+    )
+    text = replace_meta_content(
+        text,
+        "property",
+        "article:modified_time",
+        modified_datetime,
+    )
+
+    date_value = article.get("updated", article["published"])
+    date_label = (
+        f'Updated {display_date(date_value)}'
+        if article.get("updated")
+        else display_date(date_value)
+    )
+    article_meta = (
+        '<div class="article-meta">'
+        '<a class="article-byline" href="/about/" rel="author">by.foro Editorial</a>'
+        f'<time datetime="{esc(date_value)}">{esc(date_label)}</time>'
+        f'<span>{article["readingMinutes"]} min read</span></div>'
+    )
+    text = re.sub(
+        r'<div class="article-meta">.*?</div>',
+        article_meta,
+        text,
+        count=1,
+        flags=re.S,
+    )
+    breadcrumb_nav = (
+        '<nav class="breadcrumbs" aria-label="Breadcrumb">'
+        '<a href="/">by.foro</a><span>/</span>'
+        f'<a href="/{esc(article["department"])}/">'
+        f'{esc(article["department"].title())}</a><span>/</span>'
+        f'<span aria-current="page">{esc(TOPIC_LABELS[article["topic"]])}</span>'
+        "</nav>"
+    )
+    text = re.sub(
+        r'<nav\b(?=[^>]*class="breadcrumbs")[^>]*>.*?</nav>',
+        breadcrumb_nav,
+        text,
+        count=1,
+        flags=re.S,
+    )
+    return text
+
+
 def feature_story(article: dict) -> str:
     department = article["department"].title()
     topic = TOPIC_LABELS[article["topic"]]
@@ -496,16 +668,26 @@ def add_further_reading(text: str, article: dict) -> str:
                 for item in ARTICLES
                 if item["url"] != article["url"] and item["url"] not in related_urls
             ][: 2 - len(related_urls)]
-    related = [BY_URL[url] for url in related_urls[:2]]
-    links = " and ".join(
+    related = [BY_URL[url] for url in related_urls[:3]]
+    linked_titles = [
         f'<a href="{esc(item["url"])}">{esc(item["title"])}</a>' for item in related
+    ]
+    links = (
+        linked_titles[0]
+        if len(linked_titles) == 1
+        else ", ".join(linked_titles[:-1]) + f" and {linked_titles[-1]}"
     )
     block = (
         '<!-- FURTHER-READING:START --><aside class="article-further" aria-label="Further reading">'
         f'<p class="kicker">Further reading</p><p>Continue the idea with {links}.</p>'
         "</aside><!-- FURTHER-READING:END -->"
     )
-    return text.replace('<div class="article-end">', f'{block}<div class="article-end">', 1)
+    return re.sub(
+        r'(<(?:div|footer) class="article-end">)',
+        rf'{block}\g<1>',
+        text,
+        count=1,
+    )
 
 
 def expand_article(text: str, article: dict) -> str:
@@ -570,9 +752,10 @@ def polish_public_copy(text: str) -> str:
     text = text.replace('id="upgrade-', 'id="detail-')
     text = text.replace("<h2>Suggested internal reading</h2>", "<h2>More from by.foro</h2>")
     text = text.replace("<h2>Sources and reading notes</h2>", "<h2>Further reading</h2>")
-    text = text.replace(
-        "Factual and current trend references were checked against recent editorial sources before publication.",
-        "These sources offer useful context and practical detail related to this story.",
+    text = re.sub(
+        r"<p>(?:Factual and current trend references were checked against recent editorial sources before publication\.|These sources offer useful context and practical detail related to this story\.)</p>",
+        "",
+        text,
     )
     text = text.replace(
         '<section id="detail-search-intent-answered" data-reveal><h2>Search intent answered</h2>',
@@ -935,7 +1118,15 @@ def refresh_metadata() -> None:
         page = article_path(article)
         text = page.read_text(encoding="utf-8")
         description = article.get("metaDescription", article["excerpt"])
+        seo_title = article.get("seoTitle", f'{article["title"]} | by.foro')
         escaped = esc(description)
+        text = re.sub(
+            r"<title>.*?</title>",
+            f"<title>{esc(seo_title)}</title>",
+            text,
+            count=1,
+            flags=re.S,
+        )
         text = re.sub(
             r'<meta\b(?=[^>]*\bname="description")[^>]*>',
             f'<meta name="description" content="{escaped}">',
@@ -954,13 +1145,19 @@ def refresh_metadata() -> None:
             text,
             count=1,
         )
-        schema_description = json.dumps(description, ensure_ascii=False)[1:-1]
         text = re.sub(
-            r'("description"\s*:\s*")[^"]*(")',
-            rf"\g<1>{schema_description}\g<2>",
+            r'<meta\b(?=[^>]*\bproperty="og:title")[^>]*>',
+            f'<meta property="og:title" content="{esc(seo_title)}">',
             text,
             count=1,
         )
+        text = re.sub(
+            r'<meta\b(?=[^>]*\bname="twitter:title")[^>]*>',
+            f'<meta name="twitter:title" content="{esc(seo_title)}">',
+            text,
+            count=1,
+        )
+        text = sync_article_search_markup(text, article)
         page.write_text(text, encoding="utf-8", newline="\n")
 
     path = ROOT / "404.html"
@@ -981,17 +1178,6 @@ def refresh_metadata() -> None:
         text = page.read_text(encoding="utf-8")
         text = re.sub(r'<meta content="[^"]*" name="description"/>', f'<meta content="{esc(description)}" name="description"/>', text, count=1)
         page.write_text(text, encoding="utf-8", newline="\n")
-
-    kitchen = article_path(BY_URL["/blogs/home/most-beautiful-kitchen-colour-combinations/"])
-    text = kitchen.read_text(encoding="utf-8")
-    old = "The Most Beautiful Kitchen Colour Combinations Right Now | by.foro"
-    new = "10 Beautiful Kitchen Colour Combinations | by.foro"
-    text = text.replace(f'<title>{old}</title>', f'<title>{new}</title>')
-    text = text.replace(f'property="og:title"/><meta content="{old}"', f'property="og:title"/><meta content="{new}"') if False else text
-    text = text.replace(f'<meta content="{old}" property="og:title"/>', f'<meta content="{new}" property="og:title"/>')
-    text = text.replace(f'<meta content="{old}" name="twitter:title"/>', f'<meta content="{new}" name="twitter:title"/>')
-    kitchen.write_text(text, encoding="utf-8", newline="\n")
-
 
 def refresh_newsletter_language() -> None:
     for path in ROOT.rglob("index.html"):
@@ -1056,13 +1242,33 @@ def refresh_discovery_files() -> None:
     ]
     for article in ARTICLES:
         lastmod = article.get("updated", article["published"])
+        page_text = article_path(article).read_text(encoding="utf-8")
+        article_figures = re.findall(
+            r'<figure\b[^>]*class="[^"]*\barticle-(?:hero|inline)-image\b[^"]*"[^>]*>.*?</figure>',
+            page_text,
+            flags=re.S,
+        )
+        image_paths = list(
+            dict.fromkeys(
+                source
+                for figure in article_figures
+                for source in re.findall(r'<img\b[^>]*\bsrc="([^"]+)"', figure)
+            )
+        )
+        image_entries = "".join(
+            "<image:image><image:loc>"
+            f"https://byforo.com{html.escape(source)}"
+            "</image:loc></image:image>"
+            for source in image_paths
+        )
         sitemap_entries.append(
             f'<url><loc>https://byforo.com{article["url"]}</loc><lastmod>{lastmod}</lastmod>'
-            "<changefreq>monthly</changefreq><priority>0.7</priority></url>"
+            f"<changefreq>monthly</changefreq><priority>0.7</priority>{image_entries}</url>"
         )
     sitemap = (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
+        'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n'
         + "\n".join(sitemap_entries)
         + "\n</urlset>\n"
     )

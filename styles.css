@@ -212,6 +212,8 @@ html{overflow-x:clip;-webkit-text-size-adjust:100%}
 body{min-width:320px}
 main,header,footer,section,article,aside,nav,div{min-width:0}
 h1,h2,h3,p,li,a{overflow-wrap:break-word}
+.article-byline{border-bottom:1px solid transparent;transition:border-color .2s}
+.article-byline:hover{border-color:currentColor}
 table{max-width:100%}
 .article-body ul,.article-body ol{padding-left:1.25em}
 .article-body li{margin:.55rem 0}

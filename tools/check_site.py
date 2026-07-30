@@ -16,6 +16,8 @@ from urllib.parse import unquote, urlsplit
 
 
 ROOT = Path(__file__).resolve().parents[1]
+ARTICLES = json.loads((ROOT / "content" / "articles.json").read_text(encoding="utf-8"))
+ARTICLES_BY_URL = {article["url"]: article for article in ARTICLES}
 
 
 class PageParser(HTMLParser):
@@ -143,14 +145,27 @@ def main() -> None:
                 errors.append(f"{relative}: invalid JSON-LD ({exc.msg})")
 
         if "blogs" in relative.parts:
-            article_links = {urlsplit(link).path for link in parser.links if urlsplit(link).path.startswith("/blogs/")}
-            if len(article_links) < 3:
-                errors.append(f"{relative}: fewer than three internal article links")
+            article_url = "/" + "/".join(relative.parts[:-1]) + "/"
+            article = ARTICLES_BY_URL.get(article_url)
+            if article is None:
+                errors.append(f"{relative}: missing from content/articles.json")
+                continue
+            expected_title = article.get("seoTitle", f'{article["title"]} | by.foro')
+            if parser.title.strip() != expected_title:
+                errors.append(f"{relative}: title does not match catalogue SEO title")
+            expected_description = article.get(
+                "metaDescription",
+                article["excerpt"],
+            )
+            if parser.description.strip() != expected_description:
+                errors.append(
+                    f"{relative}: description does not match article catalogue"
+                )
             if not 35 <= len(parser.title.strip()) <= 60:
                 errors.append(f"{relative}: article title length is {len(parser.title.strip())}, expected 35-60")
-            if not 140 <= len(parser.description.strip()) <= 160:
+            if not 145 <= len(parser.description.strip()) <= 160:
                 errors.append(
-                    f"{relative}: article description length is {len(parser.description.strip())}, expected 140-160"
+                    f"{relative}: article description length is {len(parser.description.strip())}, expected 145-160"
                 )
             raw = path.read_text(encoding="utf-8")
             if re.search(r'<meta\b(?=[^>]*name="robots")[^>]*noindex', raw, flags=re.I):
@@ -183,21 +198,80 @@ def main() -> None:
                 if word_count < 900:
                     errors.append(f"{relative}: article body has only {word_count} words")
 
+                contextual_links = {
+                    urlsplit(link).path
+                    for link in re.findall(r'href="([^"]+)"', body_html)
+                    if urlsplit(link).path.startswith("/blogs/")
+                    and urlsplit(link).path != article_url
+                }
+                if len(contextual_links) < 3:
+                    errors.append(
+                        f"{relative}: fewer than three contextual article links"
+                    )
+
                 structured_count = None
+                payloads = []
                 for block in parser.json_blocks:
                     try:
                         payload = json.loads(block)
                     except json.JSONDecodeError:
                         continue
+                    payloads.append(payload)
                     if payload.get("@type") == "BlogPosting":
                         structured_count = int(payload.get("wordCount", 0))
-                        break
                 if structured_count is None:
                     errors.append(f"{relative}: missing BlogPosting structured data")
                 elif abs(word_count - structured_count) > 30:
                     errors.append(
                         f"{relative}: visible word count {word_count} differs from structured count {structured_count}"
                     )
+
+                blog_schemas = [
+                    payload
+                    for payload in payloads
+                    if payload.get("@type") == "BlogPosting"
+                ]
+                breadcrumb_schemas = [
+                    payload
+                    for payload in payloads
+                    if payload.get("@type") == "BreadcrumbList"
+                ]
+                if len(blog_schemas) != 1:
+                    errors.append(
+                        f"{relative}: expected one BlogPosting schema, found {len(blog_schemas)}"
+                    )
+                else:
+                    blog_schema = blog_schemas[0]
+                    expected_modified = article.get("updated", article["published"])
+                    if blog_schema.get("headline") != article["title"]:
+                        errors.append(
+                            f"{relative}: structured headline does not match article catalogue"
+                        )
+                    if not str(blog_schema.get("dateModified", "")).startswith(
+                        expected_modified
+                    ):
+                        errors.append(
+                            f"{relative}: structured dateModified does not match catalogue"
+                        )
+                    if blog_schema.get("author", {}).get("url") != (
+                        "https://byforo.com/about/"
+                    ):
+                        errors.append(
+                            f"{relative}: structured author is missing the About URL"
+                        )
+                if len(breadcrumb_schemas) != 1:
+                    errors.append(
+                        f"{relative}: expected one BreadcrumbList schema, found {len(breadcrumb_schemas)}"
+                    )
+                else:
+                    crumbs = breadcrumb_schemas[0].get("itemListElement", [])
+                    if (
+                        len(crumbs) != 3
+                        or crumbs[-1].get("name") != article["title"]
+                    ):
+                        errors.append(
+                            f"{relative}: breadcrumb schema does not match article hierarchy"
+                        )
 
             department = relative.parts[1]
             slug = relative.parts[2]
@@ -257,6 +331,29 @@ def main() -> None:
         missing = sorted(expected_urls - sitemap_urls)
         extra = sorted(sitemap_urls - expected_urls)
         errors.append(f"sitemap mismatch; missing={missing}, extra={extra}")
+    sitemap_namespace = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
+    image_namespace = "{http://www.google.com/schemas/sitemap-image/1.1}"
+    for entry in sitemap_root.findall(f"{sitemap_namespace}url"):
+        location = entry.find(f"{sitemap_namespace}loc")
+        if location is None or location.text not in blog_urls:
+            continue
+        image_locations = {
+            node.text
+            for node in entry.findall(
+                f"{image_namespace}image/{image_namespace}loc"
+            )
+            if node.text
+        }
+        if len(image_locations) < 3:
+            errors.append(
+                f"{location.text}: fewer than three images in the image sitemap"
+            )
+        for image_url in image_locations:
+            target = local_target(image_url.replace("https://byforo.com", "", 1))
+            if target is None or not target.exists():
+                errors.append(
+                    f"{location.text}: invalid sitemap image {image_url}"
+                )
 
     rss_root = ET.parse(ROOT / "rss.xml").getroot()
     rss_urls = {
