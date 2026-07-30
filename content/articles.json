@@ -1,5 +1,95 @@
 [
   {
+    "title": "The Anti-Algorithm Home: Why Perfect Interiors Are Starting to Feel Outdated",
+    "department": "home",
+    "topic": "lived-in-interiors",
+    "published": "2026-07-30",
+    "readingMinutes": 11,
+    "url": "/blogs/home/lived-in-interior-design-2026/",
+    "excerpt": "Lived-in interior design replaces showroom perfection with aged wood, useful objects, mixed materials and the beautiful evidence of daily life.",
+    "image": {
+      "webp": "/assets/images/blogs/home/lived-in-interior-design-2026/lived-in-interior-design-hero.webp",
+      "fallback": "/assets/images/blogs/home/lived-in-interior-design-2026/lived-in-interior-design-hero.jpg",
+      "alt": "Collected living room with a rumpled linen sofa, aged oak table, worn rug and personal objects",
+      "width": 1536,
+      "height": 1024
+    },
+    "metaDescription": "Discover why lived-in interior design is replacing showroom perfection in 2026, with practical ways to add patina, personality and everyday ease at home.",
+    "seoTitle": "Lived-In Interior Design: Imperfect Homes in 2026 | by.foro"
+  },
+  {
+    "title": "The New European Summer Wardrobe",
+    "department": "fashion",
+    "topic": "summer-style",
+    "published": "2026-07-30",
+    "readingMinutes": 11,
+    "url": "/blogs/fashion/european-summer-style-2026/",
+    "excerpt": "European summer style for 2026, translated into ten useful pieces that feel polished and relaxed without becoming a holiday costume.",
+    "image": {
+      "webp": "/assets/images/blogs/fashion/european-summer-style-2026/european-summer-style-hero.webp",
+      "fallback": "/assets/images/blogs/fashion/european-summer-style-2026/european-summer-style-hero.jpg",
+      "alt": "European summer wardrobe with Breton knit, Bermuda shorts, pajama trousers, raffia bag and wedges",
+      "width": 1536,
+      "height": 1024
+    },
+    "metaDescription": "Build a European summer wardrobe for 2026 with ten useful pieces, practical outfit formulas and styling advice that avoids the social-media costume effect.",
+    "seoTitle": "European Summer Style 2026: 10 Pieces That Define the Look"
+  },
+  {
+    "title": "Glamoratti: The Return of Decadent 1980s Style",
+    "department": "fashion",
+    "topic": "trends",
+    "published": "2026-07-30",
+    "readingMinutes": 11,
+    "url": "/blogs/fashion/glamoratti-style-2026/",
+    "excerpt": "Glamoratti style brings sculpted shoulders, baggy suits, funnel necks, bold belts and serious gold jewellery back to fashion in 2026.",
+    "image": {
+      "webp": "/assets/images/blogs/fashion/glamoratti-style-2026/glamoratti-style-hero.webp",
+      "fallback": "/assets/images/blogs/fashion/glamoratti-style-2026/glamoratti-style-hero.jpg",
+      "alt": "Faceless woman in a charcoal sculpted-shoulder suit, funnel neck, wide belt and gold cuff",
+      "width": 1536,
+      "height": 1024
+    },
+    "metaDescription": "Understand the Glamoratti fashion trend of 2026 and wear sculpted tailoring, funnel necks, bold belts and gold jewellery without looking like a costume.",
+    "seoTitle": "Glamoratti Style: Maximalist 1980s Fashion in 2026"
+  },
+  {
+    "title": "The Bob Haircut Boom: Japanese Bob vs Scandi Bob",
+    "department": "beauty",
+    "topic": "hair",
+    "published": "2026-07-30",
+    "readingMinutes": 11,
+    "url": "/blogs/beauty/japanese-bob-vs-scandi-bob/",
+    "excerpt": "Japanese bob versus Scandi bob, explained through length, perimeter, texture, styling, maintenance and the questions to ask before a short haircut.",
+    "image": {
+      "webp": "/assets/images/blogs/beauty/japanese-bob-vs-scandi-bob/japanese-bob-vs-scandi-bob-hero.webp",
+      "fallback": "/assets/images/blogs/beauty/japanese-bob-vs-scandi-bob/japanese-bob-vs-scandi-bob-hero.jpg",
+      "alt": "Rear view comparing a sleek dark Japanese bob and a softly textured dark blonde Scandi bob",
+      "width": 1536,
+      "height": 1024
+    },
+    "metaDescription": "Compare the Japanese bob and Scandi bob haircuts for 2026, including shape, length, texture, styling, maintenance and what to ask for at the salon.",
+    "seoTitle": "Japanese Bob vs Scandi Bob: Short Haircuts for 2026"
+  },
+  {
+    "title": "The Art Deco Revival: Why 1920s Glamour Is Returning",
+    "department": "culture",
+    "topic": "design",
+    "published": "2026-07-30",
+    "readingMinutes": 11,
+    "url": "/blogs/culture/art-deco-revival/",
+    "excerpt": "The Art Deco revival connects Fall 2026 fashion with geometric jewellery, velvet rooms, frosted lighting, marquetry and modern cocktail culture.",
+    "image": {
+      "webp": "/assets/images/blogs/culture/art-deco-revival/art-deco-revival-hero.webp",
+      "fallback": "/assets/images/blogs/culture/art-deco-revival/art-deco-revival-hero.jpg",
+      "alt": "Contemporary Art Deco lounge with oxblood velvet, walnut panels, frosted glass and black lacquer",
+      "width": 1536,
+      "height": 1024
+    },
+    "metaDescription": "Explore the Art Deco revival across Fall 2026 fashion, jewellery, lighting, furniture, hotels and cocktail culture, with advice for using it today.",
+    "seoTitle": "The Art Deco Revival: Fashion and Interiors in 2026"
+  },
+  {
     "title": "How to Make a Home Look Expensive Without Making It Cold",
     "department": "home",
     "topic": "luxury-decor",

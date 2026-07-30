@@ -22,6 +22,31 @@ ARTICLES = json.loads((ROOT / "content" / "articles.json").read_text(encoding="u
 BY_URL = {article["url"]: article for article in ARTICLES}
 
 RELATED = {
+    "/blogs/home/lived-in-interior-design-2026/": [
+        "/blogs/home/quietly-dramatic-home-decor/",
+        "/blogs/home/coffee-table-styling-that-looks-collected/",
+        "/blogs/home/how-to-make-a-home-look-expensive/",
+    ],
+    "/blogs/fashion/european-summer-style-2026/": [
+        "/blogs/fashion/summer-loafers-outfit-guide/",
+        "/blogs/fashion/dressing-with-intention/",
+        "/blogs/fashion/how-to-wear-colour-again/",
+    ],
+    "/blogs/fashion/glamoratti-style-2026/": [
+        "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
+        "/blogs/fashion/how-to-wear-colour-again/",
+        "/blogs/fashion/dressing-with-intention/",
+    ],
+    "/blogs/beauty/japanese-bob-vs-scandi-bob/": [
+        "/blogs/beauty/the-vanity-table-as-still-life/",
+        "/blogs/fashion/dressing-with-intention/",
+        "/blogs/beauty/perfume-wardrobe-by-mood/",
+    ],
+    "/blogs/culture/art-deco-revival/": [
+        "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
+        "/blogs/home/quietly-dramatic-home-decor/",
+        "/blogs/culture/how-taste-is-built/",
+    ],
     "/blogs/home/reading-nook-ideas/": [
         "/blogs/home/quietly-dramatic-home-decor/",
         "/blogs/home/whimsical-interiors-without-the-theme/",
@@ -132,7 +157,9 @@ RELATED = {
 TOPIC_LABELS = {
     "trends": "Trends",
     "personal-style": "Personal style",
+    "summer-style": "Summer style",
     "luxury-decor": "Luxury decor",
+    "lived-in-interiors": "Lived-in interiors",
     "reading-nooks": "Reading nooks",
     "kitchens": "Kitchens",
     "bedrooms": "Bedrooms",
@@ -143,8 +170,10 @@ TOPIC_LABELS = {
     "fragrance": "Fragrance",
     "beauty-routines": "Beauty routines",
     "beauty-objects": "Beauty objects",
+    "hair": "Hair",
     "music": "Music",
     "essays": "Essays",
+    "design": "Design",
     "celebrity-style": "Celebrity style",
     "hosting": "Hosting",
     "objects": "Objects",
