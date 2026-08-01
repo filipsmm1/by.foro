@@ -1,5 +1,27 @@
 [
   {
+    "title": "Ariana Grande's Petal Era Explained: Why Her Softest Aesthetic Hides Her Angriest Album",
+    "department": "culture",
+    "topic": "music",
+    "published": "2026-08-01",
+    "readingMinutes": 11,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/culture/ariana-grande-petal-meaning/",
+    "excerpt": "A visual and cultural reading of Ariana Grande's Petal era, where flowers, monochrome portraiture and restrained pop turn unfiltered rage into a study of fame.",
+    "image": {
+      "webp": "/assets/images/blogs/culture/ariana-grande-petal-meaning/ariana-grande-petal-hero.webp",
+      "fallback": "/assets/images/blogs/culture/ariana-grande-petal-meaning/ariana-grande-petal-hero.jpg",
+      "alt": "Black-and-white Petal album cover portrait of Ariana Grande smiling behind loose hair",
+      "width": 1536,
+      "height": 1024
+    },
+    "metaDescription": "Ariana Grande’s Petal era pairs delicate visuals with unfiltered rage. We decode the album’s meaning, aesthetic, music video and relationship with fame.",
+    "seoTitle": "Ariana Grande Petal Meaning: Softness, Rage and Fame",
+    "schemaType": "NewsArticle",
+    "articleSection": "Music",
+    "breadcrumbTopic": true
+  },
+  {
     "title": "The Anti-Algorithm Home: Why Perfect Interiors Are Starting to Feel Outdated",
     "department": "home",
     "topic": "lived-in-interiors",

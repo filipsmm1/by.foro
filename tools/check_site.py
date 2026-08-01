@@ -209,6 +209,7 @@ def main() -> None:
                         f"{relative}: fewer than three contextual article links"
                     )
 
+                schema_type = article.get("schemaType", "BlogPosting")
                 structured_count = None
                 payloads = []
                 for block in parser.json_blocks:
@@ -217,31 +218,31 @@ def main() -> None:
                     except json.JSONDecodeError:
                         continue
                     payloads.append(payload)
-                    if payload.get("@type") == "BlogPosting":
+                    if payload.get("@type") == schema_type:
                         structured_count = int(payload.get("wordCount", 0))
                 if structured_count is None:
-                    errors.append(f"{relative}: missing BlogPosting structured data")
+                    errors.append(f"{relative}: missing {schema_type} structured data")
                 elif abs(word_count - structured_count) > 30:
                     errors.append(
                         f"{relative}: visible word count {word_count} differs from structured count {structured_count}"
                     )
 
-                blog_schemas = [
+                article_schemas = [
                     payload
                     for payload in payloads
-                    if payload.get("@type") == "BlogPosting"
+                    if payload.get("@type") == schema_type
                 ]
                 breadcrumb_schemas = [
                     payload
                     for payload in payloads
                     if payload.get("@type") == "BreadcrumbList"
                 ]
-                if len(blog_schemas) != 1:
+                if len(article_schemas) != 1:
                     errors.append(
-                        f"{relative}: expected one BlogPosting schema, found {len(blog_schemas)}"
+                        f"{relative}: expected one {schema_type} schema, found {len(article_schemas)}"
                     )
                 else:
-                    blog_schema = blog_schemas[0]
+                    blog_schema = article_schemas[0]
                     expected_modified = article.get("updated", article["published"])
                     if blog_schema.get("headline") != article["title"]:
                         errors.append(
@@ -265,10 +266,8 @@ def main() -> None:
                     )
                 else:
                     crumbs = breadcrumb_schemas[0].get("itemListElement", [])
-                    if (
-                        len(crumbs) != 3
-                        or crumbs[-1].get("name") != article["title"]
-                    ):
+                    expected_crumbs = 4 if article.get("breadcrumbTopic") else 3
+                    if len(crumbs) != expected_crumbs or crumbs[-1].get("name") != article["title"]:
                         errors.append(
                             f"{relative}: breadcrumb schema does not match article hierarchy"
                         )
