@@ -22,6 +22,11 @@ ARTICLES = json.loads((ROOT / "content" / "articles.json").read_text(encoding="u
 BY_URL = {article["url"]: article for article in ARTICLES}
 
 RELATED = {
+    "/blogs/culture/ariana-grande-petal-meaning/": [
+        "/blogs/fashion/celebrity-style-is-getting-personal/",
+        "/blogs/culture/how-taste-is-built/",
+        "/blogs/fashion/glamoratti-style-2026/",
+    ],
     "/blogs/home/lived-in-interior-design-2026/": [
         "/blogs/home/quietly-dramatic-home-decor/",
         "/blogs/home/coffee-table-styling-that-looks-collected/",
@@ -368,12 +373,13 @@ def replace_meta_content(text: str, attribute: str, value: str, content: str) ->
 
 
 def sync_article_search_markup(text: str, article: dict) -> str:
-    blog_schema = json_ld_payload(text, "BlogPosting")
-    if blog_schema is None:
-        raise RuntimeError(f'Missing BlogPosting schema for {article["url"]}')
+    schema_type = article.get("schemaType", "BlogPosting")
+    article_schema = json_ld_payload(text, schema_type)
+    if article_schema is None:
+        raise RuntimeError(f'Missing {schema_type} schema for {article["url"]}')
 
     description = article.get("metaDescription", article["excerpt"])
-    published_datetime = blog_schema.get(
+    published_datetime = article_schema.get(
         "datePublished",
         f'{article["published"]}T12:00:00+02:00',
     )
@@ -385,7 +391,7 @@ def sync_article_search_markup(text: str, article: dict) -> str:
     page_url = f'https://byforo.com{article["url"]}'
     image_url = f'https://byforo.com{article["image"]["fallback"]}'
 
-    blog_schema.update(
+    article_schema.update(
         {
             "mainEntityOfPage": {"@type": "WebPage", "@id": page_url},
             "headline": article["title"],
@@ -403,35 +409,52 @@ def sync_article_search_markup(text: str, article: dict) -> str:
                 "name": "by.foro",
                 "url": "https://byforo.com/",
             },
-            "articleSection": article["department"].title(),
+            "articleSection": article.get(
+                "articleSection", article["department"].title()
+            ),
             "inLanguage": "en-GB",
         }
     )
-    text = upsert_json_ld(text, "BlogPosting", blog_schema, "article-schema")
+    text = upsert_json_ld(text, schema_type, article_schema, "article-schema")
 
-    breadcrumb = {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "by.foro",
-                "item": "https://byforo.com/",
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": article["department"].title(),
-                "item": f'https://byforo.com/{article["department"]}/',
-            },
+    breadcrumb_items = [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home" if article.get("breadcrumbTopic") else "by.foro",
+            "item": "https://byforo.com/",
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": article["department"].title(),
+            "item": f'https://byforo.com/{article["department"]}/',
+        },
+    ]
+    if article.get("breadcrumbTopic"):
+        breadcrumb_items.append(
             {
                 "@type": "ListItem",
                 "position": 3,
-                "name": article["title"],
-                "item": page_url,
-            },
-        ],
+                "name": TOPIC_LABELS[article["topic"]],
+                "item": (
+                    "https://byforo.com/journal/?department="
+                    f'{article["department"]}&topic={article["topic"]}'
+                ),
+            }
+        )
+    breadcrumb_items.append(
+        {
+            "@type": "ListItem",
+            "position": len(breadcrumb_items) + 1,
+            "name": article["title"],
+            "item": page_url,
+        }
+    )
+    breadcrumb = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": breadcrumb_items,
     }
     text = upsert_json_ld(
         text,
@@ -465,14 +488,26 @@ def sync_article_search_markup(text: str, article: dict) -> str:
         count=1,
         flags=re.S,
     )
-    breadcrumb_nav = (
-        '<nav class="breadcrumbs" aria-label="Breadcrumb">'
-        '<a href="/">by.foro</a><span>/</span>'
-        f'<a href="/{esc(article["department"])}/">'
-        f'{esc(article["department"].title())}</a><span>/</span>'
-        f'<span aria-current="page">{esc(TOPIC_LABELS[article["topic"]])}</span>'
-        "</nav>"
-    )
+    if article.get("breadcrumbTopic"):
+        breadcrumb_nav = (
+            '<nav class="breadcrumbs" aria-label="Breadcrumb">'
+            '<a href="/">Home</a><span>/</span>'
+            f'<a href="/{esc(article["department"])}/">'
+            f'{esc(article["department"].title())}</a><span>/</span>'
+            f'<a href="/journal/?department={esc(article["department"])}&amp;topic={esc(article["topic"])}">'
+            f'{esc(TOPIC_LABELS[article["topic"]])}</a><span>/</span>'
+            f'<span aria-current="page">{esc(article["title"])}</span>'
+            "</nav>"
+        )
+    else:
+        breadcrumb_nav = (
+            '<nav class="breadcrumbs" aria-label="Breadcrumb">'
+            '<a href="/">by.foro</a><span>/</span>'
+            f'<a href="/{esc(article["department"])}/">'
+            f'{esc(article["department"].title())}</a><span>/</span>'
+            f'<span aria-current="page">{esc(TOPIC_LABELS[article["topic"]])}</span>'
+            "</nav>"
+        )
     text = re.sub(
         r'<nav\b(?=[^>]*class="breadcrumbs")[^>]*>.*?</nav>',
         breadcrumb_nav,
@@ -808,7 +843,8 @@ def update_word_count(text: str, article: dict) -> str:
     visible = re.sub(r'<script.*?</script>|<style.*?</style>', ' ', article_html, flags=re.S)
     visible = html.unescape(re.sub(r'<[^>]+>', ' ', visible))
     count = len(re.findall(r"\b[\w’-]+\b", visible, flags=re.UNICODE))
-    minutes = max(5, (count + 179) // 180)
+    words_per_minute = article.get("readingWordsPerMinute", 180)
+    minutes = max(5, (count + words_per_minute - 1) // words_per_minute)
     article["readingMinutes"] = minutes
     text = re.sub(r'("wordCount":\s*)\d+', rf'\g<1>{count}', text, count=1)
     text = re.sub(
