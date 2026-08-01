@@ -313,3 +313,36 @@ table{max-width:100%}
 @media(hover:none){
   .story-card a:hover img,.department-card:hover img,.related-card a:hover img{transform:none}
 }
+
+/* --- Editorial title hierarchy and artwork proportions --- */
+.title-secondary{display:block;margin-top:.42em;font-family:var(--sans);font-size:.36em;font-style:normal;font-weight:520;line-height:1.28;letter-spacing:.01em;color:var(--muted);text-wrap:balance}
+.feature-story{align-items:center}
+.feature-story--square{grid-template-columns:minmax(0,1fr) minmax(360px,.9fr)}
+.feature-story__image--square,.story-image--square{aspect-ratio:1!important}
+.feature-story__image--square img,.story-image--square img{width:100%;height:100%;object-fit:cover}
+.feature-story h2.title-split{font-size:clamp(3.15rem,4.7vw,5.25rem);line-height:.9;max-width:12ch}
+.feature-story .title-secondary{font-size:.34em;max-width:26ch}
+.story-card .title-secondary,.related-card .title-secondary{font-size:.5em;line-height:1.25;margin-top:.34em;letter-spacing:.015em}
+.article-hero h1.title-split{max-width:1100px;font-size:clamp(3.8rem,7.2vw,7.6rem);line-height:.88}
+.article-hero .title-secondary{max-width:34ch;font-size:.34em;line-height:1.22;margin-top:.38em}
+.article-hero-image--square{width:min(calc(100% - 7vw),860px);height:auto;aspect-ratio:1}
+.article-hero-image--square img{width:100%;height:100%;object-fit:cover}
+
+@media(max-width:1080px){
+  .feature-story--square{grid-template-columns:1fr 1fr}
+  .article-hero-image--square{height:auto}
+}
+
+@media(max-width:760px){
+  .feature-story--square{grid-template-columns:1fr}
+  .feature-story h2.title-split{max-width:14ch;font-size:clamp(3rem,13vw,4.4rem)}
+  .feature-story .title-secondary{font-size:.36em}
+  .article-hero h1.title-split{font-size:clamp(3rem,13vw,4.45rem);line-height:.9}
+  .article-hero .title-secondary{font-size:.38em;max-width:30ch}
+  .article-hero-image--square{width:calc(100% - 2rem);aspect-ratio:1}
+}
+
+@media(max-width:480px){
+  .article-hero h1.title-split{font-size:clamp(2.85rem,13.5vw,4rem)}
+  .story-grid--editorial .story-card:not(:first-child) .title-secondary{font-size:.58em}
+}
