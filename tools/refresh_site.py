@@ -242,6 +242,22 @@ def esc(value: str) -> str:
     return html.escape(str(value), quote=True)
 
 
+def styled_title(value: str) -> str:
+    """Give long editorial titles a clear lead and secondary line."""
+    title = str(value)
+    if ":" not in title:
+        return esc(title)
+    lead, secondary = title.split(":", 1)
+    return (
+        f'{esc(lead)}:<span class="title-secondary"> '
+        f'{esc(secondary.strip())}</span>'
+    )
+
+
+def image_shape_class(article: dict) -> str:
+    return " story-image--square" if article.get("imageShape") == "square" else ""
+
+
 def route_for_path(path: Path) -> str:
     if path.name == "404.html":
         return "/404.html"
@@ -301,12 +317,12 @@ def story_card(article: dict, css_class: str = "story-card") -> str:
     image = article["image"]
     return (
         f'<article class="{css_class}"><a href="{esc(article["url"])}">'
-        f'<figure class="media story-image"><picture><source type="image/webp" '
+        f'<figure class="media story-image{image_shape_class(article)}"><picture><source type="image/webp" '
         f'srcset="{esc(webp_srcset(article))}" sizes="(max-width: 760px) 90vw, 31vw">'
         f'<img alt="{esc(image["alt"])}" decoding="async" height="{image["height"]}" '
         f'loading="lazy" src="{esc(image["fallback"])}" width="{image["width"]}"></picture></figure>'
         f'<div class="story-copy"><p class="kicker">{esc(department)} &middot; {esc(topic)}</p>'
-        f'<h3>{esc(article["title"])}</h3><p>{esc(article["excerpt"])}</p>'
+        f'<h3>{styled_title(article["title"])}</h3><p>{esc(article["excerpt"])}</p>'
         f'<span class="read-link">Read story <span aria-hidden="true">&nearr;</span></span></div></a></article>'
     )
 
@@ -390,6 +406,58 @@ def sync_article_search_markup(text: str, article: dict) -> str:
     )
     page_url = f'https://byforo.com{article["url"]}'
     image_url = f'https://byforo.com{article["image"]["fallback"]}'
+
+    text = re.sub(
+        r'<h1>.*?</h1>',
+        f'<h1 class="title-split">{styled_title(article["title"])}</h1>'
+        if ":" in article["title"]
+        else f'<h1>{styled_title(article["title"])}</h1>',
+        text,
+        count=1,
+        flags=re.S,
+    )
+    text = text.replace(" article-hero-image--square", "")
+    if article.get("imageShape") == "square":
+        text = text.replace(
+            'class="media article-hero-image"',
+            'class="media article-hero-image article-hero-image--square"',
+            1,
+        )
+
+    hero_pattern = re.compile(
+        r'<figure\b(?=[^>]*class="[^"]*\barticle-hero-image\b[^"]*")[^>]*>.*?</figure>',
+        re.S,
+    )
+    hero_match = hero_pattern.search(text)
+    if hero_match:
+        hero = hero_match.group(0)
+        hero = re.sub(
+            r'(<source\b[^>]*\bsrcset=")[^"]+("[^>]*>)',
+            rf'\g<1>{esc(webp_srcset(article))}\g<2>',
+            hero,
+            count=1,
+        )
+        hero = re.sub(
+            r'(<img\b[^>]*\bwidth=")\d+("[^>]*>)',
+            rf'\g<1>{article["image"]["width"]}\g<2>',
+            hero,
+            count=1,
+        )
+        hero = re.sub(
+            r'(<img\b[^>]*\bheight=")\d+("[^>]*>)',
+            rf'\g<1>{article["image"]["height"]}\g<2>',
+            hero,
+            count=1,
+        )
+        text = text[: hero_match.start()] + hero + text[hero_match.end() :]
+
+    if article.get("imageShape") == "square":
+        text = replace_meta_content(
+            text, "property", "og:image:width", str(article["image"]["width"])
+        )
+        text = replace_meta_content(
+            text, "property", "og:image:height", str(article["image"]["height"])
+        )
 
     article_schema.update(
         {
@@ -522,15 +590,18 @@ def feature_story(article: dict) -> str:
     department = article["department"].title()
     topic = TOPIC_LABELS[article["topic"]]
     image = article["image"]
+    square = article.get("imageShape") == "square"
+    section_class = "feature-story feature-story--square" if square else "feature-story"
+    image_class = "feature-story__image feature-story__image--square" if square else "feature-story__image"
     return (
-        '<section class="feature-story" data-reveal="">'
-        '<figure class="media feature-story__image" data-zoom-media="">'
+        f'<section class="{section_class}" data-reveal="">'
+        f'<figure class="media {image_class}" data-zoom-media="">'
         f'<picture><source type="image/webp" srcset="{esc(webp_srcset(article))}" '
         'sizes="(max-width: 760px) 90vw, 55vw">'
         f'<img alt="{esc(image["alt"])}" decoding="async" height="{image["height"]}" loading="lazy" '
         f'src="{esc(image["fallback"])}" width="{image["width"]}"></picture></figure>'
         f'<div><p class="kicker">Latest &middot; {esc(department)} &middot; {esc(topic)}</p>'
-        f'<h2>{esc(article["title"])}</h2><p>{esc(article["excerpt"])}</p>'
+        f'<h2 class="title-split">{styled_title(article["title"])}</h2><p>{esc(article["excerpt"])}</p>'
         f'<div class="story-meta"><span>{display_date(article["published"])}</span>'
         f'<span>{article["readingMinutes"]} min</span></div>'
         f'<a class="button button--dark" href="{esc(article["url"])}">Read the story</a></div></section>'
@@ -545,12 +616,12 @@ def homepage_card(article: dict, index: int) -> str:
     image = article["image"]
     return (
         f'<article class="{css_class}" data-reveal=""><a href="{esc(article["url"])}">'
-        f'<figure class="media story-image"{zoom}><picture><source type="image/webp" '
+        f'<figure class="media story-image{image_shape_class(article)}"{zoom}><picture><source type="image/webp" '
         f'srcset="{esc(webp_srcset(article))}" sizes="(max-width: 760px) 90vw, (max-width: 1080px) 45vw, 31vw">'
         f'<img alt="{esc(image["alt"])}" decoding="async" height="{image["height"]}" loading="lazy" '
         f'src="{esc(image["fallback"])}" width="{image["width"]}"></picture></figure>'
         f'<div class="story-copy"><p class="kicker">{esc(department)} &middot; {esc(topic)}</p>'
-        f'<h3>{esc(article["title"])}</h3><p>{esc(article["excerpt"])}</p>'
+        f'<h3>{styled_title(article["title"])}</h3><p>{esc(article["excerpt"])}</p>'
         '<span class="read-link">Read story <span aria-hidden="true">&nearr;</span></span></div></a></article>'
     )
 
@@ -603,12 +674,12 @@ def journal_card(article: dict) -> str:
         f'<article class="story-card" data-department="{esc(department)}" data-topic="{esc(topic)}" '
         f'data-date="{esc(article.get("updated", article["published"]))}" data-minutes="{article["readingMinutes"]}" '
         f'data-title="{esc(article["title"])}" data-search="{esc(search)}"><a href="{esc(article["url"])}">'
-        f'<figure class="media story-image"><picture><source type="image/webp" srcset="{esc(webp_srcset(article))}" '
+        f'<figure class="media story-image{image_shape_class(article)}"><picture><source type="image/webp" srcset="{esc(webp_srcset(article))}" '
         'sizes="(max-width: 760px) 90vw, (max-width: 1080px) 45vw, 31vw">'
         f'<img alt="{esc(image["alt"])}" decoding="async" height="{image["height"]}" loading="lazy" '
         f'src="{esc(image["fallback"])}" width="{image["width"]}"></picture></figure>'
         f'<div class="story-copy"><p class="kicker">{esc(department.title())} &middot; {esc(TOPIC_LABELS[topic])}</p>'
-        f'<h3>{esc(article["title"])}</h3><p>{esc(article["excerpt"])}</p>'
+        f'<h3>{styled_title(article["title"])}</h3><p>{esc(article["excerpt"])}</p>'
         f'<p class="story-date">{esc(date)} &middot; {article["readingMinutes"]} min</p>'
         '<span class="read-link">Read story <span aria-hidden="true">&nearr;</span></span></div></a></article>'
     )
