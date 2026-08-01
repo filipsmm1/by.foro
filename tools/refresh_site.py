@@ -113,9 +113,9 @@ RELATED = {
         "/blogs/fashion/dressing-with-intention/",
     ],
     "/blogs/home/how-to-make-a-home-look-expensive/": [
+        "/blogs/home/reading-nook-ideas/",
         "/blogs/home/coffee-table-styling-that-looks-collected/",
         "/blogs/home/small-entryway-that-looks-expensive/",
-        "/blogs/home/bathroom-that-feels-like-a-hotel/",
     ],
     "/blogs/home/warm-minimalist-bedroom/": [
         "/blogs/home/how-to-make-a-home-look-expensive/",
@@ -653,7 +653,7 @@ def homepage_collections() -> str:
   <div><p class="kicker">Collections</p><h2 id="homepage-collections-title">Curated routes through the archive.</h2></div>
   <div class="collection-strip__grid">
     <a href="/journal/?department=home&amp;q=expensive"><span>01</span><strong>The Expensive-Looking Home</strong><p>Stone, lighting, vintage pieces and rooms with weight.</p></a>
-    <a href="/journal/?department=home&amp;topic=reading-nooks"><span>02</span><strong>The Reading Room</strong><p>Small private corners, shelves and places to pause.</p></a>
+    <a href="/blogs/home/reading-nook-ideas/"><span>02</span><strong>The Reading Room</strong><p>Small private corners, shelves and places to pause.</p></a>
     <a href="/journal/?department=fashion"><span>03</span><strong>Wardrobe With Intention</strong><p>Trends, proportion and dressing without urgency.</p></a>
     <a href="/journal/?department=beauty"><span>04</span><strong>Beauty Objects</strong><p>Fragrance, vanity tables and daily ritual.</p></a>
   </div>
@@ -994,7 +994,7 @@ def home_compass() -> str:
 <section class="home-compass" aria-labelledby="home-compass-title" data-reveal>
   <div class="home-compass__intro"><p class="kicker">Interiors index</p><h2 id="home-compass-title">Find the room, the mood, or the problem.</h2><p>Home stories are organised by how people actually search: the room they are changing, the atmosphere they want, or the issue they need solved.</p></div>
   <div class="home-compass__columns">
-    <div><span>By room</span><a href="/journal/?department=home&amp;topic=kitchens">Kitchen</a><a href="/journal/?department=home&amp;q=bedroom">Bedroom</a><a href="/journal/?department=home&amp;q=bathroom">Bathroom</a><a href="/journal/?department=home&amp;topic=living-rooms">Living room</a><a href="/journal/?department=home&amp;topic=reading-nooks">Reading nook</a><a href="/journal/?department=home&amp;q=exterior">Exterior</a></div>
+    <div><span>By room</span><a href="/journal/?department=home&amp;topic=kitchens">Kitchen</a><a href="/journal/?department=home&amp;q=bedroom">Bedroom</a><a href="/journal/?department=home&amp;q=bathroom">Bathroom</a><a href="/journal/?department=home&amp;topic=living-rooms">Living room</a><a href="/blogs/home/reading-nook-ideas/">Reading nook guide</a><a href="/journal/?department=home&amp;q=exterior">Exterior</a></div>
     <div><span>By style</span><a href="/journal/?department=home&amp;topic=luxury-decor">Quiet luxury</a><a href="/journal/?department=home&amp;topic=living-rooms">Whimsical interiors</a><a href="/journal/?department=home&amp;q=traditional">Traditional</a><a href="/journal/?department=home&amp;q=rustic">Modern rustic</a><a href="/journal/?department=home&amp;q=parisian">Parisian</a><a href="/journal/?department=home&amp;q=mediterranean">Mediterranean</a></div>
     <div><span>By problem</span><a href="/journal/?department=home&amp;q=expensive">Make it look expensive</a><a href="/journal/?department=home&amp;q=small%20space">Small spaces</a><a href="/journal/?department=home&amp;q=colour">Colour ideas</a><a href="/journal/?department=home&amp;q=lighting">Lighting</a><a href="/journal/?department=home&amp;q=storage">Storage</a><a href="/journal/?department=home&amp;q=rental">Rental friendly</a></div>
   </div>

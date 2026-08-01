@@ -318,9 +318,9 @@
     "department": "home",
     "topic": "reading-nooks",
     "published": "2026-07-25",
-    "readingMinutes": 15,
+    "readingMinutes": 16,
     "url": "/blogs/home/reading-nook-ideas/",
-    "excerpt": "Window seats, bedroom corners, bookshelf walls and tiny reading spots that feel warm, useful and expensive-looking.",
+    "excerpt": "Thirty-seven reading nook ideas for windows, bedrooms, rentals and small spaces, with practical seating, lighting and storage advice.",
     "image": {
       "webp": "/assets/images/blogs/home/reading-nook-ideas/reading-nook-ideas-hero.webp",
       "fallback": "/assets/images/blogs/home/reading-nook-ideas/reading-nook-ideas-hero.jpg",
@@ -328,8 +328,9 @@
       "width": 1122,
       "height": 1402
     },
-    "metaDescription": "Explore 37 reading nook ideas for windows, bedrooms, libraries and small corners, with detailed advice on seating, lighting, storage and atmosphere.",
-    "seoTitle": "37 Reading Nook Ideas for a Cosy Home | by.foro"
+    "metaDescription": "Explore 37 reading nook ideas for windows, bedrooms, rentals and small spaces, with a quick comparison of seating, lighting, storage, layout and comfort.",
+    "seoTitle": "37 Reading Nook Ideas for a Cosy Home | by.foro",
+    "updated": "2026-08-01"
   },
   {
     "title": "The Quietly Dramatic Home",
@@ -369,13 +370,13 @@
     "seoTitle": "Fall 2026 Fashion Trends Worth Wearing | by.foro"
   },
   {
-    "title": "Literary Chic Without the Costume",
+    "title": "Literary Chic: How to Wear the Trend Without Looking Costumed",
     "department": "fashion",
     "topic": "trends",
     "published": "2026-07-20",
-    "readingMinutes": 7,
+    "readingMinutes": 6,
     "url": "/blogs/fashion/literary-chic-without-the-costume/",
-    "excerpt": "How to wear literary chic in a modern way with texture, tailoring, bookish references and restraint without costume.",
+    "excerpt": "A five-piece literary chic outfit formula using modern tailoring, tactile fabrics and one bookish reference without looking costumed.",
     "image": {
       "webp": "/assets/images/blogs/fashion/literary-chic-without-the-costume/literary-chic-hero.webp",
       "fallback": "/assets/images/blogs/fashion/literary-chic-without-the-costume/literary-chic-hero.jpg",
@@ -383,9 +384,9 @@
       "width": 1536,
       "height": 1024
     },
-    "updated": "2026-07-25",
-    "metaDescription": "Learn how to dress literary chic without looking like a costume through texture, precise tailoring, worn leather, modern interruptions and careful editing.",
-    "seoTitle": "Literary Chic Without the Costume | by.foro"
+    "updated": "2026-08-01",
+    "metaDescription": "Wear the literary chic trend with a five-piece outfit formula, modern proportions, tactile fabrics and one bookish detail without looking costumed.",
+    "seoTitle": "Literary Chic: How to Wear the Trend | by.foro"
   },
   {
     "title": "Whimsical Interiors Without the Theme",
@@ -407,13 +408,13 @@
     "seoTitle": "Whimsical Interiors Without the Theme | by.foro"
   },
   {
-    "title": "The Room That Asks You to Listen",
+    "title": "How to Create an Analogue Listening Room",
     "department": "culture",
     "topic": "music",
     "published": "2026-07-20",
-    "readingMinutes": 7,
+    "readingMinutes": 6,
     "url": "/blogs/culture/how-to-create-an-analogue-listening-room/",
-    "excerpt": "How to create an analogue listening room with better sound, lighting, seating, records and atmosphere without a theme.",
+    "excerpt": "A practical analogue listening room guide with a starter layout, speaker placement checklist, equipment tiers, storage and lighting advice.",
     "image": {
       "webp": "/assets/images/blogs/culture/how-to-create-an-analogue-listening-room/analogue-listening-room-hero.webp",
       "fallback": "/assets/images/blogs/culture/how-to-create-an-analogue-listening-room/analogue-listening-room-hero.jpg",
@@ -421,18 +422,18 @@
       "width": 1536,
       "height": 1024
     },
-    "updated": "2026-07-25",
-    "metaDescription": "Create an analogue listening room with thoughtful speaker placement, comfortable seating, record storage, acoustic softness and low, practical evening light.",
+    "updated": "2026-08-01",
+    "metaDescription": "Create an analogue listening room with a starter layout, speaker placement checklist, budget equipment tiers, record storage and comfortable lighting.",
     "seoTitle": "How to Create an Analogue Listening Room | by.foro"
   },
   {
-    "title": "The Perfume That Stays Close",
+    "title": "Skin Scent Perfume: What It Means and How to Wear It",
     "department": "beauty",
     "topic": "fragrance",
     "published": "2026-07-20",
-    "readingMinutes": 7,
+    "readingMinutes": 6,
     "url": "/blogs/beauty/skin-scent-perfume-guide/",
-    "excerpt": "A skin scent perfume guide covering what skin scents smell like, who they suit, how to test them and how to wear them.",
+    "excerpt": "What skin scent perfume means, the notes and types to know, how to test projection and how to make a close fragrance last.",
     "image": {
       "webp": "/assets/images/blogs/beauty/skin-scent-perfume-guide/skin-scent-perfume-hero.webp",
       "fallback": "/assets/images/blogs/beauty/skin-scent-perfume-guide/skin-scent-perfume-hero.jpg",
@@ -440,19 +441,19 @@
       "width": 1536,
       "height": 1024
     },
-    "updated": "2026-07-25",
-    "metaDescription": "Understand what skin scent perfume means, which notes create the effect and how to test projection, improve wear and choose the right bottle or travel size.",
-    "seoTitle": "Skin Scent Perfume Guide: How to Wear It | by.foro"
+    "updated": "2026-08-01",
+    "metaDescription": "Learn what skin scent perfume means, compare musk, mineral, milky and woody types, and discover how to test, wear, layer and make a close fragrance last.",
+    "seoTitle": "Skin Scent Perfume: Meaning and How to Wear It | by.foro"
   },
   {
-    "title": "The Most Beautiful Kitchen Colour Combinations Right Now",
+    "title": "The Most Beautiful Kitchen Colour Combinations for 2026",
     "department": "home",
     "topic": "kitchens",
     "published": "2026-07-13",
-    "updated": "2026-07-19",
-    "readingMinutes": 11,
+    "updated": "2026-08-01",
+    "readingMinutes": 12,
     "url": "/blogs/home/most-beautiful-kitchen-colour-combinations/",
-    "excerpt": "Kitchen colour combinations with depth: burgundy, cream, olive, walnut, blue and stone palettes for expensive-looking cabinetry.",
+    "excerpt": "Ten kitchen colour combinations for 2026, compared by room size, natural light and cabinet material, with advice for small and dark kitchens.",
     "image": {
       "webp": "/assets/images/blogs/home/most-beautiful-kitchen-colour-combinations/kitchen-colour-combinations-hero.webp",
       "fallback": "/assets/images/blogs/home/most-beautiful-kitchen-colour-combinations/kitchen-colour-combinations-hero.jpg",
@@ -460,8 +461,8 @@
       "width": 1536,
       "height": 1024
     },
-    "metaDescription": "Explore ten beautiful kitchen colour combinations using burgundy, olive, butter yellow, pale blue, timber and stone, with practical palette advice.",
-    "seoTitle": "10 Beautiful Kitchen Colour Combinations | by.foro"
+    "metaDescription": "Compare ten kitchen colour combinations for 2026 by room size, natural light and cabinet material, including the best colours for small and dark kitchens.",
+    "seoTitle": "10 Kitchen Colour Combinations for 2026 | by.foro"
   },
   {
     "title": "Dressing With Intention, Not Urgency",
