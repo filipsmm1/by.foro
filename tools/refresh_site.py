@@ -22,6 +22,11 @@ ARTICLES = json.loads((ROOT / "content" / "articles.json").read_text(encoding="u
 BY_URL = {article["url"]: article for article in ARTICLES}
 
 RELATED = {
+    "/blogs/fashion/how-to-wear-brooches/": [
+        "/blogs/fashion/glamoratti-style-2026/",
+        "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
+        "/blogs/fashion/dressing-with-intention/",
+    ],
     "/blogs/culture/ariana-grande-petal-meaning/": [
         "/blogs/fashion/celebrity-style-is-getting-personal/",
         "/blogs/culture/how-taste-is-built/",
@@ -161,6 +166,7 @@ RELATED = {
 
 TOPIC_LABELS = {
     "trends": "Trends",
+    "accessories": "Accessories",
     "personal-style": "Personal style",
     "summer-style": "Summer style",
     "luxury-decor": "Luxury decor",
@@ -225,7 +231,7 @@ NAV_DRAWER = """<div class="nav-drawer" aria-label="Editorial index">
 CONTENT_EXPANSIONS = {
     "/blogs/fashion/dressing-with-intention/": {
         "toc": "<li><a href=\"#section-5\">Inventory before aspiration</a></li><li><a href=\"#section-6\">A rule for the next purchase</a></li>",
-        "sections": """<section data-reveal id="section-5"><h2>Inventory before aspiration</h2><p>Before making a wish list, make a record of what is actually worn. For two ordinary weeks, note the pieces that leave the wardrobe, the combinations that survive a long day and the moments when an outfit creates friction. The useful information is rarely glamorous: a coat has the wrong pocket, a trouser only works with one shoe, a knit is too warm for every room in which it is worn.</p><p>This turns vague dissatisfaction into a practical brief. It may reveal that the wardrobe does not need more personality; it needs a better layer between shirt and coat, or one trouser length that works with the shoes already owned. It also shows which repeated shapes have earned their place. Those repetitions are not gaps to fill. They are the beginning of a signature.</p><p>A reference can still help, provided it is translated rather than copied. Our approach to <a href="/blogs/fashion/literary-chic-without-the-costume/">literary chic</a>, for example, begins with texture, proportion and restraint rather than a shopping list of bookish symbols.</p></section><section data-reveal id="section-6"><h2>A rule for the next purchase</h2><p>A useful new piece should enter at least three convincing outfits using clothes that already exist. This is a stricter test than asking whether the object is beautiful on its own. It considers the wardrobe as a system and exposes purchases that depend on buying several more things before they make sense.</p><p>Time is another useful filter. Save the image, write down the exact function and wait long enough for the first intensity to fade. If the need remains, compare material, construction and maintenance rather than searching for a cheaper approximation of the original feeling. The point is not to remove pleasure from buying clothes. It is to make the pleasure last beyond the parcel.</p><p>Trends can still sharpen an existing wardrobe. The distinction is whether they answer a real interest. Our <a href="/blogs/fashion/fall-2026-fashion-trends-worth-wearing/">Fall 2026 edit</a> keeps only the runway ideas with enough structure to survive ordinary life.</p></section>""",
+        "sections": """<section data-reveal id="section-5"><h2>Inventory before aspiration</h2><p>Before making a wish list, make a record of what is actually worn. For two ordinary weeks, note the pieces that leave the wardrobe, the combinations that survive a long day and the moments when an outfit creates friction. The useful information is rarely glamorous: a coat has the wrong pocket, a trouser only works with one shoe, a knit is too warm for every room in which it is worn.</p><p>This turns vague dissatisfaction into a practical brief. It may reveal that the wardrobe does not need more personality; it needs a better layer between shirt and coat, or one trouser length that works with the shoes already owned. It also shows which repeated shapes have earned their place. Those repetitions are not gaps to fill. They are the beginning of a signature.</p><p>A reference can still help, provided it is translated rather than copied. Our approach to <a href="/blogs/fashion/literary-chic-without-the-costume/">literary chic</a>, for example, begins with texture, proportion and restraint rather than a shopping list of bookish symbols.</p></section><section data-reveal id="section-6"><h2>A rule for the next purchase</h2><p>A useful new piece should enter at least three convincing outfits using clothes that already exist. This is a stricter test than asking whether the object is beautiful on its own. It considers the wardrobe as a system and exposes purchases that depend on buying several more things before they make sense. Before buying another garment, try <a href="/blogs/fashion/how-to-wear-brooches/">one well-placed brooch</a> on three pieces you already own; a small accessory can answer the need for change more intelligently.</p><p>Time is another useful filter. Save the image, write down the exact function and wait long enough for the first intensity to fade. If the need remains, compare material, construction and maintenance rather than searching for a cheaper approximation of the original feeling. The point is not to remove pleasure from buying clothes. It is to make the pleasure last beyond the parcel.</p><p>Trends can still sharpen an existing wardrobe. The distinction is whether they answer a real interest. Our <a href="/blogs/fashion/fall-2026-fashion-trends-worth-wearing/">Fall 2026 edit</a> keeps only the runway ideas with enough structure to survive ordinary life.</p></section>""",
     },
     "/blogs/beauty/the-vanity-table-as-still-life/": {
         "toc": "<li><a href=\"#section-5\">Edit by frequency</a></li><li><a href=\"#section-6\">Light, height and the final five minutes</a></li>",
@@ -1244,7 +1250,7 @@ def refresh_image_markup() -> None:
 
             text = pattern.sub(update_alt, text)
         text = FIGURE_PICTURE.sub(responsive_picture, text)
-        if "/blogs/" in path.as_posix():
+        if "/blogs/" in path.as_posix() and "/how-to-wear-brooches/" not in path.as_posix():
             text = re.sub(r"\s*<figcaption\b[^>]*>.*?</figcaption>", "", text, flags=re.S)
         path.write_text(text, encoding="utf-8", newline="\n")
 
