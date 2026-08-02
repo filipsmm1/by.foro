@@ -1,5 +1,48 @@
 [
   {
+    "title": "Petal's First-Day Numbers: What Ariana Grande's Streaming Debut Actually Means",
+    "department": "culture",
+    "topic": "music",
+    "published": "2026-08-02",
+    "readingMinutes": 10,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/culture/ariana-grande-petal-streams-rankings/",
+    "excerpt": "Ariana Grande's Petal opened with 62.2 million filtered Spotify streams. Here is every track's global rank and what the debut can actually tell us.",
+    "image": {
+      "webp": "/assets/images/blogs/culture/ariana-grande-petal-streams-rankings/ariana-petal-streams-hero.webp",
+      "fallback": "/assets/images/blogs/culture/ariana-grande-petal-streams-rankings/ariana-petal-streams-hero.jpg",
+      "alt": "Ariana Grande performing in white under blue light during the 2026 Eternal Sunshine Tour",
+      "width": 1536,
+      "height": 1024
+    },
+    "metaDescription": "Ariana Grande's Petal opened with 62.2 million Spotify streams. See every track's global ranking and what the first-day debut means worldwide in 2026.",
+    "seoTitle": "Ariana Grande Petal Streams: First-Day Rankings",
+    "schemaType": "NewsArticle",
+    "articleSection": "Music",
+    "breadcrumbTopic": true
+  },
+  {
+    "title": "How to Keep Your Space Clean: 5 Systems You Probably Haven't Tried",
+    "department": "home",
+    "topic": "cleaning",
+    "published": "2026-08-02",
+    "readingMinutes": 13,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/home/how-to-keep-your-space-clean/",
+    "excerpt": "Five uncommon systems that stop dirt, clutter and half-finished tasks before they spread through a home.",
+    "image": {
+      "webp": "/assets/images/blogs/home/how-to-keep-your-space-clean/how-to-keep-your-space-clean-hero.webp",
+      "fallback": "/assets/images/blogs/home/how-to-keep-your-space-clean/how-to-keep-your-space-clean-hero.jpg",
+      "alt": "Calm lived-in living room with oak shelving, linen seating and a clear stone coffee table",
+      "width": 1536,
+      "height": 1024
+    },
+    "metaDescription": "Keep your space clean with five uncommon systems for stopping dirt, clutter and half-finished tasks before they spread through your home every day.",
+    "seoTitle": "How to Keep Your Space Clean: 5 Unusual Systems",
+    "articleSection": "Cleaning",
+    "breadcrumbTopic": true
+  },
+  {
     "title": "Brooches Are Back: 17 Modern Ways to Wear Them in 2026",
     "department": "fashion",
     "topic": "accessories",

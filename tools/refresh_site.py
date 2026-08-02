@@ -22,20 +22,30 @@ ARTICLES = json.loads((ROOT / "content" / "articles.json").read_text(encoding="u
 BY_URL = {article["url"]: article for article in ARTICLES}
 
 RELATED = {
+    "/blogs/culture/ariana-grande-petal-streams-rankings/": [
+        "/blogs/culture/ariana-grande-petal-meaning/",
+        "/blogs/fashion/celebrity-style-is-getting-personal/",
+        "/blogs/culture/how-taste-is-built/",
+    ],
+    "/blogs/home/how-to-keep-your-space-clean/": [
+        "/blogs/home/lived-in-interior-design-2026/",
+        "/blogs/home/how-to-make-a-home-look-expensive/",
+        "/blogs/home/small-entryway-that-looks-expensive/",
+    ],
     "/blogs/fashion/how-to-wear-brooches/": [
         "/blogs/fashion/glamoratti-style-2026/",
         "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
         "/blogs/fashion/dressing-with-intention/",
     ],
     "/blogs/culture/ariana-grande-petal-meaning/": [
+        "/blogs/culture/ariana-grande-petal-streams-rankings/",
         "/blogs/fashion/celebrity-style-is-getting-personal/",
         "/blogs/culture/how-taste-is-built/",
-        "/blogs/fashion/glamoratti-style-2026/",
     ],
     "/blogs/home/lived-in-interior-design-2026/": [
+        "/blogs/home/how-to-keep-your-space-clean/",
         "/blogs/home/quietly-dramatic-home-decor/",
         "/blogs/home/coffee-table-styling-that-looks-collected/",
-        "/blogs/home/how-to-make-a-home-look-expensive/",
     ],
     "/blogs/fashion/european-summer-style-2026/": [
         "/blogs/fashion/summer-loafers-outfit-guide/",
@@ -178,6 +188,7 @@ TOPIC_LABELS = {
     "entryways": "Entryways",
     "outdoor-living": "Outdoor living",
     "living-rooms": "Living rooms",
+    "cleaning": "Cleaning",
     "fragrance": "Fragrance",
     "beauty-routines": "Beauty routines",
     "beauty-objects": "Beauty objects",
