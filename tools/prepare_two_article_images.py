@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-import tempfile
-import urllib.request
+import shutil
 from pathlib import Path
 
 from PIL import Image, ImageOps
@@ -45,35 +44,15 @@ def main() -> None:
             save_set(image, home_root / name, *size)
 
     culture_root = ROOT / "assets" / "images" / "blogs" / "culture" / "ariana-grande-petal-streams-rankings"
-    source_cache = Path(tempfile.gettempdir())
+    official_root = ROOT / "assets" / "images" / "blogs" / "culture" / "ariana-grande-petal-meaning"
     culture_sources = {
-        "ariana-petal-streams-hero": (
-            "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ariana_Grande_%2832426962484%29.jpg",
-            (250, 150, 4258, 2822),
-            source_cache / "byforo-ariana-sharp" / "ariana-2017-a.jpg",
-        ),
-        "ariana-petal-chart-impact": (
-            "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ariana_Grande_%2833141791801%29.jpg",
-            (1300, 0, 4065, 3456),
-            source_cache / "ariana-candidate.jpg",
-        ),
-        "ariana-petal-next-week": (
-            "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ariana_Grande.jpg",
-            (250, 0, 2250, 2500),
-            source_cache / "byforo-ariana-sharp" / "ariana-2011-premiere.jpg",
-        ),
+        "ariana-petal-streams-hero": "ariana-grande-petal-hero",
+        "ariana-petal-chart-impact": "petal-video-flower",
+        "ariana-petal-next-week": "petal-video-audition",
     }
-    with tempfile.TemporaryDirectory(prefix="byforo-ariana-") as temporary:
-        for name, (url, crop_box, cached_source) in culture_sources.items():
-            source = cached_source if cached_source.exists() else Path(temporary) / f"{name}.jpg"
-            if not cached_source.exists():
-                request = urllib.request.Request(url, headers={"User-Agent": "by.foro image preparation/1.0"})
-                with urllib.request.urlopen(request, timeout=60) as response, source.open("wb") as destination:
-                    destination.write(response.read())
-            with Image.open(source) as image:
-                image = ImageOps.exif_transpose(image).crop(crop_box)
-                size = (1536, 1024) if name.endswith("hero") else (1200, 1500)
-                save_set(image, culture_root / name, *size, jpeg_quality=78, webp_quality=72)
+    for destination_name, source_name in culture_sources.items():
+        for suffix in (".jpg", ".webp", "-640.webp", "-960.webp"):
+            shutil.copy2(official_root / f"{source_name}{suffix}", culture_root / f"{destination_name}{suffix}")
 
 
 if __name__ == "__main__":

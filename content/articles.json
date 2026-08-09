@@ -12,10 +12,11 @@
     "image": {
       "webp": "/assets/images/blogs/culture/ariana-grande-petal-streams-rankings/ariana-petal-streams-hero.webp",
       "fallback": "/assets/images/blogs/culture/ariana-grande-petal-streams-rankings/ariana-petal-streams-hero.jpg",
-      "alt": "Ariana Grande smiling with a microphone during the Dangerous Woman Tour in 2017",
-      "width": 1536,
+      "alt": "Black-and-white Petal album cover portrait of Ariana Grande smiling behind loose hair",
+      "width": 1024,
       "height": 1024
     },
+    "imageShape": "square",
     "metaDescription": "Ariana Grande's Petal opened with 62.2 million Spotify streams and became her sixth UK number-one album. See the first-day and first-week data in full.",
     "seoTitle": "Ariana Grande Petal Streams and UK Chart Debut Explained",
     "schemaType": "NewsArticle",
