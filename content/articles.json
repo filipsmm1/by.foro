@@ -1,5 +1,68 @@
 [
   {
+    "title": "Afrohemian Decor: Beyond the Mood Board",
+    "seoTitle": "Afrohemian Decor: How to Layer Craft With Respect",
+    "department": "home",
+    "topic": "living-rooms",
+    "published": "2026-08-09",
+    "readingMinutes": 10,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/home/afrohemian-decor-guide/",
+    "excerpt": "A considered guide to Afrohemian decor through specific textiles, natural materials, vintage furniture and responsible sourcing.",
+    "metaDescription": "Create an Afrohemian interior with indigo textiles, natural fibres, vintage furniture and culturally specific art, chosen and sourced with care today.",
+    "image": {
+      "webp": "/assets/images/blogs/home/afrohemian-decor-guide/afrohemian-decor-hero.webp",
+      "fallback": "/assets/images/blogs/home/afrohemian-decor-guide/afrohemian-decor-hero.jpg",
+      "alt": "Warm living room with indigo textiles, a linen sofa, vintage rattan chair, hand-thrown pottery and abstract art",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Living rooms",
+    "breadcrumbTopic": true
+  },
+  {
+    "title": "Vamp Romantic Beauty: Dark Glamour Without the Costume",
+    "seoTitle": "Dark Romantic Makeup: A Wearable Vamp Romantic Guide",
+    "department": "beauty",
+    "topic": "beauty-routines",
+    "published": "2026-08-09",
+    "readingMinutes": 11,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/beauty/vamp-romantic-beauty-guide/",
+    "excerpt": "A wearable guide to the Vamp Romantic trend through blurred liner, black-cherry colour, glossy nails and deliberately imperfect hair.",
+    "metaDescription": "Wear dark romantic makeup with blurred liner, black-cherry lips, glossy nails and undone hair. A refined guide to 2026's Vamp Romantic beauty trend.",
+    "image": {
+      "webp": "/assets/images/blogs/beauty/vamp-romantic-beauty-guide/vamp-romantic-beauty-hero.webp",
+      "fallback": "/assets/images/blogs/beauty/vamp-romantic-beauty-guide/vamp-romantic-beauty-hero.jpg",
+      "alt": "Black lacquer vanity with wine lipstick, charcoal eye pencil, silver compact, dark nail polish and a fading red rose",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Beauty routines",
+    "breadcrumbTopic": true
+  },
+  {
+    "title": "Opera Aesthetic Interiors: The Return of Theatrical Luxury",
+    "seoTitle": "Opera Aesthetic Interiors: Theatrical Luxury at Home",
+    "department": "home",
+    "topic": "luxury-decor",
+    "published": "2026-08-09",
+    "readingMinutes": 10,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/home/opera-aesthetic-interiors/",
+    "excerpt": "A practical guide to opera aesthetic interiors through velvet, low light, old wood and carefully controlled theatrical detail.",
+    "metaDescription": "Create an opera aesthetic interior with velvet, low lighting, old wood and dramatic colour. A practical guide to theatrical luxury without excess.",
+    "image": {
+      "webp": "/assets/images/blogs/home/opera-aesthetic-interiors/opera-aesthetic-interiors-hero.webp",
+      "fallback": "/assets/images/blogs/home/opera-aesthetic-interiors/opera-aesthetic-interiors-hero.jpg",
+      "alt": "European apartment salon with oxblood velvet curtains, cream linen sofa, dark parquet and warm sculptural lighting",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Luxury decor",
+    "breadcrumbTopic": true
+  },
+  {
     "title": "Petal's First Week: What Ariana Grande's Debut Numbers Actually Mean",
     "department": "culture",
     "topic": "music",

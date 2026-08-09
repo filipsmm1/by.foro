@@ -1172,7 +1172,13 @@ def refresh_journal() -> None:
     text = text.replace('<p class="story-date">19 July 2026 &middot; 5 min', '<p class="story-date">Updated 21 July 2026 &middot; 7 min')
     schema = journal_schema()
     if 'id="journal-collection-schema"' in text:
-        text = re.sub(r'<script id="journal-collection-schema".*?</script>', schema, text, count=1, flags=re.S)
+        text = re.sub(
+            r'<script id="journal-collection-schema".*?</script>',
+            lambda _: schema,
+            text,
+            count=1,
+            flags=re.S,
+        )
     else:
         text = text.replace('</head>', f'{schema}</head>', 1)
     text = re.sub(
