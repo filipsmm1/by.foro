@@ -53,9 +53,9 @@ RELATED = {
         "/blogs/fashion/how-to-wear-colour-again/",
     ],
     "/blogs/fashion/glamoratti-style-2026/": [
+        "/blogs/culture/art-deco-revival/",
         "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
         "/blogs/fashion/how-to-wear-colour-again/",
-        "/blogs/fashion/dressing-with-intention/",
     ],
     "/blogs/beauty/japanese-bob-vs-scandi-bob/": [
         "/blogs/beauty/the-vanity-table-as-still-life/",
@@ -163,9 +163,9 @@ RELATED = {
         "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
     ],
     "/blogs/fashion/celebrity-style-is-getting-personal/": [
+        "/blogs/culture/ariana-grande-petal-meaning/",
         "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
         "/blogs/fashion/how-to-wear-colour-again/",
-        "/blogs/fashion/dressing-with-intention/",
     ],
     "/blogs/beauty/perfume-wardrobe-by-mood/": [
         "/blogs/beauty/skin-scent-perfume-guide/",
