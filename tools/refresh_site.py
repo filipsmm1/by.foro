@@ -22,6 +22,16 @@ ARTICLES = json.loads((ROOT / "content" / "articles.json").read_text(encoding="u
 BY_URL = {article["url"]: article for article in ARTICLES}
 
 RELATED = {
+    "/blogs/culture/phoebe-bridgers-lost-weekend-meaning/": [
+        "/blogs/culture/how-taste-is-built/",
+        "/blogs/fashion/celebrity-style-is-getting-personal/",
+        "/blogs/culture/how-to-create-an-analogue-listening-room/",
+    ],
+    "/blogs/fashion/romantic-fashion-trend-2027/": [
+        "/blogs/fashion/literary-chic-without-the-costume/",
+        "/blogs/fashion/how-to-wear-brooches/",
+        "/blogs/fashion/european-summer-style-2026/",
+    ],
     "/blogs/culture/ariana-grande-petal-streams-rankings/": [
         "/blogs/culture/ariana-grande-petal-meaning/",
         "/blogs/fashion/celebrity-style-is-getting-personal/",
@@ -83,9 +93,9 @@ RELATED = {
         "/blogs/fashion/summer-loafers-outfit-guide/",
     ],
     "/blogs/fashion/literary-chic-without-the-costume/": [
+        "/blogs/fashion/romantic-fashion-trend-2027/",
         "/blogs/fashion/dressing-with-intention/",
         "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
-        "/blogs/fashion/how-to-wear-colour-again/",
     ],
     "/blogs/fashion/dressing-with-intention/": [
         "/blogs/fashion/literary-chic-without-the-costume/",
@@ -118,9 +128,9 @@ RELATED = {
         "/blogs/home/whimsical-interiors-without-the-theme/",
     ],
     "/blogs/culture/how-taste-is-built/": [
+        "/blogs/culture/phoebe-bridgers-lost-weekend-meaning/",
         "/blogs/culture/how-to-create-an-analogue-listening-room/",
         "/blogs/fashion/literary-chic-without-the-costume/",
-        "/blogs/fashion/dressing-with-intention/",
     ],
     "/blogs/home/how-to-make-a-home-look-expensive/": [
         "/blogs/home/reading-nook-ideas/",
@@ -163,9 +173,9 @@ RELATED = {
         "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
     ],
     "/blogs/fashion/celebrity-style-is-getting-personal/": [
+        "/blogs/culture/phoebe-bridgers-lost-weekend-meaning/",
         "/blogs/culture/ariana-grande-petal-meaning/",
         "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
-        "/blogs/fashion/how-to-wear-colour-again/",
     ],
     "/blogs/beauty/perfume-wardrobe-by-mood/": [
         "/blogs/beauty/skin-scent-perfume-guide/",

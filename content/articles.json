@@ -1,5 +1,48 @@
 [
   {
+    "title": "Phoebe Bridgers' Lost Weekend: What Her New Era Means",
+    "seoTitle": "Phoebe Bridgers' Lost Weekend Meaning and New Era",
+    "department": "culture",
+    "topic": "music",
+    "published": "2026-08-10",
+    "readingMinutes": 12,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/culture/phoebe-bridgers-lost-weekend-meaning/",
+    "excerpt": "A visual and cultural reading of Phoebe Bridgers' Lost Weekend, its collage structure, suburban fantasy and deliberately elusive return.",
+    "metaDescription": "Phoebe Bridgers' Lost Weekend turns grief, distance and suburban fantasy into a fragmented new era. Here is what the album and Lost Boys mean in full.",
+    "image": {
+      "webp": "/assets/images/blogs/culture/phoebe-bridgers-lost-weekend-meaning/phoebe-bridgers-lost-weekend-hero.webp",
+      "fallback": "/assets/images/blogs/culture/phoebe-bridgers-lost-weekend-meaning/phoebe-bridgers-lost-weekend-hero.jpg",
+      "alt": "Phoebe Bridgers seated in a blue car on an empty misty small-town street at dusk",
+      "width": 1536,
+      "height": 1024
+    },
+    "schemaType": "NewsArticle",
+    "articleSection": "Music",
+    "breadcrumbTopic": true
+  },
+  {
+    "title": "Romantic Fashion Is Back: The SS27 Version Is Sharper Than Coquette",
+    "seoTitle": "Romantic Fashion Is Back: The SS27 Trend Explained",
+    "department": "fashion",
+    "topic": "trends",
+    "published": "2026-08-10",
+    "readingMinutes": 12,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/fashion/romantic-fashion-trend-2027/",
+    "excerpt": "The sharper SS27 romantic look pairs lace and eyelet with leather, Bermuda shorts, capris and shoes that deliberately resist sweetness.",
+    "metaDescription": "The romantic fashion trend for 2027 pairs lace and eyelet with leather, Bermuda shorts and sharp shoes. Here is how to wear it without looking costume-like.",
+    "image": {
+      "webp": "/assets/images/blogs/fashion/romantic-fashion-trend-2027/romantic-fashion-trend-hero.webp",
+      "fallback": "/assets/images/blogs/fashion/romantic-fashion-trend-2027/romantic-fashion-trend-hero.jpg",
+      "alt": "Faceless Copenhagen street-style look with an ivory eyelet blouse, black Bermuda shorts and oxblood leather bag",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Trends",
+    "breadcrumbTopic": true
+  },
+  {
     "title": "Afrohemian Decor: Beyond the Mood Board",
     "seoTitle": "Afrohemian Decor: How to Layer Craft With Respect",
     "department": "home",
@@ -618,7 +661,7 @@
     "topic": "essays",
     "published": "2026-07-19",
     "updated": "2026-07-25",
-    "readingMinutes": 6,
+    "readingMinutes": 7,
     "url": "/blogs/culture/how-taste-is-built/",
     "excerpt": "How to build taste through looking, editing, references and practice for a slower approach to personal style and interiors.",
     "image": {
