@@ -22,6 +22,21 @@ ARTICLES = json.loads((ROOT / "content" / "articles.json").read_text(encoding="u
 BY_URL = {article["url"]: article for article in ARTICLES}
 
 RELATED = {
+    "/blogs/fashion/how-to-wear-a-scarf-belt/": [
+        "/blogs/fashion/european-summer-style-2026/",
+        "/blogs/fashion/romantic-fashion-trend-2027/",
+        "/blogs/fashion/how-to-wear-brooches/",
+    ],
+    "/blogs/beauty/birkin-bangs-guide/": [
+        "/blogs/beauty/japanese-bob-vs-scandi-bob/",
+        "/blogs/beauty/the-vanity-table-as-still-life/",
+        "/blogs/fashion/celebrity-style-is-getting-personal/",
+    ],
+    "/blogs/fashion/mahjong-necklace-meaning/": [
+        "/blogs/fashion/how-to-wear-brooches/",
+        "/blogs/fashion/glamoratti-style-2026/",
+        "/blogs/culture/art-deco-revival/",
+    ],
     "/blogs/culture/phoebe-bridgers-lost-weekend-meaning/": [
         "/blogs/culture/how-taste-is-built/",
         "/blogs/fashion/celebrity-style-is-getting-personal/",
@@ -43,8 +58,8 @@ RELATED = {
         "/blogs/home/small-entryway-that-looks-expensive/",
     ],
     "/blogs/fashion/how-to-wear-brooches/": [
+        "/blogs/fashion/mahjong-necklace-meaning/",
         "/blogs/fashion/glamoratti-style-2026/",
-        "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
         "/blogs/fashion/dressing-with-intention/",
     ],
     "/blogs/culture/ariana-grande-petal-meaning/": [
@@ -58,9 +73,9 @@ RELATED = {
         "/blogs/home/coffee-table-styling-that-looks-collected/",
     ],
     "/blogs/fashion/european-summer-style-2026/": [
+        "/blogs/fashion/how-to-wear-a-scarf-belt/",
         "/blogs/fashion/summer-loafers-outfit-guide/",
         "/blogs/fashion/dressing-with-intention/",
-        "/blogs/fashion/how-to-wear-colour-again/",
     ],
     "/blogs/fashion/glamoratti-style-2026/": [
         "/blogs/culture/art-deco-revival/",
@@ -68,9 +83,9 @@ RELATED = {
         "/blogs/fashion/how-to-wear-colour-again/",
     ],
     "/blogs/beauty/japanese-bob-vs-scandi-bob/": [
+        "/blogs/beauty/birkin-bangs-guide/",
         "/blogs/beauty/the-vanity-table-as-still-life/",
         "/blogs/fashion/dressing-with-intention/",
-        "/blogs/beauty/perfume-wardrobe-by-mood/",
     ],
     "/blogs/culture/art-deco-revival/": [
         "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
