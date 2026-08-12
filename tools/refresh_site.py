@@ -22,6 +22,16 @@ ARTICLES = json.loads((ROOT / "content" / "articles.json").read_text(encoding="u
 BY_URL = {article["url"]: article for article in ARTICLES}
 
 RELATED = {
+    "/blogs/fashion/jelly-kitten-heels/": [
+        "/blogs/fashion/summer-loafers-outfit-guide/",
+        "/blogs/fashion/european-summer-style-2026/",
+        "/blogs/fashion/how-to-wear-a-scarf-belt/",
+    ],
+    "/blogs/fashion/subtle-cat-eye-sunglasses/": [
+        "/blogs/fashion/european-summer-style-2026/",
+        "/blogs/fashion/celebrity-style-is-getting-personal/",
+        "/blogs/fashion/glamoratti-style-2026/",
+    ],
     "/blogs/fashion/how-to-wear-a-scarf-belt/": [
         "/blogs/fashion/european-summer-style-2026/",
         "/blogs/fashion/romantic-fashion-trend-2027/",
@@ -74,7 +84,7 @@ RELATED = {
     ],
     "/blogs/fashion/european-summer-style-2026/": [
         "/blogs/fashion/how-to-wear-a-scarf-belt/",
-        "/blogs/fashion/summer-loafers-outfit-guide/",
+        "/blogs/fashion/jelly-kitten-heels/",
         "/blogs/fashion/dressing-with-intention/",
     ],
     "/blogs/fashion/glamoratti-style-2026/": [
@@ -183,14 +193,14 @@ RELATED = {
         "/blogs/fashion/summer-loafers-outfit-guide/",
     ],
     "/blogs/fashion/summer-loafers-outfit-guide/": [
+        "/blogs/fashion/jelly-kitten-heels/",
         "/blogs/fashion/dressing-with-intention/",
         "/blogs/fashion/how-to-wear-colour-again/",
-        "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
     ],
     "/blogs/fashion/celebrity-style-is-getting-personal/": [
+        "/blogs/fashion/subtle-cat-eye-sunglasses/",
         "/blogs/culture/phoebe-bridgers-lost-weekend-meaning/",
         "/blogs/culture/ariana-grande-petal-meaning/",
-        "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
     ],
     "/blogs/beauty/perfume-wardrobe-by-mood/": [
         "/blogs/beauty/skin-scent-perfume-guide/",
