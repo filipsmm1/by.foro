@@ -1,5 +1,68 @@
 [
   {
+    "title": "Matcha Perfume: Why 2026's Greenest Scent Is So Addictive",
+    "seoTitle": "Matcha Perfume: What It Smells Like and How to Wear It",
+    "department": "beauty",
+    "topic": "fragrance",
+    "published": "2026-08-13",
+    "readingMinutes": 10,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/beauty/matcha-perfume-guide/",
+    "excerpt": "The fragrance does not simply smell like a drink. Its best versions balance powdered leaves, quiet bitterness, cream and skin-warm woods.",
+    "metaDescription": "Discover what matcha perfume smells like, how green, creamy and woody versions differ, how to test one properly and which fragrance style suits you.",
+    "image": {
+      "webp": "/assets/images/blogs/beauty/matcha-perfume-guide/matcha-perfume-hero.webp",
+      "fallback": "/assets/images/blogs/beauty/matcha-perfume-guide/matcha-perfume-hero.jpg",
+      "alt": "Unbranded matcha-inspired perfume bottle beside a ceramic tea bowl, bamboo whisk and spilled matcha powder",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Fragrance",
+    "breadcrumbTopic": true
+  },
+  {
+    "title": "The New Peplum: How to Wear It Without Looking Like 2012",
+    "seoTitle": "How to Wear Peplum Tops: A Modern 2026 Style Guide",
+    "department": "fashion",
+    "topic": "trends",
+    "published": "2026-08-13",
+    "readingMinutes": 10,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/fashion/how-to-wear-peplum-tops/",
+    "excerpt": "The peplum is back with a cleaner waist and sharper construction. Making it feel current is a question of seam placement, fabric and restraint.",
+    "metaDescription": "Learn how to wear peplum tops in 2026 through better waist placement, fabric, proportion and seven modern outfits that avoid an early-2010s look.",
+    "image": {
+      "webp": "/assets/images/blogs/fashion/how-to-wear-peplum-tops/peplum-top-hero.webp",
+      "fallback": "/assets/images/blogs/fashion/how-to-wear-peplum-tops/peplum-top-hero.jpg",
+      "alt": "Faceless outfit with a sculptural ivory peplum top, charcoal wide trousers and black flats",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Trends",
+    "breadcrumbTopic": true
+  },
+  {
+    "title": "Ceramide Ampoules: What They Do and Who Actually Needs One",
+    "seoTitle": "Ceramide Ampoules: Benefits, Uses and How to Choose",
+    "department": "beauty",
+    "topic": "skincare",
+    "published": "2026-08-13",
+    "readingMinutes": 10,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/beauty/ceramide-ampoule-guide/",
+    "excerpt": "Ceramides have a genuine role in the skin barrier. The word ampoule, however, does not guarantee strength, quality or necessity.",
+    "metaDescription": "Learn what ceramide ampoules do, how they differ from serums, where they fit in a skincare routine and how to choose one without believing the hype.",
+    "image": {
+      "webp": "/assets/images/blogs/beauty/ceramide-ampoule-guide/ceramide-ampoule-hero.webp",
+      "fallback": "/assets/images/blogs/beauty/ceramide-ampoule-guide/ceramide-ampoule-hero.jpg",
+      "alt": "Unbranded frosted ceramide ampoule bottle, milky dropper and cream swatch on honed limestone",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Skincare",
+    "breadcrumbTopic": true
+  },
+  {
     "title": "Jelly Kitten Heels: The Beautiful Shoe With a Practical Problem",
     "seoTitle": "Jelly Kitten Heels: How to Wear the 2026 Shoe Trend",
     "department": "fashion",

@@ -22,6 +22,21 @@ ARTICLES = json.loads((ROOT / "content" / "articles.json").read_text(encoding="u
 BY_URL = {article["url"]: article for article in ARTICLES}
 
 RELATED = {
+    "/blogs/beauty/matcha-perfume-guide/": [
+        "/blogs/beauty/skin-scent-perfume-guide/",
+        "/blogs/beauty/perfume-wardrobe-by-mood/",
+        "/blogs/beauty/the-vanity-table-as-still-life/",
+    ],
+    "/blogs/fashion/how-to-wear-peplum-tops/": [
+        "/blogs/fashion/dressing-with-intention/",
+        "/blogs/fashion/glamoratti-style-2026/",
+        "/blogs/fashion/romantic-fashion-trend-2027/",
+    ],
+    "/blogs/beauty/ceramide-ampoule-guide/": [
+        "/blogs/beauty/the-vanity-table-as-still-life/",
+        "/blogs/beauty/skin-scent-perfume-guide/",
+        "/blogs/beauty/perfume-wardrobe-by-mood/",
+    ],
     "/blogs/fashion/jelly-kitten-heels/": [
         "/blogs/fashion/summer-loafers-outfit-guide/",
         "/blogs/fashion/european-summer-style-2026/",
@@ -88,9 +103,9 @@ RELATED = {
         "/blogs/fashion/dressing-with-intention/",
     ],
     "/blogs/fashion/glamoratti-style-2026/": [
+        "/blogs/fashion/how-to-wear-peplum-tops/",
         "/blogs/culture/art-deco-revival/",
         "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
-        "/blogs/fashion/how-to-wear-colour-again/",
     ],
     "/blogs/beauty/japanese-bob-vs-scandi-bob/": [
         "/blogs/beauty/birkin-bangs-guide/",
@@ -123,9 +138,9 @@ RELATED = {
         "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
     ],
     "/blogs/fashion/dressing-with-intention/": [
+        "/blogs/fashion/how-to-wear-peplum-tops/",
         "/blogs/fashion/literary-chic-without-the-costume/",
         "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
-        "/blogs/fashion/how-to-wear-colour-again/",
     ],
     "/blogs/home/whimsical-interiors-without-the-theme/": [
         "/blogs/home/quietly-dramatic-home-decor/",
@@ -138,14 +153,14 @@ RELATED = {
         "/blogs/home/whimsical-interiors-without-the-theme/",
     ],
     "/blogs/beauty/skin-scent-perfume-guide/": [
+        "/blogs/beauty/matcha-perfume-guide/",
         "/blogs/beauty/perfume-wardrobe-by-mood/",
         "/blogs/beauty/the-vanity-table-as-still-life/",
-        "/blogs/home/coffee-table-styling-that-looks-collected/",
     ],
     "/blogs/beauty/the-vanity-table-as-still-life/": [
+        "/blogs/beauty/ceramide-ampoule-guide/",
         "/blogs/beauty/perfume-wardrobe-by-mood/",
         "/blogs/beauty/skin-scent-perfume-guide/",
-        "/blogs/home/coffee-table-styling-that-looks-collected/",
     ],
     "/blogs/culture/how-to-create-an-analogue-listening-room/": [
         "/blogs/culture/how-taste-is-built/",
@@ -203,9 +218,9 @@ RELATED = {
         "/blogs/culture/ariana-grande-petal-meaning/",
     ],
     "/blogs/beauty/perfume-wardrobe-by-mood/": [
+        "/blogs/beauty/matcha-perfume-guide/",
         "/blogs/beauty/skin-scent-perfume-guide/",
         "/blogs/beauty/the-vanity-table-as-still-life/",
-        "/blogs/home/coffee-table-styling-that-looks-collected/",
     ],
 }
 
@@ -228,6 +243,7 @@ TOPIC_LABELS = {
     "beauty-routines": "Beauty routines",
     "beauty-objects": "Beauty objects",
     "hair": "Hair",
+    "skincare": "Skincare",
     "music": "Music",
     "essays": "Essays",
     "design": "Design",
