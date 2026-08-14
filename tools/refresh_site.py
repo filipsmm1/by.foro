@@ -22,6 +22,31 @@ ARTICLES = json.loads((ROOT / "content" / "articles.json").read_text(encoding="u
 BY_URL = {article["url"]: article for article in ARTICLES}
 
 RELATED = {
+    "/blogs/fashion/how-to-wear-a-bib-necklace/": [
+        "/blogs/fashion/how-to-wear-brooches/",
+        "/blogs/fashion/mahjong-necklace-meaning/",
+        "/blogs/fashion/glamoratti-style-2026/",
+    ],
+    "/blogs/culture/pen-pal-letter-ideas-for-adults/": [
+        "/blogs/culture/how-taste-is-built/",
+        "/blogs/culture/how-to-create-an-analogue-listening-room/",
+        "/blogs/fashion/literary-chic-without-the-costume/",
+    ],
+    "/blogs/home/circus-interior-design/": [
+        "/blogs/home/whimsical-interiors-without-the-theme/",
+        "/blogs/home/quietly-dramatic-home-decor/",
+        "/blogs/culture/art-deco-revival/",
+    ],
+    "/blogs/beauty/niche-perfume-collection/": [
+        "/blogs/beauty/perfume-wardrobe-by-mood/",
+        "/blogs/beauty/skin-scent-perfume-guide/",
+        "/blogs/beauty/matcha-perfume-guide/",
+    ],
+    "/blogs/home/red-marble-bathroom-ideas/": [
+        "/blogs/home/bathroom-that-feels-like-a-hotel/",
+        "/blogs/culture/art-deco-revival/",
+        "/blogs/home/how-to-make-a-home-look-expensive/",
+    ],
     "/blogs/beauty/matcha-perfume-guide/": [
         "/blogs/beauty/skin-scent-perfume-guide/",
         "/blogs/beauty/perfume-wardrobe-by-mood/",
@@ -83,9 +108,9 @@ RELATED = {
         "/blogs/home/small-entryway-that-looks-expensive/",
     ],
     "/blogs/fashion/how-to-wear-brooches/": [
+        "/blogs/fashion/how-to-wear-a-bib-necklace/",
         "/blogs/fashion/mahjong-necklace-meaning/",
         "/blogs/fashion/glamoratti-style-2026/",
-        "/blogs/fashion/dressing-with-intention/",
     ],
     "/blogs/culture/ariana-grande-petal-meaning/": [
         "/blogs/culture/ariana-grande-petal-streams-rankings/",
@@ -143,9 +168,9 @@ RELATED = {
         "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
     ],
     "/blogs/home/whimsical-interiors-without-the-theme/": [
+        "/blogs/home/circus-interior-design/",
         "/blogs/home/quietly-dramatic-home-decor/",
         "/blogs/home/most-beautiful-kitchen-colour-combinations/",
-        "/blogs/home/coffee-table-styling-that-looks-collected/",
     ],
     "/blogs/home/most-beautiful-kitchen-colour-combinations/": [
         "/blogs/home/how-to-make-a-home-look-expensive/",
@@ -168,9 +193,9 @@ RELATED = {
         "/blogs/home/whimsical-interiors-without-the-theme/",
     ],
     "/blogs/culture/how-taste-is-built/": [
+        "/blogs/culture/pen-pal-letter-ideas-for-adults/",
         "/blogs/culture/phoebe-bridgers-lost-weekend-meaning/",
         "/blogs/culture/how-to-create-an-analogue-listening-room/",
-        "/blogs/fashion/literary-chic-without-the-costume/",
     ],
     "/blogs/home/how-to-make-a-home-look-expensive/": [
         "/blogs/home/reading-nook-ideas/",
@@ -183,9 +208,9 @@ RELATED = {
         "/blogs/home/bathroom-that-feels-like-a-hotel/",
     ],
     "/blogs/home/bathroom-that-feels-like-a-hotel/": [
+        "/blogs/home/red-marble-bathroom-ideas/",
         "/blogs/home/how-to-make-a-home-look-expensive/",
         "/blogs/home/warm-minimalist-bedroom/",
-        "/blogs/home/small-entryway-that-looks-expensive/",
     ],
     "/blogs/home/small-entryway-that-looks-expensive/": [
         "/blogs/home/how-to-make-a-home-look-expensive/",
@@ -218,9 +243,9 @@ RELATED = {
         "/blogs/culture/ariana-grande-petal-meaning/",
     ],
     "/blogs/beauty/perfume-wardrobe-by-mood/": [
+        "/blogs/beauty/niche-perfume-collection/",
         "/blogs/beauty/matcha-perfume-guide/",
         "/blogs/beauty/skin-scent-perfume-guide/",
-        "/blogs/beauty/the-vanity-table-as-still-life/",
     ],
 }
 
@@ -559,19 +584,20 @@ def sync_article_search_markup(text: str, article: dict) -> str:
             "position": 1,
             "name": "Home" if article.get("breadcrumbTopic") else "by.foro",
             "item": "https://byforo.com/",
-        },
-        {
+        }
+    ]
+    if article["department"] != "home":
+        breadcrumb_items.append({
             "@type": "ListItem",
-            "position": 2,
+            "position": len(breadcrumb_items) + 1,
             "name": article["department"].title(),
             "item": f'https://byforo.com/{article["department"]}/',
-        },
-    ]
-    if article.get("breadcrumbTopic"):
+        })
+    if article.get("breadcrumbTopic") or article["department"] == "home":
         breadcrumb_items.append(
             {
                 "@type": "ListItem",
-                "position": 3,
+                "position": len(breadcrumb_items) + 1,
                 "name": TOPIC_LABELS[article["topic"]],
                 "item": (
                     "https://byforo.com/journal/?department="
@@ -624,12 +650,17 @@ def sync_article_search_markup(text: str, article: dict) -> str:
         count=1,
         flags=re.S,
     )
-    if article.get("breadcrumbTopic"):
+    if article.get("breadcrumbTopic") or article["department"] == "home":
+        department_crumb = (
+            f'<a href="/{esc(article["department"])}/">'
+            f'{esc(article["department"].title())}</a><span>/</span>'
+            if article["department"] != "home"
+            else ""
+        )
         breadcrumb_nav = (
             '<nav class="breadcrumbs" aria-label="Breadcrumb">'
             '<a href="/">Home</a><span>/</span>'
-            f'<a href="/{esc(article["department"])}/">'
-            f'{esc(article["department"].title())}</a><span>/</span>'
+            f'{department_crumb}'
             f'<a href="/journal/?department={esc(article["department"])}&amp;topic={esc(article["topic"])}">'
             f'{esc(TOPIC_LABELS[article["topic"]])}</a><span>/</span>'
             f'<span aria-current="page">{esc(article["title"])}</span>'

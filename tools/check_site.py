@@ -266,7 +266,10 @@ def main() -> None:
                     )
                 else:
                     crumbs = breadcrumb_schemas[0].get("itemListElement", [])
-                    expected_crumbs = 4 if article.get("breadcrumbTopic") else 3
+                    if article["department"] == "home":
+                        expected_crumbs = 3
+                    else:
+                        expected_crumbs = 4 if article.get("breadcrumbTopic") else 3
                     if len(crumbs) != expected_crumbs or crumbs[-1].get("name") != article["title"]:
                         errors.append(
                             f"{relative}: breadcrumb schema does not match article hierarchy"

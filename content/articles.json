@@ -1,5 +1,110 @@
 [
   {
+    "title": "The New Bib Necklace: How to Wear It Without Looking Dated",
+    "seoTitle": "How to Wear a Bib Necklace: The Modern 2026 Style Guide",
+    "department": "fashion",
+    "topic": "accessories",
+    "published": "2026-08-14",
+    "readingMinutes": 10,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/fashion/how-to-wear-a-bib-necklace/",
+    "excerpt": "The statement necklace is back, but the styling has changed. Its strongest partner is not another statement. It is an ordinary, beautifully cut garment.",
+    "metaDescription": "Learn how to wear a bib necklace in 2026 with the right neckline, proportion and outfit balance, plus six modern formulas that avoid a dated look.",
+    "image": {
+      "webp": "/assets/images/blogs/fashion/how-to-wear-a-bib-necklace/bib-necklace-hero.webp",
+      "fallback": "/assets/images/blogs/fashion/how-to-wear-a-bib-necklace/bib-necklace-hero.jpg",
+      "alt": "Hammered silver bib necklace arranged on black silk beside a pale travertine block",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Accessories",
+    "breadcrumbTopic": true
+  },
+  {
+    "title": "Pen Pal Letters for Adults: What to Write Beyond Small Talk",
+    "seoTitle": "Pen Pal Letter Ideas for Adults Who Hate Small Talk",
+    "department": "culture",
+    "topic": "essays",
+    "published": "2026-08-14",
+    "readingMinutes": 10,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/culture/pen-pal-letter-ideas-for-adults/",
+    "excerpt": "The best letters are not performances of perfect handwriting. They are records of specific attention, built slowly enough for another person to answer.",
+    "metaDescription": "Find thoughtful pen-pal letter ideas for adults, a natural first-letter structure, 30 specific prompts, meaningful enclosures and sensible privacy advice.",
+    "image": {
+      "webp": "/assets/images/blogs/culture/pen-pal-letter-ideas-for-adults/pen-pal-letter-hero.webp",
+      "fallback": "/assets/images/blogs/culture/pen-pal-letter-ideas-for-adults/pen-pal-letter-hero.jpg",
+      "alt": "Handwritten letter, fountain pen, envelope and vintage stamps arranged on a quiet wooden writing desk",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Essays",
+    "breadcrumbTopic": true
+  },
+  {
+    "title": "Circus Interiors: How to Make the FunHaus Trend Look Expensive",
+    "seoTitle": "Circus Interior Design That Looks Expensive in 2026",
+    "department": "home",
+    "topic": "living-rooms",
+    "published": "2026-08-14",
+    "readingMinutes": 10,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/home/circus-interior-design/",
+    "excerpt": "Borrow the circus’s rhythm, illusion and sense of reveal. Leave the literal props behind.",
+    "metaDescription": "Explore rich circus interior design through stripes, theatrical colour, sculptural furniture and natural materials, without creating a themed room.",
+    "image": {
+      "webp": "/assets/images/blogs/home/circus-interior-design/circus-interior-hero.webp",
+      "fallback": "/assets/images/blogs/home/circus-interior-design/circus-interior-hero.jpg",
+      "alt": "Sophisticated living room with an oxblood and cream striped ceiling, red chair and deep blue sofa",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Living Rooms",
+    "breadcrumbTopic": true
+  },
+  {
+    "title": "The Edited Scent Wardrobe: Build a Niche Perfume Collection",
+    "seoTitle": "How to Build a Niche Perfume Collection Without Waste",
+    "department": "beauty",
+    "topic": "fragrance",
+    "published": "2026-08-14",
+    "readingMinutes": 10,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/beauty/niche-perfume-collection/",
+    "excerpt": "A considered scent wardrobe is built around differences you actually wear, not shelves of beautiful bottles with the same drydown.",
+    "metaDescription": "Build a niche perfume collection without overbuying using a wardrobe map, three-wear sampling method, bottle-size test, storage plan and layering rules.",
+    "image": {
+      "webp": "/assets/images/blogs/beauty/niche-perfume-collection/niche-perfume-hero.webp",
+      "fallback": "/assets/images/blogs/beauty/niche-perfume-collection/niche-perfume-hero.jpg",
+      "alt": "Edited collection of unbranded niche perfume bottles arranged on a dark walnut shelf",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Fragrance",
+    "breadcrumbTopic": true
+  },
+  {
+    "title": "The Red Marble Bathroom: Drama Without the Showroom Effect",
+    "seoTitle": "Red Marble Bathroom Ideas That Feel Rich, Not Loud",
+    "department": "home",
+    "topic": "bathrooms",
+    "published": "2026-08-14",
+    "readingMinutes": 10,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/home/red-marble-bathroom-ideas/",
+    "excerpt": "Burgundy stone can feel geological, intimate and lived-in. The difference lies in how much you use, what sits beside it and how precisely it is detailed.",
+    "metaDescription": "Use red marble in a bathroom with restraint through better slab placement, colour pairings, lighting and maintenance details that create a residential result.",
+    "image": {
+      "webp": "/assets/images/blogs/home/red-marble-bathroom-ideas/red-marble-bathroom-hero.webp",
+      "fallback": "/assets/images/blogs/home/red-marble-bathroom-ideas/red-marble-bathroom-hero.jpg",
+      "alt": "Compact European bathroom with a burgundy marble vanity and bath, walnut cabinetry and ivory plaster",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Bathrooms",
+    "breadcrumbTopic": true
+  },
+  {
     "title": "Matcha Perfume: Why 2026's Greenest Scent Is So Addictive",
     "seoTitle": "Matcha Perfume: What It Smells Like and How to Wear It",
     "department": "beauty",
