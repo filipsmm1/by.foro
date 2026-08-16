@@ -247,6 +247,31 @@ RELATED = {
         "/blogs/beauty/matcha-perfume-guide/",
         "/blogs/beauty/skin-scent-perfume-guide/",
     ],
+    "/blogs/culture/the-last-house-ending-explained/": [
+        "/blogs/culture/how-taste-is-built/",
+        "/blogs/home/lived-in-interior-design-2026/",
+        "/blogs/culture/how-to-create-an-analogue-listening-room/",
+    ],
+    "/blogs/culture/sam-smith-hazel-eyes-meaning/": [
+        "/blogs/culture/ariana-grande-petal-meaning/",
+        "/blogs/culture/phoebe-bridgers-lost-weekend-meaning/",
+        "/blogs/culture/how-taste-is-built/",
+    ],
+    "/blogs/fashion/jennifer-lopez-green-versace-dress/": [
+        "/blogs/fashion/celebrity-style-is-getting-personal/",
+        "/blogs/fashion/glamoratti-style-2026/",
+        "/blogs/culture/art-deco-revival/",
+    ],
+    "/blogs/home/elegant-summerween-decor/": [
+        "/blogs/home/whimsical-interiors-without-the-theme/",
+        "/blogs/home/quietly-dramatic-home-decor/",
+        "/blogs/culture/how-to-serve-chilled-red-wine/",
+    ],
+    "/blogs/culture/how-to-serve-chilled-red-wine/": [
+        "/blogs/home/elegant-summerween-decor/",
+        "/blogs/home/outdoor-space-that-feels-expensive/",
+        "/blogs/home/coffee-table-styling-that-looks-collected/",
+    ],
 }
 
 TOPIC_LABELS = {
@@ -270,10 +295,12 @@ TOPIC_LABELS = {
     "hair": "Hair",
     "skincare": "Skincare",
     "music": "Music",
+    "film": "Film",
     "essays": "Essays",
     "design": "Design",
     "celebrity-style": "Celebrity style",
     "hosting": "Hosting",
+    "seasonal": "Seasonal",
     "objects": "Objects",
 }
 
