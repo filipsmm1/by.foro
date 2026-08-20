@@ -22,6 +22,26 @@ ARTICLES = json.loads((ROOT / "content" / "articles.json").read_text(encoding="u
 BY_URL = {article["url"]: article for article in ARTICLES}
 
 RELATED = {
+    "/blogs/home/dorm-desk-hutch-ideas/": [
+        "/blogs/home/how-to-keep-your-space-clean/",
+        "/blogs/home/small-entryway-that-looks-expensive/",
+        "/blogs/home/lived-in-interior-design-2026/",
+    ],
+    "/blogs/beauty/dragonfly-nails/": [
+        "/blogs/beauty/vamp-romantic-beauty-guide/",
+        "/blogs/beauty/the-vanity-table-as-still-life/",
+        "/blogs/fashion/bug-jewellery-trend/",
+    ],
+    "/blogs/fashion/khaki-coded-style/": [
+        "/blogs/fashion/fall-2026-fashion-trends-worth-wearing/",
+        "/blogs/fashion/dressing-with-intention/",
+        "/blogs/fashion/how-to-wear-colour-again/",
+    ],
+    "/blogs/fashion/bug-jewellery-trend/": [
+        "/blogs/fashion/how-to-wear-brooches/",
+        "/blogs/fashion/how-to-wear-a-bib-necklace/",
+        "/blogs/beauty/dragonfly-nails/",
+    ],
     "/blogs/fashion/how-to-wear-a-bib-necklace/": [
         "/blogs/fashion/how-to-wear-brooches/",
         "/blogs/fashion/mahjong-necklace-meaning/",
@@ -277,6 +297,7 @@ RELATED = {
 TOPIC_LABELS = {
     "trends": "Trends",
     "accessories": "Accessories",
+    "jewellery": "Jewellery",
     "personal-style": "Personal style",
     "summer-style": "Summer style",
     "luxury-decor": "Luxury decor",
@@ -289,11 +310,13 @@ TOPIC_LABELS = {
     "outdoor-living": "Outdoor living",
     "living-rooms": "Living rooms",
     "cleaning": "Cleaning",
+    "dorm-rooms": "Dorm rooms",
     "fragrance": "Fragrance",
     "beauty-routines": "Beauty routines",
     "beauty-objects": "Beauty objects",
     "hair": "Hair",
     "skincare": "Skincare",
+    "nails": "Nails",
     "music": "Music",
     "film": "Film",
     "essays": "Essays",

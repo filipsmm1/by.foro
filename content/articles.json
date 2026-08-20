@@ -1,5 +1,89 @@
 [
   {
+    "title": "The Dorm Desk That Actually Works",
+    "seoTitle": "Dorm Desk Hutch Ideas for a Chic, Clutter-Free Room",
+    "department": "home",
+    "topic": "dorm-rooms",
+    "published": "2026-08-20",
+    "readingMinutes": 11,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/home/dorm-desk-hutch-ideas/",
+    "excerpt": "Use height, protect the writing surface and make every shelf earn its space. The best dorm desk is ready before the laptop opens.",
+    "metaDescription": "Plan a dorm desk hutch that saves space without stealing your work surface, with measurements, lighting, cable control and styling that stays practical.",
+    "image": {
+      "webp": "/assets/images/blogs/home/dorm-desk-hutch-ideas/dorm-desk-hutch-hero.webp",
+      "fallback": "/assets/images/blogs/home/dorm-desk-hutch-ideas/dorm-desk-hutch-hero.jpg",
+      "alt": "Sophisticated oak dorm desk hutch with books, lamp, laptop and a clear work surface beside a Twin XL bed",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Dorm Rooms",
+    "breadcrumbTopic": true
+  },
+  {
+    "title": "Dragonfly Nails, Drawn With a Lighter Hand",
+    "seoTitle": "Dragonfly Nails: 17 Elegant Designs to Try in 2026",
+    "department": "beauty",
+    "topic": "nails",
+    "published": "2026-08-20",
+    "readingMinutes": 10,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/beauty/dragonfly-nails/",
+    "excerpt": "Keep the body fine, the wings translucent and the surrounding nails quiet. Seventeen versions prove the motif does not need to feel literal.",
+    "metaDescription": "Discover 17 elegant dragonfly nail ideas, from fine-line and chrome-wing details to short natural manicures, plus practical salon notes for lasting results.",
+    "image": {
+      "webp": "/assets/images/blogs/beauty/dragonfly-nails/dragonfly-nails-hero.webp",
+      "fallback": "/assets/images/blogs/beauty/dragonfly-nails/dragonfly-nails-hero.jpg",
+      "alt": "Natural almond nails with three tiny silver and translucent blue dragonflies resting on ivory linen",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Nails",
+    "breadcrumbTopic": true
+  },
+  {
+    "title": "Khaki Coded, Without the Costume",
+    "seoTitle": "Khaki Coded Style: How to Wear Utility Fashion in 2026",
+    "department": "fashion",
+    "topic": "trends",
+    "published": "2026-08-20",
+    "readingMinutes": 10,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/fashion/khaki-coded-style/",
+    "excerpt": "The modern utility wardrobe is built on contrast: washed cotton with silk, useful pockets with clean tailoring, and earth tones with one dark anchor.",
+    "metaDescription": "Learn how to wear khaki coded style with field jackets, pleated trousers, linen and polished accessories, without making utility fashion feel like costume.",
+    "image": {
+      "webp": "/assets/images/blogs/fashion/khaki-coded-style/khaki-coded-hero.webp",
+      "fallback": "/assets/images/blogs/fashion/khaki-coded-style/khaki-coded-hero.jpg",
+      "alt": "Face-free street-style view of an olive field jacket with an ivory silk midi skirt, brown bag and loafers",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Trends",
+    "breadcrumbTopic": true
+  },
+  {
+    "title": "A Small Field Guide to Bug Jewellery",
+    "seoTitle": "Bug Jewellery Is Back: The Wilderkind Trend Explained",
+    "department": "fashion",
+    "topic": "jewellery",
+    "published": "2026-08-20",
+    "readingMinutes": 10,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/fashion/bug-jewellery-trend/",
+    "excerpt": "Beetles, moths and dragonflies have returned to the jewel box. Wear one precise creature against an ordinary fabric and let it remain strange.",
+    "metaDescription": "Explore the bug jewellery trend through beetles, moths, bees and dragonflies, including symbolism, antique references and modern ways to style each motif.",
+    "image": {
+      "webp": "/assets/images/blogs/fashion/bug-jewellery-trend/bug-jewellery-hero.webp",
+      "fallback": "/assets/images/blogs/fashion/bug-jewellery-trend/bug-jewellery-hero.jpg",
+      "alt": "Gold beetle, silver dragonfly, bee earrings, moth pendant and scarab ring arranged on tobacco velvet",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Jewellery",
+    "breadcrumbTopic": true
+  },
+  {
     "title": "The Last House Ending Explained: The Home Was Never Safe",
     "seoTitle": "The Last House Ending Explained: What It Really Means",
     "department": "culture",
