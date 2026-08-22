@@ -18,6 +18,7 @@ from urllib.parse import quote
 
 
 ROOT = Path(__file__).resolve().parents[1]
+ASSET_VERSION = "20260822b"
 ARTICLES = json.loads((ROOT / "content" / "articles.json").read_text(encoding="utf-8"))
 BY_URL = {article["url"]: article for article in ARTICLES}
 
@@ -343,26 +344,25 @@ MONTHS = (
 )
 
 EDITION_BAR = (
-    '<div class="edition-bar"><span>Independent editorial</span>'
-    '<span>Edition 01 &middot; 2026</span>'
-    '<span>Fashion &middot; Home &middot; Beauty &middot; Culture</span></div>'
+    '<div class="edition-bar"><span>Independent visual journal</span>'
+    '<a href="/the-edit/">The August edit</a>'
+    '<a href="/journal/#journal-library-title">Search the archive</a></div>'
 )
 
 PRIMARY_NAV = (
-    ("Start here", "/start-here/"),
     ("Journal", "/journal/"),
-    ("The Edit", "/the-edit/"),
     ("Home", "/home/"),
     ("Fashion", "/fashion/"),
     ("Beauty", "/beauty/"),
     ("Culture", "/culture/"),
 )
 
-NAV_DRAWER = """<div class="nav-drawer" aria-label="Editorial index">
-  <div><span>Begin</span><a href="/start-here/">Where to start</a><a href="/the-edit/">The current edit</a><a href="/journal/">Search all stories</a></div>
-  <div><span>Home</span><a href="/journal/?department=home&amp;topic=reading-nooks">Reading nooks</a><a href="/journal/?department=home&amp;topic=luxury-decor">Luxury decor</a><a href="/journal/?department=home&amp;topic=kitchens">Kitchens</a><a href="/journal/?department=home&amp;q=small%20spaces">Small spaces</a></div>
-  <div><span>Style and beauty</span><a href="/journal/?department=fashion">Fashion</a><a href="/journal/?department=beauty&amp;topic=fragrance">Fragrance</a><a href="/journal/?department=beauty&amp;topic=beauty-objects">Beauty objects</a><a href="/journal/?q=personal%20style">Personal style</a></div>
-  <div><span>Reference</span><a href="/journal/?department=culture">Culture</a><a href="/about/">About by.foro</a><a href="/studio/">FORO Studio</a><a href="/contact/">Contact</a></div>
+NAV_DRAWER = """<div class="nav-drawer" id="explore-menu" aria-label="Explore by.foro" aria-hidden="true">
+  <div class="nav-drawer__intro"><p class="kicker">Explore by.foro</p><p>Find a useful guide, a beautiful idea or the next story worth keeping.</p><a class="nav-search-link" href="/journal/#journal-library-title">Search all stories <span aria-hidden="true">&rarr;</span></a></div>
+  <div class="nav-drawer__group"><span>Begin</span><a href="/start-here/">Start here</a><a href="/the-edit/">The current edit</a><a href="/journal/">Complete Journal</a></div>
+  <div class="nav-drawer__group"><span>Departments</span><a href="/home/">Home</a><a href="/fashion/">Fashion</a><a href="/beauty/">Beauty</a><a href="/culture/">Culture</a></div>
+  <div class="nav-drawer__group"><span>Popular paths</span><a href="/journal/?department=home&amp;topic=reading-nooks">Reading nooks</a><a href="/journal/?department=beauty&amp;topic=fragrance">Fragrance</a><a href="/journal/?department=fashion&amp;topic=personal-style">Personal style</a><a href="/journal/?department=fashion&amp;topic=celebrity-style">Celebrity style</a></div>
+  <div class="nav-drawer__group"><span>About</span><a href="/about/">About by.foro</a><a href="/editorial-policy/">How we work</a><a href="/studio/">FORO Studio</a><a href="/contact/">Contact</a></div>
 </div>"""
 
 CONTENT_EXPANSIONS = {
@@ -429,14 +429,17 @@ def site_header(current: str) -> str:
     links = "".join(parts)
     return (
         '<header class="site-header" data-header><a class="wordmark" href="/" '
-        'aria-label="by.foro homepage">by.foro</a><button class="menu-toggle" type="button" '
-        'aria-controls="site-nav" aria-expanded="false"><span>Menu</span></button>'
-        f'<nav class="site-nav" id="site-nav" aria-label="Main navigation">{links}{NAV_DRAWER}</nav></header>'
+        'aria-label="by.foro homepage">by.foro</a>'
+        f'<nav class="site-nav" id="site-nav" aria-label="Main navigation">{links}</nav>'
+        '<div class="header-actions"><a class="header-search" href="/journal/#journal-library-title">Search</a>'
+        '<button class="menu-toggle" type="button" aria-controls="explore-menu" aria-expanded="false">'
+        '<span>Explore</span><i aria-hidden="true"></i></button></div>'
+        f'{NAV_DRAWER}</header>'
     )
 
 
 def site_footer() -> str:
-    return """<footer class="site-footer"><div class="footer-lead"><a class="footer-wordmark" href="/">by.foro</a><p>A point of view on fashion, interiors, beauty and contemporary culture.</p></div><div class="footer-grid"><div><h2>Begin</h2><a href="/start-here/">Start Here</a><a href="/the-edit/">The Edit</a><a href="/journal/">Journal</a></div><div><h2>Departments</h2><a href="/home/">Home</a><a href="/fashion/">Fashion</a><a href="/beauty/">Beauty</a><a href="/culture/">Culture</a></div><div><h2>Work</h2><a href="/studio/">FORO Studio</a><a href="/contact/">Contact</a><a href="/about/">About</a></div><div><h2>Standards</h2><a href="/editorial-policy/">Editorial policy</a><a href="/affiliate-disclosure/">Affiliate disclosure</a><a href="/accessibility/">Accessibility</a><a href="/privacy/">Privacy</a><a href="/cookies/">Cookies</a><a href="/terms/">Terms</a></div></div><div class="footer-bottom"><p>&copy; <span data-year>2026</span> by.foro</p><p>Curated by people, not an algorithm.</p></div></footer>"""
+    return """<footer class="site-footer"><div class="footer-top"><div class="footer-lead"><p class="kicker">Independent visual journal</p><a class="footer-wordmark" href="/">by.foro</a><p>Fashion, interiors, beauty and culture, edited for character and staying power.</p></div><div class="footer-invitation"><p class="kicker">Keep exploring</p><h2>Find something worth your time.</h2><a class="button button--light" href="/journal/#journal-library-title">Search the Journal</a></div></div><div class="footer-grid"><div><h2>Begin</h2><a href="/start-here/">Start here</a><a href="/the-edit/">The Edit</a><a href="/journal/">All stories</a></div><div><h2>Departments</h2><a href="/home/">Home</a><a href="/fashion/">Fashion</a><a href="/beauty/">Beauty</a><a href="/culture/">Culture</a></div><div><h2>About</h2><a href="/about/">About by.foro</a><a href="/studio/">FORO Studio</a><a href="/contact/">Contact</a><a href="/editorial-policy/">How we work</a></div><div><h2>Information</h2><a href="/accessibility/">Accessibility</a><a href="/privacy/">Privacy</a><a href="/cookies/">Cookie settings</a><a href="/terms/">Terms</a></div></div><div class="footer-bottom"><p>&copy; <span data-year>2026</span> by.foro</p><p>Curated by people, not an algorithm.</p></div></footer>"""
 
 
 def article_path(article: dict) -> Path:
@@ -782,10 +785,14 @@ def homepage_story_grid() -> str:
 
 def homepage_entry_panel() -> str:
     return """<!-- HOMEPAGE-ENTRY:START -->
-<section class="luxury-ledger" aria-label="by.foro orientation" data-reveal>
-  <a href="/start-here/"><span>New here</span><strong>Start with the five stories that explain the point of view.</strong></a>
-  <a href="/the-edit/"><span>The Edit</span><strong>Browse the current mood, collections and essential reads.</strong></a>
-  <a href="/journal/"><span>Search</span><strong>Find stories by room, object, style, problem or department.</strong></a>
+<section class="home-paths" aria-labelledby="home-paths-title" data-reveal>
+  <div class="home-paths__intro"><p class="kicker">Browse by interest</p><h2 id="home-paths-title">Four worlds, one point of view.</h2><p>Go straight to the department you need, or search the complete Journal by topic.</p><a class="text-link" href="/journal/#journal-library-title">Search all stories</a></div>
+  <div class="home-paths__grid">
+    <a href="/home/"><span>01</span><strong>Home</strong><small>Rooms, objects and atmosphere</small></a>
+    <a href="/fashion/"><span>02</span><strong>Fashion</strong><small>Personal style and considered trends</small></a>
+    <a href="/beauty/"><span>03</span><strong>Beauty</strong><small>Fragrance, ritual and detail</small></a>
+    <a href="/culture/"><span>04</span><strong>Culture</strong><small>Music, film and contemporary life</small></a>
+  </div>
 </section>
 <!-- HOMEPAGE-ENTRY:END -->"""
 
@@ -884,11 +891,11 @@ def journal_story_grid() -> str:
 
 def journal_library() -> str:
     return f'''<section class="journal-library" aria-labelledby="journal-library-title" data-journal-library>
-  <div class="journal-library__heading"><div><p class="kicker">All stories</p><h2 id="journal-library-title">Browse the Journal.</h2></div><p class="journal-status" data-journal-status aria-live="polite">Showing all {len(ARTICLES)} stories</p></div>
-  <div class="journal-search-row"><label class="journal-search" for="journal-search"><span>Search the Journal</span><input id="journal-search" type="search" inputmode="search" autocomplete="off" placeholder="Try reading nooks, perfume, kitchens or personal style" data-journal-search></label><label class="journal-sort" for="journal-sort"><span>Sort</span><select id="journal-sort" data-journal-sort><option value="newest">Newest first</option><option value="longest">Long reads</option><option value="shortest">Quick reads</option><option value="az">A to Z</option></select></label><button class="journal-clear" type="button" data-journal-clear hidden>Clear search</button></div>
-  <div class="journal-quick-search" aria-label="Popular searches"><span>Popular searches</span><div><button type="button" data-journal-query="reading nook">Reading nook</button><button type="button" data-journal-query="kitchen colour">Kitchen colour</button><button type="button" data-journal-query="quiet luxury">Quiet luxury</button><button type="button" data-journal-query="perfume">Perfume</button><button type="button" data-journal-query="personal style">Personal style</button></div></div>
+  <div class="journal-library__heading"><div><p class="kicker">The complete archive</p><h2 id="journal-library-title">What would you like to read?</h2></div><p class="journal-status" data-journal-status aria-live="polite">Showing all {len(ARTICLES)} stories</p></div>
+  <div class="journal-search-row"><label class="journal-search" for="journal-search"><span>Search by idea, room, person or problem</span><input id="journal-search" type="search" inputmode="search" autocomplete="off" placeholder="Search the Journal" data-journal-search></label><label class="journal-sort" for="journal-sort"><span>Order</span><select id="journal-sort" data-journal-sort><option value="newest">Newest first</option><option value="longest">Long reads</option><option value="shortest">Quick reads</option><option value="az">A to Z</option></select></label><button class="journal-clear" type="button" data-journal-clear hidden>Clear</button></div>
+  <div class="journal-quick-search" aria-label="Popular searches"><span>Popular now</span><div><button type="button" data-journal-query="reading nook">Reading nooks</button><button type="button" data-journal-query="kitchen colour">Kitchens</button><button type="button" data-journal-query="quiet luxury">Quiet luxury</button><button type="button" data-journal-query="perfume">Perfume</button><button type="button" data-journal-query="personal style">Personal style</button></div></div>
   {journal_department_filters()}
-  {journal_topic_filters()}
+  <details class="journal-topic-disclosure"><summary>Browse all subcategories <span>Topics</span></summary>{journal_topic_filters()}</details>
 </section>'''
 
 
@@ -1202,7 +1209,7 @@ def refresh_homepage() -> None:
     text = path.read_text(encoding="utf-8")
     text = re.sub(
         r'<div class="hero-actions">.*?</div>',
-        '<div class="hero-actions"><a class="button button--dark" href="/start-here/">Start here</a><a class="text-link" href="/the-edit/">See the edit</a></div>',
+        '<div class="hero-actions"><a class="button button--dark" href="/journal/#journal-library-title">Explore the Journal</a><a class="text-link" href="/start-here/">New here? Start here</a></div>',
         text,
         count=1,
         flags=re.S,
@@ -1484,19 +1491,39 @@ def refresh_navigation() -> None:
             continue
         route = route_for_path(path)
         text = path.read_text(encoding="utf-8")
-        text = re.sub(
-            r'<div class="edition-bar">.*?</div>\s*<header class="site-header".*?</header>',
-            EDITION_BAR + site_header(route),
-            text,
-            count=1,
-            flags=re.S,
-        )
+        chrome = EDITION_BAR + site_header(route)
+        if '<div class="edition-bar">' in text:
+            text = re.sub(
+                r'<div class="edition-bar">.*?</div>\s*<header class="site-header".*?</header>',
+                chrome,
+                text,
+                count=1,
+                flags=re.S,
+            )
+        else:
+            text = re.sub(
+                r'<header class="site-header".*?</header>',
+                chrome,
+                text,
+                count=1,
+                flags=re.S,
+            )
         text = re.sub(
             r'<footer class="site-footer">.*?</footer>',
             site_footer(),
             text,
             count=1,
             flags=re.S,
+        )
+        text = re.sub(
+            r'(?<=href=")/styles\.css(?:\?v=[^"&]+)?',
+            f"/styles.css?v={ASSET_VERSION}",
+            text,
+        )
+        text = re.sub(
+            r'(?<=src=")/(script|journal/journal)\.js(?:\?v=[^"&]+)?',
+            rf"/\1.js?v={ASSET_VERSION}",
+            text,
         )
         path.write_text(text, encoding="utf-8", newline="\n")
 

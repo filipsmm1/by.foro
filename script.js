@@ -1,12 +1,41 @@
 
 const root=document.documentElement;root.classList.add('reveal-ready');
-const header=document.querySelector('[data-header]');const toggle=document.querySelector('.menu-toggle');const nav=document.querySelector('.site-nav');
+const header=document.querySelector('[data-header]');const toggle=document.querySelector('.menu-toggle');const nav=document.querySelector('.site-nav');const drawer=document.querySelector('.nav-drawer');
 let menuReturnFocus=null;
-const menuFocusable=()=>[toggle,...nav.querySelectorAll('a[href],button:not([disabled])')].filter(Boolean);
-const closeMenu=(restoreFocus=false)=>{if(!nav||!toggle)return;const wasOpen=nav.classList.contains('is-open');nav.classList.remove('is-open');document.body.classList.remove('menu-open');toggle.setAttribute('aria-expanded','false');toggle.querySelector('span').textContent='Menu';if(wasOpen&&restoreFocus)(menuReturnFocus||toggle).focus()};
-const openMenu=()=>{if(!nav||!toggle)return;menuReturnFocus=document.activeElement;nav.classList.add('is-open');document.body.classList.add('menu-open');toggle.setAttribute('aria-expanded','true');toggle.querySelector('span').textContent='Close';requestAnimationFrame(()=>nav.querySelector('a')?.focus())};
-if(toggle&&nav){toggle.addEventListener('click',()=>nav.classList.contains('is-open')?closeMenu(true):openMenu());nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>closeMenu(false)));document.addEventListener('keydown',e=>{if(!nav.classList.contains('is-open'))return;if(e.key==='Escape'){e.preventDefault();closeMenu(true);return}if(e.key!=='Tab')return;const items=menuFocusable();const first=items[0];const last=items.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}});window.matchMedia('(min-width: 1081px)').addEventListener('change',event=>{if(event.matches)closeMenu(false)})}
+const menuFocusable=()=>[toggle,...(drawer?.querySelectorAll('a[href],button:not([disabled])')||[])].filter(Boolean);
+const closeMenu=(restoreFocus=false)=>{if(!drawer||!toggle)return;const wasOpen=drawer.classList.contains('is-open');drawer.classList.remove('is-open');header?.classList.remove('has-open-menu');document.body.classList.remove('menu-open');toggle.setAttribute('aria-expanded','false');toggle.querySelector('span').textContent='Explore';drawer.setAttribute('aria-hidden','true');if(wasOpen&&restoreFocus)(menuReturnFocus||toggle).focus()};
+const openMenu=()=>{if(!drawer||!toggle)return;menuReturnFocus=document.activeElement;drawer.classList.add('is-open');header?.classList.add('has-open-menu');document.body.classList.add('menu-open');toggle.setAttribute('aria-expanded','true');toggle.querySelector('span').textContent='Close';drawer.setAttribute('aria-hidden','false');requestAnimationFrame(()=>drawer.querySelector('a')?.focus())};
+if(toggle&&drawer){toggle.addEventListener('click',()=>drawer.classList.contains('is-open')?closeMenu(true):openMenu());drawer.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>closeMenu(false)));document.addEventListener('keydown',e=>{if(!drawer.classList.contains('is-open'))return;if(e.key==='Escape'){e.preventDefault();closeMenu(true);return}if(e.key!=='Tab')return;const items=menuFocusable();const first=items[0];const last=items.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}})}
 const onScroll=()=>header?.classList.toggle('is-scrolled',window.scrollY>24);onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+// Calm reading tools: a slim progress rule and a compact mobile contents menu.
+(()=>{
+  const article=document.querySelector('.article');
+  if(!article)return;
+  const progress=document.createElement('div');
+  progress.className='reading-progress';
+  progress.setAttribute('aria-hidden','true');
+  progress.innerHTML='<span></span>';
+  document.body.prepend(progress);
+  const updateProgress=()=>{
+    const start=article.offsetTop;
+    const distance=Math.max(1,article.offsetHeight-window.innerHeight);
+    const value=Math.max(0,Math.min(1,(window.scrollY-start)/distance));
+    progress.style.setProperty('--reading-progress',`${(value*100).toFixed(2)}%`);
+  };
+  updateProgress();
+  window.addEventListener('scroll',updateProgress,{passive:true});
+  window.addEventListener('resize',updateProgress,{passive:true});
+
+  const aside=article.querySelector('.article-aside');
+  const layout=article.querySelector('.article-layout');
+  const links=aside?[...aside.querySelectorAll('ol a[href^="#"]')]:[];
+  if(!layout||!links.length)return;
+  const jump=document.createElement('details');
+  jump.className='article-jump';
+  jump.innerHTML=`<summary><span>In this story</span><small>${links.length} sections</small></summary><ol>${links.map(link=>`<li><a href="${link.getAttribute('href')}">${link.textContent}</a></li>`).join('')}</ol>`;
+  jump.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>jump.removeAttribute('open')));
+  layout.before(jump);
+})();
 const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;const reveals=document.querySelectorAll('[data-reveal]');if(reduce||!('IntersectionObserver'in window)){reveals.forEach(x=>x.classList.add('is-visible'))}else{const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -40px'});reveals.forEach(x=>io.observe(x))}
 document.querySelectorAll('[data-year]').forEach(el=>el.textContent=new Date().getFullYear());
 const setTemporaryLabel=(button,label)=>{const original=button.textContent;button.textContent=label;window.setTimeout(()=>button.textContent=original,2200)};

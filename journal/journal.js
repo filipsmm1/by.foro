@@ -13,11 +13,13 @@
   const departmentButtons=[...library.querySelectorAll('[data-department]')];
   const topicButtons=[...library.querySelectorAll('[data-topic]')];
   const queryButtons=[...library.querySelectorAll('[data-journal-query]')];
+  const topicDisclosure=library.querySelector('.journal-topic-disclosure');
   const allowedDepartments=new Set(departmentButtons.map(button=>button.dataset.department));
   const allowedTopics=new Set(topicButtons.map(button=>button.dataset.topic));
   const params=new URLSearchParams(location.search);
   let department=allowedDepartments.has(params.get('department'))?params.get('department'):'all';
   let topic=allowedTopics.has(params.get('topic'))?params.get('topic'):'all';
+  if(topic!=='all'&&topicDisclosure)topicDisclosure.open=true;
   search.value=params.get('q')||'';
   if(sort&&['newest','longest','shortest','az'].includes(params.get('sort')))sort.value=params.get('sort');
 
@@ -82,7 +84,7 @@
     updateUrl();
   };
   departmentButtons.forEach(button=>button.addEventListener('click',()=>{department=button.dataset.department;apply()}));
-  topicButtons.forEach(button=>button.addEventListener('click',()=>{topic=button.dataset.topic;apply()}));
+  topicButtons.forEach(button=>button.addEventListener('click',()=>{topic=button.dataset.topic;if(topic!=='all'&&topicDisclosure)topicDisclosure.open=true;apply()}));
   queryButtons.forEach(button=>button.addEventListener('click',()=>{search.value=button.dataset.journalQuery;search.focus();apply()}));
   search.addEventListener('input',apply);
   sort?.addEventListener('change',apply);
