@@ -1,6 +1,7 @@
 
 const root=document.documentElement;root.classList.add('reveal-ready');
 const header=document.querySelector('[data-header]');const toggle=document.querySelector('.menu-toggle');const nav=document.querySelector('.site-nav');const drawer=document.querySelector('.nav-drawer');
+if(drawer&&drawer.parentElement!==document.body)document.body.append(drawer);
 let menuReturnFocus=null;
 const menuFocusable=()=>[toggle,...(drawer?.querySelectorAll('a[href],button:not([disabled])')||[])].filter(Boolean);
 const closeMenu=(restoreFocus=false)=>{if(!drawer||!toggle)return;const wasOpen=drawer.classList.contains('is-open');drawer.classList.remove('is-open');header?.classList.remove('has-open-menu');document.body.classList.remove('menu-open');toggle.setAttribute('aria-expanded','false');toggle.querySelector('span').textContent='Explore';drawer.setAttribute('aria-hidden','true');if(wasOpen&&restoreFocus)(menuReturnFocus||toggle).focus()};

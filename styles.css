@@ -752,11 +752,19 @@ body{background:#f8f5ef;color:#1c1815}
 
 .mag-latest-card>a{height:128px;min-height:0;padding:.8rem 0;grid-template-columns:minmax(0,1fr) 88px}
 .mag-latest-card .kicker{margin-bottom:.35rem;font-size:.6rem}
-.mag-latest-card h3{display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2;font-size:1.18rem;line-height:1.02}
+.mag-latest-card h3{display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:3;font-size:1.13rem;line-height:1.02}
 .mag-latest-card span{margin-top:.5rem;font-size:.61rem}
 .mag-pick h3 .title-secondary{display:block;margin-top:.22rem;font-family:var(--serif);font-size:.78em;font-weight:400;line-height:1.06;letter-spacing:-.02em;text-transform:none;color:var(--ink)}
 
 @media(max-width:760px){
   .mag-latest-card>a{height:118px;grid-template-columns:1fr 82px}
   .mag-latest-card h3{font-size:1.28rem}
+}
+
+/* Keep the Explore drawer anchored to the viewport at every scroll position. */
+.nav-drawer{position:fixed;top:82px;max-height:calc(100dvh - 82px)}
+body.menu-open .site-header{position:fixed;inset:0 0 auto;width:100%}
+
+@media(max-width:760px){
+  .nav-drawer{top:74px;max-height:calc(100dvh - 74px)}
 }
