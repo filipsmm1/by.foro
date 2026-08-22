@@ -1,0 +1,55 @@
+name: Publish scheduled by.foro stories
+
+on:
+  schedule:
+    - cron: "15 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: byforo-scheduled-publishing
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Publish stories due today
+        run: |
+          python tools/check_august_22_schedule.py
+          python tools/publish_august_22_schedule.py
+
+      - name: Rebuild catalogue pages and validate
+        shell: bash
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            python tools/refresh_site.py
+            python tools/check_site.py
+            python -m py_compile tools/publish_august_22_schedule.py tools/august_22_scheduled_content.py tools/check_august_22_schedule.py tools/refresh_site.py tools/check_site.py
+            git diff --check
+          fi
+
+      - name: Commit the scheduled release
+        shell: bash
+        run: |
+          if [[ -z "$(git status --porcelain)" ]]; then
+            echo "Nothing due today."
+            exit 0
+          fi
+          git config user.name "by.foro publishing bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add --all
+          git commit -m "Publish scheduled by.foro story for $(date -u +%F)"
+          git push origin HEAD:main

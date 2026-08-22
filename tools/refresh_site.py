@@ -18,7 +18,7 @@ from urllib.parse import quote
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_VERSION = "20260822i"
+ASSET_VERSION = "20260822j"
 ARTICLES = json.loads((ROOT / "content" / "articles.json").read_text(encoding="utf-8"))
 BY_URL = {article["url"]: article for article in ARTICLES}
 
@@ -292,6 +292,31 @@ RELATED = {
         "/blogs/home/elegant-summerween-decor/",
         "/blogs/home/outdoor-space-that-feels-expensive/",
         "/blogs/home/coffee-table-styling-that-looks-collected/",
+    ],
+    "/blogs/fashion/runner-flats-outfit/": [
+        "/blogs/fashion/jelly-kitten-heels/",
+        "/blogs/fashion/summer-loafers-outfit-guide/",
+        "/blogs/fashion/dressing-with-intention/",
+    ],
+    "/blogs/fashion/sheer-poncho-outfit/": [
+        "/blogs/fashion/european-summer-style-2026/",
+        "/blogs/fashion/romantic-fashion-trend-2027/",
+        "/blogs/fashion/how-to-wear-a-scarf-belt/",
+    ],
+    "/blogs/fashion/flowy-capri-pants-outfit/": [
+        "/blogs/fashion/runner-flats-outfit/",
+        "/blogs/fashion/european-summer-style-2026/",
+        "/blogs/fashion/how-to-wear-peplum-tops/",
+    ],
+    "/blogs/fashion/bandana-jewellery/": [
+        "/blogs/fashion/how-to-wear-a-scarf-belt/",
+        "/blogs/fashion/how-to-wear-brooches/",
+        "/blogs/fashion/how-to-wear-a-bib-necklace/",
+    ],
+    "/blogs/culture/sardines-breakfast/": [
+        "/blogs/culture/how-to-serve-chilled-red-wine/",
+        "/blogs/home/elegant-summerween-decor/",
+        "/blogs/culture/how-taste-is-built/",
     ],
 }
 

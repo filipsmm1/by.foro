@@ -1205,6 +1205,8 @@ main{overflow:clip}
   .entry-paths,.edit-ledger,.about-grid{grid-template-columns:1fr}
   .service-grid{grid-template-columns:repeat(2,1fr)}
   .legal-layout{grid-template-columns:1fr}.legal-layout aside{position:static}
+  .article-layout{grid-template-columns:minmax(0,760px);justify-content:center}
+  .article-aside{display:none!important}
 }
 
 @media(max-width:760px){
