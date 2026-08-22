@@ -18,7 +18,7 @@ from urllib.parse import quote
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_VERSION = "20260822c"
+ASSET_VERSION = "20260822d"
 ARTICLES = json.loads((ROOT / "content" / "articles.json").read_text(encoding="utf-8"))
 BY_URL = {article["url"]: article for article in ARTICLES}
 
@@ -857,37 +857,66 @@ def homepage_department_panel(department: str, number: int) -> str:
     )
 
 
+def homepage_mag_latest(article: dict) -> str:
+    short_titles = {
+        "/blogs/beauty/dragonfly-nails/": "Dragonfly Nails, Done Lightly",
+        "/blogs/fashion/khaki-coded-style/": "Khaki, Without the Costume",
+        "/blogs/fashion/bug-jewellery-trend/": "The New Bug Jewellery",
+        "/blogs/home/elegant-summerween-decor/": "Summerween, Without the Plastic",
+    }
+    title = short_titles.get(article["url"], article["title"])
+    return (
+        f'<article class="mag-latest-card"><a href="{esc(article["url"])}"><div>'
+        f'<p class="kicker">{esc(article["department"].title())}</p>'
+        f'<h3>{styled_title(title)}</h3>'
+        f'<span>{article["readingMinutes"]} min read</span></div>'
+        f'<figure class="media">{homepage_picture(article, "105px")}</figure></a></article>'
+    )
+
+
+def homepage_mag_pick(article: dict) -> str:
+    return (
+        f'<article class="mag-pick"><a href="{esc(article["url"])}">'
+        f'<figure class="media">{homepage_picture(article, "(max-width: 760px) 88vw, 22vw")}</figure>'
+        f'<div><p class="kicker">{esc(article["department"].title())}</p>'
+        f'<h3>{styled_title(article["title"])}</h3>'
+        f'<span>{article["readingMinutes"]} min read <i aria-hidden="true">&rarr;</i></span></div>'
+        '</a></article>'
+    )
+
+
+def homepage_mag_category(department: str, article: dict) -> str:
+    return (
+        f'<a class="mag-category" href="/{department}/">'
+        f'<figure class="media">{homepage_picture(article, "(max-width: 760px) 88vw, 23vw")}</figure>'
+        f'<strong>{department.title()}</strong><span aria-hidden="true">&rarr;</span></a>'
+    )
+
+
 def homepage_main() -> str:
     lead = ARTICLES[0]
     lead_department = lead["department"].title()
     lead_topic = TOPIC_LABELS[lead["topic"]]
-    rail_articles = [ARTICLES[index] for index in (1, 2, 3, 7)]
-    rail = "".join(
-        homepage_front_rail_card(article, index)
-        for index, article in enumerate(rail_articles, start=1)
+    rail = "".join(homepage_mag_latest(ARTICLES[index]) for index in (1, 2, 3, 7))
+    picks = "".join(homepage_mag_pick(ARTICLES[index]) for index in (8, 9, 10, 11))
+    categories = "".join(
+        homepage_mag_category(department, ARTICLES[index])
+        for department, index in (("fashion", 18), ("home", 13), ("beauty", 14), ("culture", 51))
     )
-    latest = "".join(
+    shelf = "".join(
         homepage_latest_card(article, index)
-        for index, article in enumerate(ARTICLES[8:14])
+        for index, article in enumerate(ARTICLES[12:18])
     )
-    departments = "".join(
-        homepage_department_panel(department, index)
-        for index, department in enumerate(("home", "fashion", "beauty", "culture"), start=1)
-    )
-    return f'''<main class="front-page" id="main">
-<section class="front-opening" aria-labelledby="front-opening-title">
-  <div><p class="kicker">The by.foro front page &middot; Updated 22 August</p><h1 id="front-opening-title">The stories worth opening today.</h1></div>
-  <p>Fashion, rooms, beauty and culture, edited for people who want a useful point of view, not more noise.</p>
+    return f'''<main class="mag-home" id="main">
+<section class="mag-hero" aria-labelledby="mag-home-title">
+  <div class="mag-intro"><p class="kicker">The by.foro Journal &middot; Updated 22 August</p><h1 id="mag-home-title">The stories worth opening <em>today.</em></h1><p>Fashion, beauty, interiors and culture, edited for people who want a useful point of view, not more noise.</p><a class="button button--wine" href="/journal/">Explore the Journal <span aria-hidden="true">&rarr;</span></a></div>
+  <article class="mag-feature"><a href="{esc(lead["url"])}"><figure class="media">{homepage_picture(lead, "(max-width: 760px) 94vw, 49vw", eager=True)}</figure><div class="mag-feature__card"><p class="kicker">{esc(lead_department)} &middot; {esc(lead_topic)}</p><h2>{styled_title(lead["title"])}</h2><p>{esc(lead["excerpt"])}</p><span>Read the story <i aria-hidden="true">&rarr;</i></span><div><b>01</b><i></i><b>05</b></div></div></a></article>
+  <aside class="mag-latest"><header><p class="kicker">Latest stories</p><a href="/journal/">View all</a></header>{rail}</aside>
 </section>
-<nav class="front-channels" aria-label="Browse the Journal"><span>Go straight to</span><a href="/journal/">All stories</a><a href="/home/">Home</a><a href="/fashion/">Fashion</a><a href="/beauty/">Beauty</a><a href="/culture/">Culture</a><a href="/journal/#journal-library-title">Search</a></nav>
-<section class="front-desk" aria-label="Today’s lead stories">
-  <article class="front-lead"><a href="{esc(lead["url"])}"><figure class="media">{homepage_picture(lead, "(max-width: 760px) 94vw, 64vw", eager=True)}</figure><div class="front-lead__copy"><p class="kicker">Lead story &middot; {esc(lead_department)} &middot; {esc(lead_topic)}</p><h2>{styled_title(lead["title"])}</h2><p>{esc(lead["excerpt"])}</p><span class="front-read">Read the story &middot; {lead["readingMinutes"]} min <i aria-hidden="true">&rarr;</i></span></div></a></article>
-  <aside class="front-rail"><header><div><p class="kicker">New in the Journal</p><h2>Choose your next read.</h2></div><a href="/journal/">View all {len(ARTICLES)}</a></header>{rail}</aside>
-</section>
-<section class="front-find" aria-labelledby="front-find-title"><div><p class="kicker">Choose by mood</p><h2 id="front-find-title">What are you here for?</h2></div><nav><a href="/journal/?department=home&amp;q=expensive">Make a room feel expensive</a><a href="/journal/?department=fashion&amp;q=personal%20style">Dress with more intention</a><a href="/journal/?department=beauty&amp;q=perfume">Find a new fragrance</a><a href="/journal/?department=culture">Read the culture desk</a><a href="/start-here/">Show me where to begin</a></nav></section>
-<section class="front-latest" aria-labelledby="front-latest-title"><header><div><p class="kicker">Recently published</p><h2 id="front-latest-title">More from the desk.</h2></div><p>Six new reads, arranged for fast scanning. Pick the idea that earns your attention.</p></header><div class="front-card-grid">{latest}</div><a class="front-all-link" href="/journal/">Browse all {len(ARTICLES)} stories <span aria-hidden="true">&rarr;</span></a></section>
-<section class="front-departments" aria-labelledby="front-departments-title"><header><p class="kicker">Explore by department</p><h2 id="front-departments-title">A clearer way into the archive.</h2></header><div>{departments}</div></section>
-<section class="front-edit" aria-labelledby="front-edit-title"><div><p class="kicker">The current edit</p><h2 id="front-edit-title">Three routes with somewhere to go.</h2><p>No endless mood-board scrolling. Each edit gathers stories around a useful idea.</p></div><nav><a href="/journal/?department=home&amp;q=expensive"><span>01 &middot; Home</span><strong>The Expensive-Looking Home</strong><i>Lighting, stone, scale and rooms with weight.</i></a><a href="/blogs/home/reading-nook-ideas/"><span>02 &middot; Home</span><strong>The Reading Room</strong><i>Private corners, shelves and places to pause.</i></a><a href="/journal/?department=fashion"><span>03 &middot; Fashion</span><strong>Wardrobe With Intention</strong><i>Proportion, detail and dressing without urgency.</i></a></nav></section>
+<section class="mag-picks" aria-labelledby="mag-picks-title"><header><p class="kicker" id="mag-picks-title">Editor’s picks</p><a href="/journal/">See the complete Journal</a></header><div>{picks}</div></section>
+<section class="mag-categories" aria-labelledby="mag-categories-title"><header><p class="kicker" id="mag-categories-title">Explore by category</p><p>Four clear ways into the by.foro archive.</p></header><div>{categories}</div></section>
+<section class="front-find mag-find" aria-labelledby="front-find-title"><div><p class="kicker">Choose by mood</p><h2 id="front-find-title">What are you here for?</h2></div><nav><a href="/journal/?department=home&amp;q=expensive">Make a room feel expensive</a><a href="/journal/?department=fashion&amp;q=personal%20style">Dress with more intention</a><a href="/journal/?department=beauty&amp;q=perfume">Find a new fragrance</a><a href="/journal/?department=culture">Read the culture desk</a><a href="/start-here/">Show me where to begin</a></nav></section>
+<section class="front-latest mag-shelf" aria-labelledby="front-latest-title"><header><div><p class="kicker">From the archive</p><h2 id="front-latest-title">Keep reading.</h2></div><p>Useful guides and visual stories selected from across the Journal.</p></header><div class="front-card-grid">{shelf}</div><a class="front-all-link" href="/journal/">Browse all {len(ARTICLES)} stories <span aria-hidden="true">&rarr;</span></a></section>
 <section class="newsletter front-letter"><div><p class="kicker">The FORO Letter</p><h2>One sharp edit. No daily noise.</h2></div><div><p>Fashion, rooms, beauty, objects and culture, sent only when there is something worth keeping.</p><form action="https://formsubmit.co/hello@byforo.com" class="newsletter-form" data-ajax-form data-form-kind="newsletter" method="post"><input name="_subject" type="hidden" value="New by.foro newsletter request"><input name="_template" type="hidden" value="table"><input autocomplete="off" class="hp" name="_honey" tabindex="-1" type="text"><label for="newsletter-home">Email address</label><div class="field-line"><input autocomplete="email" id="newsletter-home" name="email" placeholder="you@example.com" required type="email"><button type="submit">Request invitation</button></div><label class="consent"><input name="consent" required type="checkbox" value="Yes"><span>I agree to receive The FORO Letter and understand I can unsubscribe at any time.</span></label><p aria-live="polite" class="form-status"></p></form></div></section>
 </main>'''
 
