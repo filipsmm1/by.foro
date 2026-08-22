@@ -18,7 +18,7 @@ from urllib.parse import quote
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_VERSION = "20260822h"
+ASSET_VERSION = "20260822i"
 ARTICLES = json.loads((ROOT / "content" / "articles.json").read_text(encoding="utf-8"))
 BY_URL = {article["url"]: article for article in ARTICLES}
 

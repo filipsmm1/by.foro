@@ -1290,3 +1290,30 @@ main{overflow:clip}
   .story-grid--department h3,.story-grid--journal .story-card h3,
   .story-grid--journal .story-card:not(.story-card--featured) h3{font-size:1.3rem}
 }
+
+/* Keep the homepage feature card inside its image at wide desktop sizes. */
+@media(min-width:1201px){
+  .mag-feature__card{
+    top:8%;
+    right:4%;
+    bottom:8%;
+    width:min(49%,370px);
+    min-height:0;
+    padding:clamp(1.25rem,1.7vw,1.85rem)
+  }
+  .mag-feature__card h2{
+    margin:.45rem 0 .7rem;
+    font-size:clamp(2rem,2.25vw,2.65rem);
+    line-height:.96
+  }
+  .mag-feature__card>p:not(.kicker){
+    display:-webkit-box;
+    overflow:hidden;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:4;
+    font-size:.78rem;
+    line-height:1.45
+  }
+  .mag-feature__card>span{margin-top:.8rem;font-size:.66rem}
+  .mag-feature__card>div{padding-top:.8rem}
+}
