@@ -18,7 +18,7 @@ from urllib.parse import quote
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_VERSION = "20260822b"
+ASSET_VERSION = "20260822c"
 ARTICLES = json.loads((ROOT / "content" / "articles.json").read_text(encoding="utf-8"))
 BY_URL = {article["url"]: article for article in ARTICLES}
 
@@ -343,11 +343,7 @@ MONTHS = (
     "December",
 )
 
-EDITION_BAR = (
-    '<div class="edition-bar"><span>Independent visual journal</span>'
-    '<a href="/the-edit/">The August edit</a>'
-    '<a href="/journal/#journal-library-title">Search the archive</a></div>'
-)
+EDITION_BAR = ""
 
 PRIMARY_NAV = (
     ("Journal", "/journal/"),
@@ -811,6 +807,91 @@ def homepage_collections() -> str:
 <!-- HOMEPAGE-COLLECTIONS:END -->"""
 
 
+def homepage_picture(article: dict, sizes: str, *, eager: bool = False) -> str:
+    image = article["image"]
+    loading = "eager" if eager else "lazy"
+    priority = ' fetchpriority="high"' if eager else ""
+    return (
+        f'<picture><source type="image/webp" srcset="{esc(webp_srcset(article))}" sizes="{esc(sizes)}">'
+        f'<img alt="{esc(image["alt"])}" decoding="async" height="{image["height"]}" '
+        f'loading="{loading}"{priority} src="{esc(image["fallback"])}" width="{image["width"]}"></picture>'
+    )
+
+
+def homepage_front_rail_card(article: dict, index: int) -> str:
+    department = article["department"].title()
+    topic = TOPIC_LABELS[article["topic"]]
+    return (
+        f'<article class="front-rail-card"><a href="{esc(article["url"])}">'
+        f'<span class="front-rail-card__number">0{index}</span>'
+        f'<div><p class="kicker">{esc(department)} &middot; {esc(topic)}</p>'
+        f'<h3>{styled_title(article["title"])}</h3>'
+        f'<p>{esc(article["excerpt"])}</p></div>'
+        f'<figure class="media">{homepage_picture(article, "110px")}</figure>'
+        '</a></article>'
+    )
+
+
+def homepage_latest_card(article: dict, index: int) -> str:
+    department = article["department"].title()
+    topic = TOPIC_LABELS[article["topic"]]
+    return (
+        f'<article class="front-card front-card--{index + 1}"><a href="{esc(article["url"])}">'
+        f'<figure class="media">{homepage_picture(article, "(max-width: 760px) 92vw, 31vw")}</figure>'
+        f'<div><p class="kicker">{esc(department)} &middot; {esc(topic)}</p>'
+        f'<h3>{styled_title(article["title"])}</h3><p>{esc(article["excerpt"])}</p>'
+        f'<span>{article["readingMinutes"]} min read</span></div></a></article>'
+    )
+
+
+def homepage_department_panel(department: str, number: int) -> str:
+    articles = [article for article in ARTICLES if article["department"] == department][1:4]
+    links = "".join(
+        f'<li><a href="{esc(article["url"])}"><span>{TOPIC_LABELS[article["topic"]]}</span>'
+        f'<strong>{styled_title(article["title"])}</strong><i aria-hidden="true">&rarr;</i></a></li>'
+        for article in articles
+    )
+    return (
+        f'<section class="front-department"><header><span>0{number}</span><h3>{department.title()}</h3>'
+        f'<a href="/{department}/">Open department</a></header><ol>{links}</ol></section>'
+    )
+
+
+def homepage_main() -> str:
+    lead = ARTICLES[0]
+    lead_department = lead["department"].title()
+    lead_topic = TOPIC_LABELS[lead["topic"]]
+    rail_articles = [ARTICLES[index] for index in (1, 2, 3, 7)]
+    rail = "".join(
+        homepage_front_rail_card(article, index)
+        for index, article in enumerate(rail_articles, start=1)
+    )
+    latest = "".join(
+        homepage_latest_card(article, index)
+        for index, article in enumerate(ARTICLES[8:14])
+    )
+    departments = "".join(
+        homepage_department_panel(department, index)
+        for index, department in enumerate(("home", "fashion", "beauty", "culture"), start=1)
+    )
+    return f'''<main class="front-page" id="main">
+<section class="front-opening" aria-labelledby="front-opening-title">
+  <div><p class="kicker">The by.foro front page &middot; Updated 22 August</p><h1 id="front-opening-title">The stories worth opening today.</h1></div>
+  <p>Fashion, rooms, beauty and culture, edited for people who want a useful point of view, not more noise.</p>
+</section>
+<nav class="front-channels" aria-label="Browse the Journal"><span>Go straight to</span><a href="/journal/">All stories</a><a href="/home/">Home</a><a href="/fashion/">Fashion</a><a href="/beauty/">Beauty</a><a href="/culture/">Culture</a><a href="/journal/#journal-library-title">Search</a></nav>
+<section class="front-desk" aria-label="Today’s lead stories">
+  <article class="front-lead"><a href="{esc(lead["url"])}"><figure class="media">{homepage_picture(lead, "(max-width: 760px) 94vw, 64vw", eager=True)}</figure><div class="front-lead__copy"><p class="kicker">Lead story &middot; {esc(lead_department)} &middot; {esc(lead_topic)}</p><h2>{styled_title(lead["title"])}</h2><p>{esc(lead["excerpt"])}</p><span class="front-read">Read the story &middot; {lead["readingMinutes"]} min <i aria-hidden="true">&rarr;</i></span></div></a></article>
+  <aside class="front-rail"><header><div><p class="kicker">New in the Journal</p><h2>Choose your next read.</h2></div><a href="/journal/">View all {len(ARTICLES)}</a></header>{rail}</aside>
+</section>
+<section class="front-find" aria-labelledby="front-find-title"><div><p class="kicker">Choose by mood</p><h2 id="front-find-title">What are you here for?</h2></div><nav><a href="/journal/?department=home&amp;q=expensive">Make a room feel expensive</a><a href="/journal/?department=fashion&amp;q=personal%20style">Dress with more intention</a><a href="/journal/?department=beauty&amp;q=perfume">Find a new fragrance</a><a href="/journal/?department=culture">Read the culture desk</a><a href="/start-here/">Show me where to begin</a></nav></section>
+<section class="front-latest" aria-labelledby="front-latest-title"><header><div><p class="kicker">Recently published</p><h2 id="front-latest-title">More from the desk.</h2></div><p>Six new reads, arranged for fast scanning. Pick the idea that earns your attention.</p></header><div class="front-card-grid">{latest}</div><a class="front-all-link" href="/journal/">Browse all {len(ARTICLES)} stories <span aria-hidden="true">&rarr;</span></a></section>
+<section class="front-departments" aria-labelledby="front-departments-title"><header><p class="kicker">Explore by department</p><h2 id="front-departments-title">A clearer way into the archive.</h2></header><div>{departments}</div></section>
+<section class="front-edit" aria-labelledby="front-edit-title"><div><p class="kicker">The current edit</p><h2 id="front-edit-title">Three routes with somewhere to go.</h2><p>No endless mood-board scrolling. Each edit gathers stories around a useful idea.</p></div><nav><a href="/journal/?department=home&amp;q=expensive"><span>01 &middot; Home</span><strong>The Expensive-Looking Home</strong><i>Lighting, stone, scale and rooms with weight.</i></a><a href="/blogs/home/reading-nook-ideas/"><span>02 &middot; Home</span><strong>The Reading Room</strong><i>Private corners, shelves and places to pause.</i></a><a href="/journal/?department=fashion"><span>03 &middot; Fashion</span><strong>Wardrobe With Intention</strong><i>Proportion, detail and dressing without urgency.</i></a></nav></section>
+<section class="newsletter front-letter"><div><p class="kicker">The FORO Letter</p><h2>One sharp edit. No daily noise.</h2></div><div><p>Fashion, rooms, beauty, objects and culture, sent only when there is something worth keeping.</p><form action="https://formsubmit.co/hello@byforo.com" class="newsletter-form" data-ajax-form data-form-kind="newsletter" method="post"><input name="_subject" type="hidden" value="New by.foro newsletter request"><input name="_template" type="hidden" value="table"><input autocomplete="off" class="hp" name="_honey" tabindex="-1" type="text"><label for="newsletter-home">Email address</label><div class="field-line"><input autocomplete="email" id="newsletter-home" name="email" placeholder="you@example.com" required type="email"><button type="submit">Request invitation</button></div><label class="consent"><input name="consent" required type="checkbox" value="Yes"><span>I agree to receive The FORO Letter and understand I can unsubscribe at any time.</span></label><p aria-live="polite" class="form-status"></p></form></div></section>
+</main>'''
+
+
 def journal_card(article: dict) -> str:
     department = article["department"]
     topic = article["topic"]
@@ -1208,58 +1289,19 @@ def refresh_homepage() -> None:
     path = ROOT / "index.html"
     text = path.read_text(encoding="utf-8")
     text = re.sub(
-        r'<div class="hero-actions">.*?</div>',
-        '<div class="hero-actions"><a class="button button--dark" href="/journal/#journal-library-title">Explore the Journal</a><a class="text-link" href="/start-here/">New here? Start here</a></div>',
+        r'<main\b[^>]*id="main"[^>]*>.*?</main>',
+        homepage_main(),
         text,
         count=1,
         flags=re.S,
     )
     text = re.sub(
-        r'<section aria-label="by\.foro editorial themes" class="marquee">.*?</section>',
-        '<section aria-label="by.foro editorial themes" class="marquee"><div>Personal style &middot; Characterful rooms &middot; Beautiful objects &middot; Visual culture &middot; Personal style &middot; Characterful rooms &middot; Beautiful objects &middot; Visual culture</div></section>',
+        r'<body(?:\s+class="[^"]*")?>',
+        '<body class="front-page-body">',
         text,
         count=1,
         flags=re.S,
     )
-    if "<!-- HOMEPAGE-ENTRY:START -->" in text:
-        text = re.sub(
-            r'<!-- HOMEPAGE-ENTRY:START -->.*?<!-- HOMEPAGE-ENTRY:END -->',
-            homepage_entry_panel(),
-            text,
-            count=1,
-            flags=re.S,
-        )
-    else:
-        text = re.sub(
-            r'(<section aria-label="by\.foro editorial themes" class="marquee">.*?</section>)',
-            rf'\g<1>{homepage_entry_panel()}',
-            text,
-            count=1,
-            flags=re.S,
-        )
-    text = re.sub(
-        r'<section class="story-grid story-grid--editorial">.*?</section>',
-        homepage_story_grid(),
-        text,
-        count=1,
-        flags=re.S,
-    )
-    if "<!-- HOMEPAGE-COLLECTIONS:START -->" in text:
-        text = re.sub(
-            r'<!-- HOMEPAGE-COLLECTIONS:START -->.*?<!-- HOMEPAGE-COLLECTIONS:END -->',
-            homepage_collections(),
-            text,
-            count=1,
-            flags=re.S,
-        )
-    else:
-        text = re.sub(
-            r'(</section>\s*)(?=<section class="foro-index")',
-            rf'\g<1>{homepage_collections()}',
-            text,
-            count=1,
-            flags=re.S,
-        )
     path.write_text(text, encoding="utf-8", newline="\n")
 
 
