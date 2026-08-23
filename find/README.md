@@ -1,24 +1,23 @@
-# by.foro Finder
+# by.foro Product Finder
 
-The live 150-perfume catalogue is stored in `products.json`. The questionnaire and searchable library use those fields directly, so new products and affiliate destinations do not require layout changes.
+The live catalogue is stored in `products.json`. It contains 270 products across six departments: 150 perfumes plus 24 products each for makeup, skincare, kitchen appliances, home essentials and fashion accessories.
 
-## Add an affiliate link
+The interface asks four short questions about budget, product type, priorities and dealbreakers. The searchable library and recommendations read the same product fields, so catalogue updates do not require layout changes.
 
-For the relevant product, paste the complete tracked destination into `affiliateUrl`:
+## Amazon shopping links
 
-```json
-"productUrl": "https://brand.example/product",
-"affiliateUrl": "https://affiliate-network.example/tracked-destination"
-```
+Every shopping destination in the Finder points to Amazon. Current non-perfume products use direct ASIN links. Perfumes use exact Amazon search links where a stable ASIN has not been verified.
 
-When `affiliateUrl` is empty, the button says **View official product** and opens `productUrl`. When it is filled, the button says **Shop via partner**, uses the affiliate destination, and receives `rel="sponsored nofollow noopener"` automatically.
+`affiliateUrl` must stay empty until a real Amazon Associates tracking link is available. Do not invent a tracking ID. When a verified affiliate destination is added, the interface automatically uses it instead of `productUrl`.
 
 ## Product images
 
-Every catalogue image has a `.webp` file and `.jpg` fallback in `assets/products/`. Images are sourced brand or retailer product photography with the original background preserved. `sourceImageUrl`, `productUrl` and `imageCredit` record where each image and listing came from.
+The 150 perfume images have white backgrounds and are stored locally as compact `.webp` files with `.jpg` fallbacks in `assets/products/`. Other departments use current Amazon-hosted product images inside white, `object-fit: contain` image fields. Amazon-hosted images are not copied into the repository.
 
-## Refresh the sourced catalogue
+## Refresh the catalogue
 
-`tools/build_perfume_catalogue.py` reads three current Ulta Beauty eau de parfum listing pages, checks individual product pages for fragrance family and key notes, excludes sets and refills, then prepares compact local images. The first 10 products remain the hand-edited by.foro selection; the script fills the library to exactly 150 distinct perfumes.
+- `tools/build_amazon_departments.py` refreshes 24 current Amazon products for each non-perfume department and merges them with the perfume catalogue.
+- `tools/build_perfume_catalogue.py` refreshes the 150-perfume source set, prepares white-background image files and writes Amazon shopping destinations.
+- `tools/normalize_product_backgrounds.py` converts the edge-connected studio backgrounds of existing local perfume images to white without redrawing branded packaging.
 
-Review the JSON and image diff before publishing because product names, prices and retailer availability can change.
+Review product names, images and destinations before publishing because availability and Amazon listings can change.

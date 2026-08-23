@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Build the static by.foro perfume catalogue from sourced retailer listings.
+"""Build the static by.foro perfume catalogue from sourced product listings.
 
 The script keeps the hand-edited products already in ``products.json`` and adds
-current products from Ulta Beauty listing pages. Product detail copy supplies
-the fragrance family and key notes. Images are downloaded from Ulta's media CDN
-and saved locally as compact WebP files with JPEG fallbacks.
+current products from retailer listing pages. Product detail copy supplies the
+fragrance family and key notes. Images are saved locally on white backgrounds
+as compact WebP files with JPEG fallbacks. Shopping links point to Amazon.
 
 This is an editorial data preparation tool, not a live price feed. Re-run it
 before a major catalogue update and review the resulting diff before publishing.
@@ -19,6 +19,7 @@ import re
 import sys
 import unicodedata
 import urllib.error
+import urllib.parse
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
@@ -359,10 +360,14 @@ def prepare_image(source_url: str, slug: str) -> None:
     IMAGE_DIR.mkdir(parents=True, exist_ok=True)
     raw = request_bytes(f"{source_url}?w=900&h=900&fmt=jpeg", timeout=60)
     with Image.open(io.BytesIO(raw)) as source:
-        image = ImageOps.exif_transpose(source).convert("RGB")
+        image = ImageOps.exif_transpose(source).convert("RGBA")
         image.thumbnail((900, 900), Image.Resampling.LANCZOS)
-        background = Image.new("RGB", (900, 900), "#f7f4ef")
-        background.paste(image, ((900 - image.width) // 2, (900 - image.height) // 2))
+        background = Image.new("RGB", (900, 900), "#ffffff")
+        background.paste(
+            image,
+            ((900 - image.width) // 2, (900 - image.height) // 2),
+            image.getchannel("A"),
+        )
         background.save(IMAGE_DIR / f"{slug}.webp", "WEBP", quality=76, method=6)
         background.save(IMAGE_DIR / f"{slug}.jpg", "JPEG", quality=82, optimize=True, progressive=True)
 
@@ -374,17 +379,18 @@ def build_entry(listing: dict[str, Any], detail: dict[str, Any]) -> dict[str, An
     profile = profile_for(name, detail["officialFamily"], notes, detail["features"])
     slug = image_slug(brand, name, listing["productId"])
     price = listing.get("salePrice") or listing.get("listPrice") or "See current price"
+    amazon_query = urllib.parse.quote_plus(f"{brand} {name}")
     return {
         "id": slug,
         "brand": brand,
         "name": name,
         "concentration": "Eau de parfum",
         "priceTier": price_tier(price),
-        "priceLabel": f"{price} at Ulta" if price.startswith("$") else price,
-        "productUrl": listing["action"]["url"],
+        "priceLabel": "See current price on Amazon",
+        "productUrl": f"https://www.amazon.com/s?k={amazon_query}",
         "affiliateUrl": "",
         "image": slug,
-        "imageCredit": f"Ulta Beauty / {brand}",
+        "imageCredit": f"{brand} product photography",
         "sourceImageUrl": listing["image"]["imageUrl"],
         **profile,
         "notes": notes[:6],
@@ -534,6 +540,8 @@ def main() -> int:
                 print(f"images {complete}/{len(futures)}", flush=True)
 
     catalogue = editorial + added
+    for item in catalogue:
+        item.pop("sourceImageUrl", None)
     PRODUCTS_PATH.write_text(
         json.dumps(catalogue, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
