@@ -17,6 +17,12 @@
   const compareHead = document.querySelector('[data-compare-head]');
   const compareBody = document.querySelector('[data-compare-body]');
   const sourceList = document.querySelector('[data-source-list]');
+  const catalogueGrid = document.querySelector('[data-catalogue-grid]');
+  const catalogueSearch = document.querySelector('[data-catalogue-search]');
+  const catalogueFamily = document.querySelector('[data-catalogue-family]');
+  const cataloguePrice = document.querySelector('[data-catalogue-price]');
+  const catalogueCount = document.querySelector('[data-catalogue-count]');
+  const catalogueMore = document.querySelector('[data-catalogue-more]');
 
   const familyLabels = {
     'skin-musk': 'skin musk',
@@ -39,6 +45,7 @@
 
   let products = [];
   let current = 0;
+  let catalogueVisible = 24;
 
   const escapeHtml = value => String(value).replace(/[&<>'"]/g, character => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
@@ -126,6 +133,63 @@
   });
 
   const overlap = (left, right) => left.filter(value => right.includes(value));
+
+  const normaliseSearch = value => String(value)
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+
+  const catalogueCard = product => {
+    const destination = product.affiliateUrl || product.productUrl;
+    const affiliate = Boolean(product.affiliateUrl);
+    const rel = affiliate ? 'sponsored nofollow noopener' : 'nofollow noopener';
+    return `
+      <article class="catalogue-card">
+        <a href="${escapeHtml(destination)}" target="_blank" rel="${rel}" data-product-link data-product-id="${escapeHtml(product.id)}" data-affiliate="${affiliate}">
+          <div class="catalogue-image"><picture><source srcset="/find/assets/products/${escapeHtml(product.image)}.webp" type="image/webp"><img src="/find/assets/products/${escapeHtml(product.image)}.jpg" width="900" height="900" loading="lazy" decoding="async" alt="${escapeHtml(product.brand)} ${escapeHtml(product.name)} perfume bottle in sourced product photography"></picture></div>
+          <div class="catalogue-copy"><p class="catalogue-brand">${escapeHtml(product.brand)}</p><h3>${escapeHtml(product.name)}</h3><p class="catalogue-meta">${escapeHtml(product.priceLabel)}</p><ul class="catalogue-notes">${product.notes.slice(0, 3).map(note => `<li>${escapeHtml(note)}</li>`).join('')}</ul></div>
+        </a>
+      </article>`;
+  };
+
+  const filteredCatalogue = () => {
+    const query = normaliseSearch(catalogueSearch?.value || '');
+    const family = catalogueFamily?.value || '';
+    const price = Number(cataloguePrice?.value || 0);
+    return products.filter(product => {
+      const haystack = normaliseSearch([product.brand, product.name, product.officialFamily || '', ...product.notes, ...product.families.map(value => familyLabels[value] || value)].join(' '));
+      return (!query || haystack.includes(query))
+        && (!family || product.families.includes(family))
+        && (!price || product.priceTier === price);
+    });
+  };
+
+  const renderCatalogue = (reset = false) => {
+    if (!catalogueGrid) return;
+    if (reset) catalogueVisible = 24;
+    const filtered = filteredCatalogue();
+    const visible = filtered.slice(0, catalogueVisible);
+    catalogueGrid.innerHTML = visible.length
+      ? visible.map(catalogueCard).join('')
+      : '<div class="catalogue-empty"><h3>No exact match.</h3><p>Remove one filter or try a broader note, family or brand.</p></div>';
+    if (catalogueCount) {
+      catalogueCount.textContent = `${filtered.length} perfume${filtered.length === 1 ? '' : 's'} · showing ${visible.length}`;
+    }
+    if (catalogueMore) {
+      catalogueMore.hidden = visible.length >= filtered.length;
+      catalogueMore.textContent = `Show ${Math.min(24, filtered.length - visible.length)} more`;
+    }
+  };
+
+  [catalogueSearch, catalogueFamily, cataloguePrice].filter(Boolean).forEach(control => {
+    control.addEventListener(control === catalogueSearch ? 'input' : 'change', () => renderCatalogue(true));
+  });
+  catalogueMore?.addEventListener('click', () => {
+    catalogueVisible += 24;
+    renderCatalogue();
+  });
+
   const scoreProduct = (product, profile) => {
     let score = 8;
     const matches = {
@@ -223,7 +287,7 @@
 
   const renderResults = (scroll = true) => {
     const profile = answers();
-    const ranked = products.map(product => scoreProduct(product, profile)).sort((a, b) => b.score - a.score || a.product.id.localeCompare(b.product.id));
+    const ranked = products.map(product => scoreProduct(product, profile)).sort((a, b) => b.score - a.score || (b.product.reviewCount || 0) - (a.product.reviewCount || 0) || a.product.id.localeCompare(b.product.id));
     const scores = ranked.map(item => item.score);
     const low = Math.min(...scores);
     const high = Math.max(...scores);
@@ -231,7 +295,15 @@
       item.fit = Math.round(72 + ((item.score - low) / Math.max(1, high - low)) * 24);
       if (item.matches.conflicts.length) item.fit = Math.min(item.fit, 84);
     });
-    const shortlist = ranked.slice(0, 3);
+    const shortlist = [];
+    for (const item of ranked) {
+      if (!shortlist.some(chosen => chosen.product.brand.toLowerCase() === item.product.brand.toLowerCase())) shortlist.push(item);
+      if (shortlist.length === 3) break;
+    }
+    for (const item of ranked) {
+      if (shortlist.length === 3) break;
+      if (!shortlist.includes(item)) shortlist.push(item);
+    }
     resultGrid.innerHTML = shortlist.map(productCard).join('');
     compare(shortlist);
     resultSummary.textContent = `Built from ${profile.families.map(value => familyLabels[value]).join(', ')}, ${intensityLabels[profile.intensity]} projection and ${profile.avoid.length ? `${profile.avoid.length} deal-breaker${profile.avoid.length === 1 ? '' : 's'}` : 'no scent exclusions'}.`;
@@ -297,7 +369,8 @@
       const response = await fetch('/find/products.json', { cache: 'no-cache' });
       if (!response.ok) throw new Error(`Product database returned ${response.status}`);
       products = await response.json();
-      sourceList.innerHTML = products.map(product => `<a href="${escapeHtml(product.sourceImageUrl)}" target="_blank" rel="nofollow noopener">${escapeHtml(product.brand)} ${escapeHtml(product.name)} · ${escapeHtml(product.imageCredit)}</a>`).join('');
+      sourceList.innerHTML = products.map(product => `<a href="${escapeHtml(product.productUrl)}" target="_blank" rel="nofollow noopener">${escapeHtml(product.brand)} ${escapeHtml(product.name)} · ${escapeHtml(product.imageCredit)}</a>`).join('');
+      renderCatalogue(true);
       updateControls();
       const profilePart = location.hash.startsWith('#profile=') ? location.hash.slice(9) : '';
       const profile = profilePart ? decodeProfile(profilePart) : null;

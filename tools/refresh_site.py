@@ -372,6 +372,7 @@ EDITION_BAR = ""
 
 PRIMARY_NAV = (
     ("Journal", "/journal/"),
+    ("Find", "/find/"),
     ("Home", "/home/"),
     ("Fashion", "/fashion/"),
     ("Beauty", "/beauty/"),
@@ -380,7 +381,7 @@ PRIMARY_NAV = (
 
 NAV_DRAWER = """<div class="nav-drawer" id="explore-menu" aria-label="Explore by.foro" aria-hidden="true">
   <div class="nav-drawer__intro"><p class="kicker">Explore by.foro</p><p>Find a useful guide, a beautiful idea or the next story worth keeping.</p><a class="nav-search-link" href="/journal/#journal-library-title">Search all stories <span aria-hidden="true">&rarr;</span></a></div>
-  <div class="nav-drawer__group"><span>Begin</span><a href="/start-here/">Start here</a><a href="/the-edit/">The current edit</a><a href="/journal/">Complete Journal</a></div>
+  <div class="nav-drawer__group"><span>Begin</span><a href="/start-here/">Start here</a><a href="/find/">The Finder</a><a href="/the-edit/">The current edit</a><a href="/journal/">Complete Journal</a></div>
   <div class="nav-drawer__group"><span>Departments</span><a href="/home/">Home</a><a href="/fashion/">Fashion</a><a href="/beauty/">Beauty</a><a href="/culture/">Culture</a></div>
   <div class="nav-drawer__group"><span>Popular paths</span><a href="/journal/?department=home&amp;topic=reading-nooks">Reading nooks</a><a href="/journal/?department=beauty&amp;topic=fragrance">Fragrance</a><a href="/journal/?department=fashion&amp;topic=personal-style">Personal style</a><a href="/journal/?department=fashion&amp;topic=celebrity-style">Celebrity style</a></div>
   <div class="nav-drawer__group"><span>About</span><a href="/about/">About by.foro</a><a href="/editorial-policy/">How we work</a><a href="/studio/">FORO Studio</a><a href="/contact/">Contact</a></div>
@@ -460,7 +461,7 @@ def site_header(current: str) -> str:
 
 
 def site_footer() -> str:
-    return """<footer class="site-footer"><div class="footer-top"><div class="footer-lead"><p class="kicker">Independent visual journal</p><a class="footer-wordmark" href="/">by.foro</a><p>Fashion, interiors, beauty and culture, edited for character and staying power.</p></div><div class="footer-invitation"><p class="kicker">Keep exploring</p><h2>Find something worth your time.</h2><a class="button button--light" href="/journal/#journal-library-title">Search the Journal</a></div></div><div class="footer-grid"><div><h2>Begin</h2><a href="/start-here/">Start here</a><a href="/the-edit/">The Edit</a><a href="/journal/">All stories</a></div><div><h2>Departments</h2><a href="/home/">Home</a><a href="/fashion/">Fashion</a><a href="/beauty/">Beauty</a><a href="/culture/">Culture</a></div><div><h2>About</h2><a href="/about/">About by.foro</a><a href="/studio/">FORO Studio</a><a href="/contact/">Contact</a><a href="/editorial-policy/">How we work</a></div><div><h2>Information</h2><a href="/accessibility/">Accessibility</a><a href="/privacy/">Privacy</a><a href="/cookies/">Cookie settings</a><a href="/terms/">Terms</a></div></div><div class="footer-bottom"><p>&copy; <span data-year>2026</span> by.foro</p><p>Curated by people, not an algorithm.</p></div></footer>"""
+    return """<footer class="site-footer"><div class="footer-top"><div class="footer-lead"><p class="kicker">Independent visual journal</p><a class="footer-wordmark" href="/">by.foro</a><p>Fashion, interiors, beauty and culture, edited for character and staying power.</p></div><div class="footer-invitation"><p class="kicker">Keep exploring</p><h2>Find something worth your time.</h2><a class="button button--light" href="/journal/#journal-library-title">Search the Journal</a></div></div><div class="footer-grid"><div><h2>Begin</h2><a href="/start-here/">Start here</a><a href="/find/">The Finder</a><a href="/the-edit/">The Edit</a><a href="/journal/">All stories</a></div><div><h2>Departments</h2><a href="/home/">Home</a><a href="/fashion/">Fashion</a><a href="/beauty/">Beauty</a><a href="/culture/">Culture</a></div><div><h2>About</h2><a href="/about/">About by.foro</a><a href="/studio/">FORO Studio</a><a href="/contact/">Contact</a><a href="/editorial-policy/">How we work</a></div><div><h2>Information</h2><a href="/accessibility/">Accessibility</a><a href="/privacy/">Privacy</a><a href="/cookies/">Cookie settings</a><a href="/terms/">Terms</a></div></div><div class="footer-bottom"><p>&copy; <span data-year>2026</span> by.foro</p><p>Curated by people, not an algorithm.</p></div></footer>"""
 
 
 def article_path(article: dict) -> Path:
@@ -1633,6 +1634,7 @@ def refresh_discovery_files() -> None:
         ("/start-here/", latest_article_date, "monthly", "0.8"),
         ("/the-edit/", latest_article_date, "weekly", "0.8"),
         ("/journal/", latest_article_date, "weekly", "0.9"),
+        ("/find/", "2026-08-23", "weekly", "0.9"),
         ("/fashion/", latest_article_date, "weekly", "0.8"),
         ("/home/", latest_article_date, "weekly", "0.8"),
         ("/beauty/", latest_article_date, "weekly", "0.8"),
