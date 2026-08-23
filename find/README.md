@@ -1,6 +1,6 @@
 # by.foro Product Finder
 
-The live catalogue is stored in `products.json`. It contains 270 products across six departments: 150 perfumes plus 24 products each for makeup, skincare, kitchen appliances, home essentials and fashion accessories.
+The live catalogue is stored in `products.json`. It contains 1,200 products across six departments: 200 each for perfume, makeup, skincare, kitchen appliances, home essentials and fashion accessories.
 
 The interface asks four short questions about budget, product type, priorities and dealbreakers. The searchable library and recommendations read the same product fields, so catalogue updates do not require layout changes.
 
@@ -12,11 +12,11 @@ Every shopping destination in the Finder points to Amazon. Current non-perfume p
 
 ## Product images
 
-The 150 perfume images have white backgrounds and are stored locally as compact `.webp` files with `.jpg` fallbacks in `assets/products/`. Other departments use current Amazon-hosted product images inside white, `object-fit: contain` image fields. Amazon-hosted images are not copied into the repository.
+The original 150 perfume images have white backgrounds and are stored locally as compact `.webp` files with `.jpg` fallbacks in `assets/products/`. The 50 additional perfumes and all other departments use Amazon-hosted product images inside white, `object-fit: contain` image fields. Amazon-hosted images are not copied into the repository.
 
 ## Refresh the catalogue
 
-- `tools/build_amazon_departments.py` refreshes 24 current Amazon products for each non-perfume department and merges them with the perfume catalogue.
+- `tools/build_amazon_departments.py` maintains at least 200 Amazon-linked products in every department. Completed departments are preserved by default; pass `--refresh` for a deliberate full source refresh.
 - `tools/build_perfume_catalogue.py` refreshes the 150-perfume source set, prepares white-background image files and writes Amazon shopping destinations.
 - `tools/normalize_product_backgrounds.py` converts the edge-connected studio backgrounds of existing local perfume images to white without redrawing branded packaging.
 

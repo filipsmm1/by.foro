@@ -1,8 +1,9 @@
-"""Build the non-fragrance departments for the by.foro Finder.
+"""Build every Amazon-backed department for the by.foro Finder.
 
 The script keeps the existing editorial perfume catalogue, changes its shopping
-destinations to Amazon searches, and adds five current Amazon departments. It
-stores Amazon-hosted thumbnail URLs rather than copying Amazon product images.
+destinations to Amazon searches, supplements it to the requested size, and
+builds five further departments from current Amazon category and search pages.
+It stores Amazon-hosted image URLs rather than copying Amazon product images.
 That keeps the catalogue light and leaves product graphics on Amazon's servers.
 """
 
@@ -10,7 +11,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import math
 import re
 import sys
 import time
@@ -26,6 +26,7 @@ from lxml import html
 FIND_DIR = Path(__file__).resolve().parents[1]
 PRODUCTS_PATH = FIND_DIR / "products.json"
 CHECKED_DATE = "2026-08-23"
+DEFAULT_PER_DEPARTMENT = 200
 USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140 Safari/537.36"
@@ -45,7 +46,71 @@ SOURCES = {
     ],
 }
 
+# Targeted searches provide enough breadth for a 200-item department while also
+# supplying a reliable type hint when a concise Amazon title omits category
+# language. Searches stop as soon as the requested unique-item target is met.
+SEARCHES: dict[str, list[tuple[str, str]]] = {
+    "perfume": [
+        ("women's perfume", "floral-powdery"),
+        ("men's cologne", "green-woody"),
+        ("unisex fragrance", "skin-musk"),
+        ("vanilla perfume", "gourmand-vanilla"),
+        ("musk perfume", "skin-musk"),
+        ("fresh citrus perfume", "fresh-citrus"),
+        ("oud perfume", "green-woody"),
+        ("amber perfume", "amber-spicy"),
+    ],
+    "makeup": [
+        ("mascara", "eyes"), ("eyeshadow palette", "eyes"),
+        ("eyeliner makeup", "eyes"), ("foundation makeup", "complexion"),
+        ("concealer makeup", "complexion"), ("face primer makeup", "complexion"),
+        ("face powder makeup", "complexion"), ("lipstick", "lips"),
+        ("lip gloss", "lips"), ("blush makeup", "cheeks"),
+        ("bronzer highlighter", "cheeks"), ("eyebrow pencil", "brows"),
+    ],
+    "skincare": [
+        ("facial cleanser", "cleanser"), ("face moisturizer", "moisturizer"),
+        ("face sunscreen", "sunscreen"), ("face serum", "serum"),
+        ("vitamin c serum", "serum"), ("retinol serum", "serum"),
+        ("face toner", "exfoliant"), ("face exfoliant", "exfoliant"),
+        ("acne treatment", "mask"), ("pimple patches", "mask"),
+        ("face mask skincare", "mask"), ("body lotion", "body"),
+    ],
+    "kitchen": [
+        ("air fryer", "air-frying"), ("coffee maker", "coffee"),
+        ("espresso machine", "coffee"), ("personal blender", "blending"),
+        ("countertop blender", "blending"), ("food processor", "blending"),
+        ("two slice toaster", "breakfast"), ("electric kettle", "breakfast"),
+        ("waffle maker", "baking"), ("stand mixer", "baking"),
+        ("rice cooker", "meal-prep"), ("slow cooker", "meal-prep"),
+        ("indoor grill", "meal-prep"), ("juicer machine", "blending"),
+    ],
+    "home": [
+        ("table lamp home decor", "lighting"), ("floor lamp home", "lighting"),
+        ("throw pillow home decor", "textiles"), ("area rug home", "textiles"),
+        ("throw blanket", "textiles"), ("curtains living room", "textiles"),
+        ("storage basket home", "storage"), ("drawer organizer home", "storage"),
+        ("home storage shelves", "storage"), ("decorative tray", "tabletop"),
+        ("decorative vase", "tabletop"), ("picture frame home", "wall-decor"),
+        ("wall mirror home decor", "wall-decor"), ("wall art home decor", "wall-decor"),
+        ("candle warmer lamp", "scent"), ("reed diffuser home", "scent"),
+    ],
+    "accessories": [
+        ("women's earrings", "jewelry"), ("women's necklace", "jewelry"),
+        ("women's bracelet", "jewelry"), ("women's rings", "jewelry"),
+        ("brooch pin women", "jewelry"), ("women's handbag", "handbags"),
+        ("women's wallet", "handbags"), ("women's tote bag", "handbags"),
+        ("women's hair accessories", "hair"), ("women's belt", "belts"),
+        ("women's scarf", "scarves"), ("women's sunglasses", "eyewear"),
+        ("women's sun hat", "hats"),
+    ],
+}
+
 ALLOW = {
+    "perfume": re.compile(
+        r"perfume|parfum|fragrance|cologne|eau de toilette|eau de parfum|body spray",
+        re.I,
+    ),
     "makeup": re.compile(
         r"mascara|lip|foundation|concealer|blush|bronzer|liner|shadow|brow|powder|primer|makeup|gloss|highlighter",
         re.I,
@@ -69,11 +134,12 @@ ALLOW = {
 }
 
 BLOCK = re.compile(
-    r"refill|replacement|liner|filter only|gift card|subscription|book|costume|cleaning cloth|makeup remover|wipes",
+    r"\brefill\b|\breplacement\b|\bliner\b|filter only|gift card|subscription|\bbook\b|costume|cleaning cloth|makeup remover|wipes",
     re.I,
 )
 
 DEPARTMENT_BLOCK = {
+    "perfume": re.compile(r"empty bottle|atomizer only|perfume tray|perfume organizer|deodorant", re.I),
     "makeup": re.compile(r"remover|wipe|cleaner|case|bag|mirror", re.I),
     "skincare": re.compile(r"setting spray|towel|cloth|tool|brush|massager|razor|supplement", re.I),
     "kitchen": re.compile(r"replacement|accessor|liner|filter|recipe|cover only", re.I),
@@ -99,12 +165,31 @@ KNOWN_BRANDS = sorted(
         "Julep", "Revlon", "Clinique", "Vanicream", "EltaMD", "Naturium", "Dr.Althea",
         "Turelar", "Cosori", "Nutribullet", "CHICHAUS", "Crock-Pot", "AROMA", "Elite Gourmet",
         "Chefman", "OVENTE", "upsimples",
+        "Yves Saint Laurent", "Victoria's Secret", "Swiss Arabian", "Giorgio Armani",
+        "Dolce & Gabbana", "Carolina Herrera", "Jean Paul Gaultier", "Ariana Grande",
+        "Billie Eilish", "Sabrina Carpenter", "Calvin Klein", "Ralph Lauren", "Britney Spears",
+        "Elizabeth Arden", "Maison Alhambra", "Al Haramain", "Fragrance World", "Sol de Janeiro",
+        "Maison Margiela", "Juliette Has a Gun", "Marc Jacobs", "Viktor & Rolf", "Tom Ford",
+        "Paco Rabanne", "Lucky Brand", "Ed Hardy", "Kate Spade", "Paris Hilton", "Perry Ellis",
+        "Lattafa", "Afnan", "Rasasi", "Armaf", "Pacifica", "Dossier", "Nemat", "Mugler",
+        "Versace", "Gucci", "Burberry", "Prada", "Dior", "Chanel", "Valentino", "Givenchy",
+        "Lancôme", "Clinique", "Coach", "Nautica", "Davidoff", "Montblanc", "Rabanne",
+        "Azzaro", "Guess", "Jimmy Choo", "Issey Miyake", "Tommy Hilfiger", "Vera Wang",
+        "Jovan", "Curve", "Cuba",
     },
     key=len,
     reverse=True,
 )
 
 TYPE_RULES = {
+    "perfume": {
+        "skin-musk": r"musk|skin scent|clean|cotton|cashmere|ambrette",
+        "fresh-citrus": r"fresh|citrus|bergamot|lemon|orange|aqua|marine|ocean|blue",
+        "floral-powdery": r"floral|rose|jasmine|iris|violet|gardenia|blossom|powder",
+        "green-woody": r"wood|woody|oud|cedar|sandal|vetiver|green|forest|tobacco",
+        "gourmand-vanilla": r"vanilla|gourmand|caramel|candy|chocolate|coffee|sweet|coconut",
+        "amber-spicy": r"amber|spice|spicy|intense|elixir|oriental|warm",
+    },
     "makeup": {
         "complexion": r"foundation|concealer|powder|primer|setting spray",
         "lips": r"lip|gloss",
@@ -150,6 +235,15 @@ TYPE_RULES = {
 }
 
 PRIORITY_RULES = {
+    "perfume": {
+        "longevity": r"long.?lasting|intense|elixir|parfum|extrait",
+        "subtlety": r"skin|clean|soft|light|fresh",
+        "uniqueness": r"niche|unisex|oud|artisan|rare",
+        "versatility": r"everyday|daily|classic|signature",
+        "compliments": r"bold|seductive|sexy|statement",
+        "layering": r"layer|musk|oil",
+        "comfort": r"vanilla|cashmere|warm|cozy|coconut",
+    },
     "makeup": {
         "natural": r"natural|sheer|tinted|skin tint",
         "long-wear": r"long.?wear|24.?hour|waterproof|stay",
@@ -193,6 +287,7 @@ PRIORITY_RULES = {
 }
 
 AVOID_RULES = {
+    "perfume": {"sweet": r"sweet|candy|caramel|gourmand", "powdery": r"powder|iris|violet", "floral": r"floral|rose|jasmine|flower", "citrus": r"citrus|lemon|bergamot|orange", "musk": r"musk", "vanilla": r"vanilla", "woody": r"wood|oud|cedar|sandal", "smoky": r"smok|tobacco|incense", "strong": r"intense|elixir|extrait|powerful"},
     "makeup": {"fragrance": r"fragrance|scented", "shimmer": r"shimmer|glitter|sparkle", "full-coverage": r"full coverage", "waterproof": r"waterproof", "cream": r"cream|liquid", "powder": r"powder"},
     "skincare": {"fragrance": r"fragrance|scented|perfume", "active-heavy": r"retinol|acid|peel|benzoyl", "rich": r"rich|butter|balm", "oil": r"oil", "exfoliating": r"exfol|scrub|peel|acid"},
     "kitchen": {"plastic": r"plastic", "hand-wash": r"hand wash", "large": r"large|family|12.?cup|14.?cup", "single-use": r"single.?serve|one function", "noisy": r"powerful|high.?speed"},
@@ -217,12 +312,33 @@ def request_text(url: str) -> str:
     raise RuntimeError("Amazon request did not complete")
 
 
+def search_document(query: str, page: int) -> Any:
+    """Fetch a populated Amazon search page, retrying empty throttle pages."""
+    last_count = 0
+    for attempt in range(4):
+        params = urllib.parse.urlencode(
+            {"k": query, "page": page, "qid": int(time.time()) + attempt}
+        )
+        document = html.fromstring(request_text(f"https://www.amazon.com/s?{params}"))
+        last_count = len(
+            document.xpath("//*[@data-component-type='s-search-result' and @data-asin]")
+        )
+        if last_count >= 8:
+            time.sleep(0.7)
+            return document
+        time.sleep(2.0 * (attempt + 1))
+    raise RuntimeError(
+        f"Amazon returned an incomplete search page for {query!r} page {page} ({last_count} items)"
+    )
+
+
 def clean_spaces(value: str) -> str:
     return re.sub(r"\s+", " ", value).strip()
 
 
 def brand_and_name(title: str) -> tuple[str, str]:
-    cleaned = clean_spaces(title).replace("�", "")
+    cleaned = clean_spaces(title).replace("\ufffd", "")
+    cleaned = re.sub(r"^Sponsored Ad\s*[-:]\s*", "", cleaned, flags=re.I)
     brand = next((name for name in KNOWN_BRANDS if cleaned.lower().startswith(name.lower())), "")
     if not brand:
         brand = re.split(r"\s+", cleaned, maxsplit=1)[0].strip("-–—|,")
@@ -234,14 +350,17 @@ def brand_and_name(title: str) -> tuple[str, str]:
         brand = "Hero Cosmetics"
         cleaned = cleaned.replace("Mighty Patch Hero Cosmetics", "Hero Cosmetics Mighty Patch", 1)
     remaining = cleaned if brand == "Amazon Find" else cleaned[len(brand):].lstrip(" -–—|,")
-    name = re.split(r"\s*[|,]\s*|\s+-\s+|\s+with\s+", remaining, maxsplit=1, flags=re.I)[0]
+    name = re.split(r"\s*\|\s*|\s+-\s+|\s+with\s+", remaining, maxsplit=1, flags=re.I)[0]
     name = re.sub(r"\s+\(?Pack of.*$|\s+\d+\s*(?:Count|Ct)\b.*$", "", name, flags=re.I)
     name = clean_spaces(name)[:82].rstrip(" -–—|,")
     return brand[:42], name or cleaned[:82]
 
 
 def price_tier(card: Any) -> int:
-    prices = card.xpath(".//span[contains(@class,'p13n-sc-price')]/text()")
+    prices = card.xpath(
+        ".//span[contains(@class,'p13n-sc-price')]/text() | "
+        ".//span[contains(@class,'a-price')]//span[contains(@class,'a-offscreen')]/text()"
+    )
     if not prices:
         return 0
     match = re.search(r"([0-9]+(?:[.,][0-9]+)?)", clean_spaces(prices[0]).replace(",", ""))
@@ -256,58 +375,141 @@ def classify(title: str, rules: dict[str, str], fallback: str) -> list[str]:
     return matches[:3] or [fallback]
 
 
-def scrape_department(department: str, target: int) -> list[dict[str, Any]]:
+def image_url(image: Any) -> str:
+    srcset = clean_spaces(image.get("srcset", ""))
+    choices = [part.strip().split(" ", 1)[0] for part in srcset.split(",") if part.strip()]
+    source = choices[-1] if choices else image.get("src", "")
+    return source.replace("http://", "https://")
+
+
+def duplicate_key(brand: str, name: str) -> str:
+    value = clean_spaces(f"{brand} {name}").lower()
+    value = re.sub(r"\b(?:pack|set) of \d+\b|\b\d+\s*(?:count|ct)\b", "", value)
+    return re.sub(r"[^a-z0-9]+", " ", value).strip()
+
+
+def entry_from_card(department: str, card: Any, fallback_type: str) -> dict[str, Any] | None:
+    asin = card.get("data-asin", "").strip()
+    images = card.xpath(".//img[@src]")
+    if not asin or not images:
+        return None
+    title = clean_spaces(images[0].get("alt", ""))
+    if not title:
+        title = clean_spaces(" ".join(card.xpath(".//h2//text()")))
+    if (
+        not title
+        or BLOCK.search(title)
+        or DEPARTMENT_BLOCK[department].search(title)
+        or not ALLOW[department].search(title)
+    ):
+        return None
+    brand, name = brand_and_name(title)
+    types = classify(title, TYPE_RULES[department], fallback_type)
+    if fallback_type not in types:
+        types = [fallback_type, *types][:3]
+    priorities = classify(title, PRIORITY_RULES[department], next(iter(PRIORITY_RULES[department])))
+    avoid = [key for key, pattern in AVOID_RULES[department].items() if re.search(pattern, title, re.I)][:3]
+    return {
+        "id": f"{department}-{asin.lower()}",
+        "department": department,
+        "brand": brand,
+        "name": name,
+        "priceTier": price_tier(card),
+        "priceLabel": "See current price on Amazon",
+        "productUrl": f"https://www.amazon.com/dp/{asin}",
+        "affiliateUrl": "",
+        "imageUrl": image_url(images[0]),
+        "imageCredit": "Amazon product photography",
+        "types": types,
+        "priorities": priorities,
+        "avoid": avoid,
+        "tags": list(dict.fromkeys(types + priorities))[:4],
+        "summary": f"A {types[0].replace('-', ' ')} option from {brand}, found in Amazon's current catalogue.",
+        "amazonAsin": asin,
+        "catalogueChecked": CHECKED_DATE,
+    }
+
+
+def scrape_department(
+    department: str,
+    target: int,
+    excluded_titles: set[str] | None = None,
+) -> list[dict[str, Any]]:
     candidates: list[dict[str, Any]] = []
-    seen: set[str] = set()
-    source_quota = math.ceil(target / len(SOURCES[department]))
-    for source in SOURCES[department]:
-        source_start = len(candidates)
+    seen_asins: set[str] = set()
+    seen_titles = set(excluded_titles or set())
+
+    def collect(document: Any, fallback_type: str, max_add: int | None = None) -> int:
+        added = 0
+        cards = document.xpath("//*[@data-component-type='s-search-result' and @data-asin]")
+        if not cards:
+            cards = document.xpath("//*[@data-asin and string-length(@data-asin)>0]")
+        for card in cards:
+            entry = entry_from_card(department, card, fallback_type)
+            if not entry:
+                continue
+            asin = entry["amazonAsin"]
+            title_key = duplicate_key(entry["brand"], entry["name"])
+            if asin in seen_asins or title_key in seen_titles:
+                continue
+            candidates.append(entry)
+            seen_asins.add(asin)
+            seen_titles.add(title_key)
+            added += 1
+            if len(candidates) == target or (max_add is not None and added == max_add):
+                break
+        return added
+
+    # The concise Best Sellers pages are useful for small editorial refreshes.
+    # At 100+ items, targeted searches provide much better type diversity.
+    for source in SOURCES.get(department, []) if target < 100 else []:
         for page in (1, 2):
             joiner = "&" if "?" in source else "?"
             document = html.fromstring(request_text(f"{source}{joiner}pg={page}"))
-            for card in document.xpath("//*[@data-asin and string-length(@data-asin)>0]"):
-                asin = card.get("data-asin", "").strip()
-                if not asin or asin in seen:
-                    continue
-                image = card.xpath(".//img[@src]")
-                if not image:
-                    continue
-                title = clean_spaces(image[0].get("alt", ""))
-                if not title or BLOCK.search(title) or DEPARTMENT_BLOCK[department].search(title) or not ALLOW[department].search(title):
-                    continue
-                brand, name = brand_and_name(title)
-                types = classify(title, TYPE_RULES[department], next(iter(TYPE_RULES[department])))
-                priorities = classify(title, PRIORITY_RULES[department], next(iter(PRIORITY_RULES[department])))
-                avoid = [key for key, pattern in AVOID_RULES[department].items() if re.search(pattern, title, re.I)][:3]
-                image_url = image[0].get("src", "").replace("http://", "https://")
-                candidates.append(
-                    {
-                        "id": f"{department}-{asin.lower()}",
-                        "department": department,
-                        "brand": brand,
-                        "name": name,
-                        "priceTier": price_tier(card),
-                        "priceLabel": "See current price on Amazon",
-                        "productUrl": f"https://www.amazon.com/dp/{asin}",
-                        "affiliateUrl": "",
-                        "imageUrl": image_url,
-                        "imageCredit": "Amazon product photography",
-                        "types": types,
-                        "priorities": priorities,
-                        "avoid": avoid,
-                        "tags": list(dict.fromkeys(types + priorities))[:4],
-                        "summary": f"A {types[0].replace('-', ' ')} option from {brand}, selected from Amazon's current category listings.",
-                        "amazonAsin": asin,
-                        "catalogueChecked": CHECKED_DATE,
-                    }
-                )
-                seen.add(asin)
-                if len(candidates) - source_start >= source_quota or len(candidates) == target:
-                    break
-            if len(candidates) - source_start >= source_quota or len(candidates) == target:
-                break
-        if len(candidates) == target:
-            return candidates
+            collect(document, next(iter(TYPE_RULES[department])))
+            print(f"{department}: {len(candidates)}/{target}", flush=True)
+            if len(candidates) == target:
+                return candidates
+
+    searches = SEARCHES[department]
+    type_totals = {
+        type_name: target // len(TYPE_RULES[department])
+        + (index < target % len(TYPE_RULES[department]))
+        for index, type_name in enumerate(TYPE_RULES[department])
+    }
+    type_occurrences = {
+        type_name: sum(fallback == type_name for _, fallback in searches)
+        for type_name in TYPE_RULES[department]
+    }
+    used_per_type = {type_name: 0 for type_name in TYPE_RULES[department]}
+    query_limits: list[int] = []
+    for _, fallback_type in searches:
+        occurrence = used_per_type[fallback_type]
+        count = type_occurrences[fallback_type]
+        total = type_totals[fallback_type]
+        query_limits.append(total // count + (occurrence < total % count))
+        used_per_type[fallback_type] += 1
+    query_counts = [0] * len(searches)
+
+    for page in (1, 2):
+        for query_index, (query, fallback_type) in enumerate(searches):
+            remaining = query_limits[query_index] - query_counts[query_index]
+            if remaining <= 0:
+                continue
+            document = search_document(query, page)
+            query_counts[query_index] += collect(document, fallback_type, remaining)
+            print(f"{department}: {len(candidates)}/{target}", flush=True)
+            if len(candidates) == target:
+                return candidates
+
+    # If a narrow query could not fill its share, reuse the unselected results
+    # from every query before declaring the department incomplete.
+    for page in (1, 2):
+        for query, fallback_type in searches:
+            document = search_document(query, page)
+            collect(document, fallback_type)
+            if len(candidates) == target:
+                return candidates
     raise RuntimeError(f"Only {len(candidates)} usable {department} products were found; {target} required")
 
 
@@ -317,13 +519,27 @@ def amazon_search(brand: str, name: str) -> str:
 
 
 def perfume_catalogue(existing: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    perfumes = [item for item in existing if item.get("department", "perfume") == "perfume"]
+    perfumes = [
+        item
+        for item in existing
+        if item.get("department", "perfume") == "perfume"
+        and (
+            not item.get("amazonAsin")
+            or not DEPARTMENT_BLOCK["perfume"].search(f"{item.get('brand', '')} {item.get('name', '')}")
+        )
+    ]
     for item in perfumes:
         item["department"] = "perfume"
-        item["types"] = item.get("families", ["skin-musk"])
+        item["types"] = item.get("families") or item.get("types") or ["skin-musk"]
         item["tags"] = item.get("notes", [])[:4]
-        item["avoid"] = item.get("traits", [])
-        item["productUrl"] = amazon_search(item["brand"], item["name"])
+        if not item["tags"]:
+            item["tags"] = list(dict.fromkeys(item["types"] + item.get("priorities", [])))[:4]
+        item["avoid"] = item.get("traits") or item.get("avoid") or []
+        item["productUrl"] = (
+            f"https://www.amazon.com/dp/{item['amazonAsin']}"
+            if item.get("amazonAsin")
+            else amazon_search(item["brand"], item["name"])
+        )
         item["affiliateUrl"] = ""
         item["priceLabel"] = "See current price on Amazon"
         item["imageCredit"] = f"{item['brand']} product photography"
@@ -334,12 +550,33 @@ def perfume_catalogue(existing: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--per-department", type=int, default=24)
+    parser.add_argument("--per-department", type=int, default=DEFAULT_PER_DEPARTMENT)
+    parser.add_argument(
+        "--refresh",
+        action="store_true",
+        help="Re-fetch departments that already meet the requested size.",
+    )
     args = parser.parse_args()
     existing = json.loads(PRODUCTS_PATH.read_text(encoding="utf-8"))
-    catalogue = perfume_catalogue(existing)
+    perfumes = perfume_catalogue(existing)[: args.per_department]
+    if len(perfumes) < args.per_department:
+        existing_titles = {duplicate_key(item["brand"], item["name"]) for item in perfumes}
+        perfumes.extend(
+            scrape_department(
+                "perfume",
+                args.per_department - len(perfumes),
+                excluded_titles=existing_titles,
+            )
+        )
+    catalogue = perfumes
+    print(f"perfume: {len(perfumes)}", flush=True)
     for department in SOURCES:
-        products = scrape_department(department, args.per_department)
+        current = [item for item in existing if item.get("department") == department]
+        products = (
+            current[: args.per_department]
+            if not args.refresh and len(current) >= args.per_department
+            else scrape_department(department, args.per_department)
+        )
         catalogue.extend(products)
         print(f"{department}: {len(products)}", flush=True)
     PRODUCTS_PATH.write_text(
