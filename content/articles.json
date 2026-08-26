@@ -1,5 +1,89 @@
 [
   {
+    "title": "Eyeliner Stickers, Without the Festival Effect",
+    "seoTitle": "Eyeliner Stickers: How to Wear the 2026 Makeup Trend",
+    "department": "beauty",
+    "topic": "makeup",
+    "published": "2026-08-26",
+    "readingMinutes": 12,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/beauty/eyeliner-stickers/",
+    "excerpt": "The shortcut works when the material stays thin, the direction follows the lashes and the rest of the makeup gives it room.",
+    "metaDescription": "Learn how to apply eyeliner stickers cleanly, choose a flattering shape, improve wear and style the 2026 makeup trend without a costume effect in real life.",
+    "image": {
+      "webp": "/assets/images/blogs/beauty/eyeliner-stickers/eyeliner-stickers-hero.webp",
+      "fallback": "/assets/images/blogs/beauty/eyeliner-stickers/eyeliner-stickers-hero.jpg",
+      "alt": "Black wing-shaped eyeliner stickers on clear backing with steel tweezers, gel liner and cotton buds on pale travertine",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Makeup",
+    "breadcrumbTopic": true
+  },
+  {
+    "title": "Tomato Leaf Perfume Smells Better Than It Sounds",
+    "seoTitle": "Tomato Leaf Perfume: What the Green Scent Smells Like",
+    "department": "beauty",
+    "topic": "fragrance",
+    "published": "2026-08-26",
+    "readingMinutes": 11,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/beauty/tomato-leaf-perfume-guide/",
+    "excerpt": "It is the greenhouse around the fruit: snapped stem, damp soil, bitter sap and the sweetness waiting beyond the leaves.",
+    "metaDescription": "Discover what tomato leaf perfume smells like, how green fragrance styles differ, what to layer with them and how to choose a wearable bottle for every season.",
+    "image": {
+      "webp": "/assets/images/blogs/beauty/tomato-leaf-perfume-guide/tomato-leaf-perfume-hero.webp",
+      "fallback": "/assets/images/blogs/beauty/tomato-leaf-perfume-guide/tomato-leaf-perfume-hero.jpg",
+      "alt": "Unbranded clear green perfume bottle beside wet tomato leaves, green tomatoes, terracotta pots and grapefruit peel in a greenhouse",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Fragrance",
+    "breadcrumbTopic": true
+  },
+  {
+    "title": "The Arched Range Hood, Drawn Properly",
+    "seoTitle": "Arched Range Hood Ideas for a Softer, Timeless Kitchen",
+    "department": "home",
+    "topic": "kitchens",
+    "published": "2026-08-26",
+    "readingMinutes": 11,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/home/arched-range-hood-ideas/",
+    "excerpt": "Begin with the insert, duct and working clearance. The curve belongs around the appliance, never the other way round.",
+    "metaDescription": "Plan an arched range hood with better proportions, functional ventilation, practical materials and design ideas for large and small kitchens alike.",
+    "image": {
+      "webp": "/assets/images/blogs/home/arched-range-hood-ideas/arched-range-hood-hero.webp",
+      "fallback": "/assets/images/blogs/home/arched-range-hood-ideas/arched-range-hood-hero.jpg",
+      "alt": "Bright oak kitchen with a broad cream plaster arch framing an unbranded range, copper pan and discreet ventilation filter",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Kitchens",
+    "breadcrumbTopic": true
+  },
+  {
+    "title": "Turquoise Accessories, Minus the Holiday Costume",
+    "seoTitle": "How to Wear Turquoise Accessories Without Looking Beachy",
+    "department": "fashion",
+    "topic": "accessories",
+    "published": "2026-08-26",
+    "readingMinutes": 11,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/fashion/how-to-wear-turquoise-accessories/",
+    "excerpt": "One clear blue-green object can change the temperature of an outfit. Give it serious materials and no matching chorus.",
+    "metaDescription": "Learn how to wear turquoise accessories with chocolate brown, charcoal, camel, oxblood and denim, plus practical turquoise jewellery buying guidance.",
+    "image": {
+      "webp": "/assets/images/blogs/fashion/how-to-wear-turquoise-accessories/turquoise-accessories-hero.webp",
+      "fallback": "/assets/images/blogs/fashion/how-to-wear-turquoise-accessories/turquoise-accessories-hero.jpg",
+      "alt": "Structured turquoise leather bag with dark brown loafers, charcoal silk, a turquoise bangle and muted gold hardware",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Accessories",
+    "breadcrumbTopic": true
+  },
+  {
     "title": "Sardines for Breakfast, Without Making It a Performance",
     "seoTitle": "Sardines for Breakfast: 7 Easy Ideas That Taste Good",
     "department": "culture",
@@ -1171,7 +1255,7 @@
     "topic": "kitchens",
     "published": "2026-07-13",
     "updated": "2026-08-01",
-    "readingMinutes": 12,
+    "readingMinutes": 13,
     "url": "/blogs/home/most-beautiful-kitchen-colour-combinations/",
     "excerpt": "Ten kitchen colour combinations for 2026, compared by room size, natural light and cabinet material, with advice for small and dark kitchens.",
     "image": {

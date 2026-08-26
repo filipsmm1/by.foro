@@ -23,6 +23,26 @@ ARTICLES = json.loads((ROOT / "content" / "articles.json").read_text(encoding="u
 BY_URL = {article["url"]: article for article in ARTICLES}
 
 RELATED = {
+    "/blogs/beauty/eyeliner-stickers/": [
+        "/blogs/beauty/dragonfly-nails/",
+        "/blogs/beauty/vamp-romantic-beauty-guide/",
+        "/blogs/beauty/the-vanity-table-as-still-life/",
+    ],
+    "/blogs/beauty/tomato-leaf-perfume-guide/": [
+        "/blogs/beauty/matcha-perfume-guide/",
+        "/blogs/beauty/skin-scent-perfume-guide/",
+        "/blogs/beauty/perfume-wardrobe-by-mood/",
+    ],
+    "/blogs/home/arched-range-hood-ideas/": [
+        "/blogs/home/most-beautiful-kitchen-colour-combinations/",
+        "/blogs/home/how-to-make-a-home-look-expensive/",
+        "/blogs/home/lived-in-interior-design-2026/",
+    ],
+    "/blogs/fashion/how-to-wear-turquoise-accessories/": [
+        "/blogs/fashion/how-to-wear-colour-again/",
+        "/blogs/fashion/glamoratti-style-2026/",
+        "/blogs/fashion/bandana-jewellery/",
+    ],
     "/blogs/home/dorm-desk-hutch-ideas/": [
         "/blogs/home/how-to-keep-your-space-clean/",
         "/blogs/home/small-entryway-that-looks-expensive/",
@@ -338,6 +358,7 @@ TOPIC_LABELS = {
     "cleaning": "Cleaning",
     "dorm-rooms": "Dorm rooms",
     "fragrance": "Fragrance",
+    "makeup": "Makeup",
     "beauty-routines": "Beauty routines",
     "beauty-objects": "Beauty objects",
     "hair": "Hair",
