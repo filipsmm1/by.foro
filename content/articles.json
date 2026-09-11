@@ -1,5 +1,68 @@
 [
   {
+    "title": "The Kitchen-Sink Necklace, Without the Junk-Drawer Effect",
+    "seoTitle": "Kitchen-Sink Necklace Trend 2026: How to Wear It",
+    "department": "fashion",
+    "topic": "accessories",
+    "published": "2026-09-05",
+    "readingMinutes": 10,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/fashion/kitchen-sink-necklace/",
+    "excerpt": "The season's fullest necklace works when the objects are personal, the chain is simple and one decision holds the apparent chaos together.",
+    "metaDescription": "Learn how to build and wear a kitchen-sink necklace with charms, medallions and keepsakes while keeping the fall 2026 jewellery trend intentional.",
+    "image": {
+      "webp": "/assets/images/blogs/fashion/kitchen-sink-necklace/kitchen-sink-necklace-hero.webp",
+      "fallback": "/assets/images/blogs/fashion/kitchen-sink-necklace/kitchen-sink-necklace-hero.jpg",
+      "alt": "Long eclectic necklace with old medallions, small keys, shells and enamel charms worn over a plain charcoal knit, cropped from chin to waist",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Accessories",
+    "breadcrumbTopic": true
+  },
+  {
+    "title": "Greek Chic Interiors, Without the Holiday-Villa Theme",
+    "seoTitle": "Greek Chic Interiors: How to Get the Look in 2026",
+    "department": "home",
+    "topic": "luxury-decor",
+    "published": "2026-09-05",
+    "readingMinutes": 10,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/home/greek-chic-interiors/",
+    "excerpt": "Chalky walls, worn stone and washed linen can hold onto Mediterranean light long after summer. The room does not need a bust or a blue stripe.",
+    "metaDescription": "Create Greek chic interiors at home with limewash, stone, linen, timber and softened blue while avoiding nautical clichés and ancient-temple pastiche.",
+    "image": {
+      "webp": "/assets/images/blogs/home/greek-chic-interiors/greek-chic-interiors-hero.webp",
+      "fallback": "/assets/images/blogs/home/greek-chic-interiors/greek-chic-interiors-hero.jpg",
+      "alt": "Sunlit living room with warm limewash walls, low linen sofa, limestone table, aged wood and a single muted blue ceramic vessel",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Luxury decor",
+    "breadcrumbTopic": true
+  },
+  {
+    "title": "Rice Perfume Smells More Like Skin Than Supper",
+    "seoTitle": "Rice Perfume: What the Quiet Gourmand Smells Like",
+    "department": "beauty",
+    "topic": "fragrance",
+    "published": "2026-09-05",
+    "readingMinutes": 10,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/beauty/rice-perfume-guide/",
+    "excerpt": "Soft starch, warm steam, pale woods and a trace of nuttiness make rice one of fragrance's quietest gourmands.",
+    "metaDescription": "Discover what rice perfume smells like, how steamed, toasted and powdery rice accords differ, which notes suit them and how to test and layer one.",
+    "image": {
+      "webp": "/assets/images/blogs/beauty/rice-perfume-guide/rice-perfume-hero.webp",
+      "fallback": "/assets/images/blogs/beauty/rice-perfume-guide/rice-perfume-hero.jpg",
+      "alt": "Unbranded frosted perfume bottle beside a shallow bowl of steamed rice, dry grains, white iris and pale wood on warm limestone",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Fragrance",
+    "breadcrumbTopic": true
+  },
+  {
     "title": "Carrot Seed Perfume Smells More Like Iris Than Dinner",
     "seoTitle": "Carrot Seed Perfume: What the Earthy Note Smells Like",
     "department": "beauty",
@@ -152,7 +215,7 @@
     "department": "fashion",
     "topic": "accessories",
     "published": "2026-08-25",
-    "readingMinutes": 10,
+    "readingMinutes": 11,
     "readingWordsPerMinute": 195,
     "url": "/blogs/fashion/bandana-jewellery/",
     "excerpt": "Silk folds, metal holds, and one small weight gives the accessory direction. The construction should remain easy to read.",
@@ -425,7 +488,7 @@
     "department": "fashion",
     "topic": "accessories",
     "published": "2026-08-14",
-    "readingMinutes": 10,
+    "readingMinutes": 11,
     "readingWordsPerMinute": 195,
     "url": "/blogs/fashion/how-to-wear-a-bib-necklace/",
     "excerpt": "The statement necklace is back, but the styling has changed. Its strongest partner is not another statement. It is an ordinary, beautifully cut garment.",
@@ -1128,7 +1191,7 @@
     "department": "beauty",
     "topic": "fragrance",
     "published": "2026-07-25",
-    "readingMinutes": 6,
+    "readingMinutes": 7,
     "url": "/blogs/beauty/perfume-wardrobe-by-mood/",
     "excerpt": "A perfume wardrobe guide organised by mood, with clean, warm, green, sensual and bright scents plus testing and storage advice.",
     "image": {
