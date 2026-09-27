@@ -341,6 +341,7 @@ RELATED = {
 }
 
 TOPIC_LABELS = {
+    "architecture": "Architecture",
     "trends": "Trends",
     "accessories": "Accessories",
     "jewellery": "Jewellery",
