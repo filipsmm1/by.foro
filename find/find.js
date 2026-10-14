@@ -261,7 +261,7 @@
 
   const load = async () => {
     try {
-      const response=await fetch('/find/products.json',{cache:'no-cache'});
+      const response=await fetch('/find/products.json',{credentials:'same-origin',mode:'cors'});
       if(!response.ok)throw new Error(`Product database returned ${response.status}`);
       products=await response.json();
       const restored=restoreProfile();
