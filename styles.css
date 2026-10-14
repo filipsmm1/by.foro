@@ -1319,3 +1319,75 @@ main{overflow:clip}
   .mag-feature__card>span{margin-top:.8rem;font-size:.66rem}
   .mag-feature__card>div{padding-top:.8rem}
 }
+
+/* ===== Motion & polish layer (2026-10) ===== */
+:root{--spring:cubic-bezier(.2,.9,.25,1.12);--glide:cubic-bezier(.16,1,.3,1)}
+/* Cross-page transitions (Chrome/Edge 126+, Safari 18.2+). Other browsers simply navigate. */
+@view-transition{navigation:auto}
+.site-header{view-transition-name:site-header}
+::view-transition-old(root){animation:vt-out .2s var(--ease) both}
+::view-transition-new(root){animation:vt-in .5s var(--glide) both}
+@keyframes vt-out{to{opacity:0;transform:translateY(-6px)}}
+@keyframes vt-in{from{opacity:0;transform:translateY(12px)}}
+
+/* Page-load entrance for hero copy */
+@keyframes rise-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes rise-in-soft{from{transform:translateY(14px)}to{transform:none}}
+.mag-intro>*,.article-hero>*,.mag-feature__card,.mag-latest{animation:rise-in .9s var(--glide) both}
+.mag-intro>h1,.article-hero>h1{animation-name:rise-in-soft}
+.mag-intro>:nth-child(2),.article-hero>:nth-child(2){animation-delay:.06s}
+.mag-intro>:nth-child(3),.article-hero>:nth-child(3){animation-delay:.12s}
+.mag-intro>:nth-child(4),.article-hero>:nth-child(4),.mag-feature__card{animation-delay:.18s}
+.article-hero>:nth-child(5),.mag-latest{animation-delay:.24s}
+
+/* Scroll reveals applied by script.js to below-the-fold blocks */
+.m-reveal{opacity:0;transform:translateY(26px);transition:opacity .8s var(--glide) var(--m-delay,0s),transform 1s var(--glide) var(--m-delay,0s)}
+.m-reveal.is-in{opacity:1;transform:none}
+.m-reveal.media,.m-reveal .media{overflow:hidden}
+
+/* Lazy images fade in instead of popping */
+img.m-img{opacity:0;transition:opacity .7s var(--ease),transform .95s var(--image-ease),filter .7s var(--image-ease)}
+img.m-img.is-loaded{opacity:1}
+.media{background-color:rgba(164,134,95,.12)}
+
+/* Buttons and links: tactile, springy feedback */
+.button{transition:transform .35s var(--spring),background-color .25s var(--ease),border-color .25s var(--ease),color .25s var(--ease),box-shadow .35s var(--ease)}
+.button:active{transform:scale(.97)!important;transition-duration:.08s}
+.button span[aria-hidden],.read-link span[aria-hidden],.text-link span[aria-hidden],.nav-search-link span[aria-hidden]{display:inline-block;transition:transform .35s var(--spring)}
+.button:hover span[aria-hidden],.read-link:hover span[aria-hidden],a:hover>.read-link span[aria-hidden],.text-link:hover span[aria-hidden],.nav-search-link:hover span[aria-hidden]{transform:translateX(4px)}
+
+.story-card h2,.story-card h3,.related-card h2,.related-card h3,.mag-pick h3,.mag-latest-card h3,.front-card h3{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.16em;text-decoration-color:transparent;transition:text-decoration-color .35s var(--ease)}
+.story-card:hover h2,.story-card:hover h3,.related-card:hover h2,.related-card:hover h3,.mag-pick:hover h3,.mag-latest-card:hover h3,.front-card:hover h3{text-decoration-color:currentColor}
+
+.article-inline-image--diagram img{aspect-ratio:3/2;object-fit:contain}
+
+/* Typography refinements */
+h1,h2,h3{text-wrap:balance}
+p,li{text-wrap:pretty}
+.article p{hanging-punctuation:first}
+
+/* Header: softer shadow when scrolled */
+.site-header{transition:box-shadow .4s var(--ease),background-color .4s var(--ease),height .4s var(--glide)}
+.site-header.is-scrolled{box-shadow:0 10px 30px -22px rgba(23,21,18,.45)}
+
+/* Reading progress glides */
+.reading-progress span{transition:width .12s linear}
+
+/* Compact first-visit cookie bar */
+.cookie-panel--compact{width:min(640px,calc(100% - 2rem));grid-template-columns:1fr auto;gap:1rem;align-items:center;padding:.85rem .85rem .85rem 1.25rem;border-color:var(--line-strong,rgba(23,21,18,.2));box-shadow:0 18px 50px -18px rgba(23,21,18,.35);animation:cookie-in .7s var(--glide) .6s both}
+.cookie-panel--compact p{margin:0!important;font-size:.88rem;line-height:1.45;color:var(--ink)!important}
+.cookie-panel--compact a{color:var(--muted);white-space:nowrap}
+.cookie-panel--compact .button{min-height:40px;padding:.55rem .95rem}
+@keyframes cookie-in{from{opacity:0;transform:translate(-50%,24px)}to{opacity:1;transform:translate(-50%,0)}}
+@media(max-width:760px){
+  .cookie-panel--compact{bottom:.65rem;width:calc(100% - 1.3rem);grid-template-columns:1fr;gap:.7rem;padding:.9rem}
+  .cookie-panel--compact .cookie-panel__actions{flex-direction:row}
+  .cookie-panel--compact .cookie-panel__actions .button{flex:1;width:auto}
+}
+
+@media (prefers-reduced-motion:reduce){
+  @view-transition{navigation:none}
+  .m-reveal{opacity:1;transform:none}
+  img.m-img{opacity:1}
+  .mag-intro>*,.article-hero>*,.mag-feature__card,.mag-latest,.cookie-panel--compact{animation:none}
+}

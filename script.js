@@ -82,6 +82,15 @@ document.querySelectorAll('[data-ajax-form]').forEach(form=>form.addEventListene
   let cookieReturnFocus=null;
   const closePanel=(restoreFocus=false)=>{document.querySelector('[data-cookie-panel]')?.remove();if(restoreFocus)cookieReturnFocus?.focus()};
   const save=choice=>{writeChoice(choice);announce(choice);closePanel(true)};
+  const openBar=()=>{
+    closePanel();cookieReturnFocus=null;
+    const bar=document.createElement('section');
+    bar.className='cookie-panel cookie-panel--compact';bar.dataset.cookiePanel='';bar.setAttribute('role','region');bar.setAttribute('aria-label','Cookie preferences');
+    bar.innerHTML='<p id="cookie-description">Analytics stays off unless you allow it. <a href="/cookies/">Cookie policy</a></p><div class="cookie-panel__actions"><button class="button button--dark" data-cookie-accept type="button">Accept</button><button class="button" data-cookie-reject type="button">Reject</button></div>';
+    document.body.append(bar);
+    bar.querySelector('[data-cookie-accept]').addEventListener('click',()=>save('accepted'));
+    bar.querySelector('[data-cookie-reject]').addEventListener('click',()=>save('rejected'));
+  };
   const openPanel=(opener=null)=>{
     closePanel();cookieReturnFocus=opener;
     const panel=document.createElement('section');
@@ -95,7 +104,7 @@ document.querySelectorAll('[data-ajax-form]').forEach(form=>form.addEventListene
   };
   document.addEventListener('click',event=>{const opener=event.target.closest('[data-cookie-settings]');if(opener){event.preventDefault();openPanel(opener)}});
   const choice=readChoice();
-  if(choice==='accepted'||choice==='rejected')announce(choice);else openPanel();
+  if(choice==='accepted'||choice==='rejected')announce(choice);else openBar();
 })();
 
 // Dynamic editorial image interaction: cursor-position zoom and subtle parallax.
@@ -130,5 +139,27 @@ document.querySelectorAll('[data-ajax-form]').forEach(form=>form.addEventListene
     });
     media.addEventListener('pointerleave',()=>reset(media));
     media.addEventListener('blur',()=>reset(media));
+  });
+})();
+
+// Motion layer: staggered scroll reveals for below-the-fold blocks and soft image fades.
+(()=>{
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches||!('IntersectionObserver'in window))return;
+  const selector='.story-card,.related-card,.mag-pick,.mag-category,.mag-latest-card,.front-card,.category-card,.article-inline-image,.article-layout h2,.section-heading,.footer-top,.footer-grid>div,.mag-find,.front-letter,.newsletter';
+  const fold=window.innerHeight*.92;
+  const targets=[...document.querySelectorAll(selector)].filter(el=>!el.closest('[data-reveal],.nav-drawer,.m-reveal')&&el.getBoundingClientRect().top>fold);
+  if(targets.length){
+    const io=new IntersectionObserver(entries=>{
+      const groups=new Map();
+      entries.filter(e=>e.isIntersecting).forEach(e=>{const p=e.target.parentElement;groups.set(p,[...(groups.get(p)||[]),e.target])});
+      groups.forEach(list=>list.forEach((el,i)=>{el.style.setProperty('--m-delay',`${Math.min(i,5)*70}ms`);el.classList.add('is-in');io.unobserve(el);el.addEventListener('transitionend',()=>el.style.removeProperty('--m-delay'),{once:true})}));
+    },{threshold:.08,rootMargin:'0px 0px -6% 0px'});
+    targets.forEach(el=>{el.classList.add('m-reveal');io.observe(el)});
+  }
+  document.querySelectorAll('img[loading="lazy"]').forEach(img=>{
+    if(img.complete&&img.naturalWidth)return;
+    img.classList.add('m-img');
+    const done=()=>img.classList.add('is-loaded');
+    img.addEventListener('load',done,{once:true});img.addEventListener('error',done,{once:true});
   });
 })();
