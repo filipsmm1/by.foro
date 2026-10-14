@@ -943,6 +943,8 @@ def homepage_mag_category(department: str, article: dict) -> str:
 
 def homepage_main() -> str:
     lead = ARTICLES[0]
+    latest_value = max(article.get("updated", article["published"]) for article in ARTICLES)
+    latest_update = display_date(latest_value).rsplit(" ", 1)[0]
     lead_department = lead["department"].title()
     lead_topic = TOPIC_LABELS[lead["topic"]]
     rail = "".join(homepage_mag_latest(ARTICLES[index]) for index in (1, 2, 3, 7))
@@ -957,7 +959,7 @@ def homepage_main() -> str:
     )
     return f'''<main class="mag-home" id="main">
 <section class="mag-hero" aria-labelledby="mag-home-title">
-  <div class="mag-intro"><p class="kicker">The by.foro Journal &middot; Updated 22 August</p><h1 id="mag-home-title">The stories worth opening <em>today.</em></h1><p>Fashion, beauty, interiors and culture, edited for people who want a useful point of view, not more noise.</p><a class="button button--wine" href="/journal/">Explore the Journal <span aria-hidden="true">&rarr;</span></a></div>
+  <div class="mag-intro"><p class="kicker">The by.foro Journal &middot; Updated {latest_update}</p><h1 id="mag-home-title">The stories worth opening <em>today.</em></h1><p>Fashion, beauty, interiors and culture, edited for people who want a useful point of view, not more noise.</p><a class="button button--wine" href="/journal/">Explore the Journal <span aria-hidden="true">&rarr;</span></a></div>
   <article class="mag-feature"><a href="{esc(lead["url"])}"><figure class="media">{homepage_picture(lead, "(max-width: 760px) 94vw, 49vw", eager=True)}</figure><div class="mag-feature__card"><p class="kicker">{esc(lead_department)} &middot; {esc(lead_topic)}</p><h2>{styled_title(lead["title"])}</h2><p>{esc(lead["excerpt"])}</p><span>Read the story <i aria-hidden="true">&rarr;</i></span><div><b>01</b><i></i><b>05</b></div></div></a></article>
   <aside class="mag-latest"><header><p class="kicker">Latest stories</p><a href="/journal/">View all</a></header>{rail}</aside>
 </section>
