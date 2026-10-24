@@ -1,5 +1,68 @@
 [
   {
+    "title": "A Kitchen Rooflight Works Best Where the Daylight Is Missing",
+    "seoTitle": "Kitchen Extension Rooflight Ideas: Light, Layout and Shade",
+    "department": "home",
+    "topic": "architecture",
+    "published": "2026-10-24",
+    "readingMinutes": 7,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/home/kitchen-extension-rooflight-ideas/",
+    "excerpt": "The brightest patch in the photograph is only part of the story. Start with the room that needs the light.",
+    "metaDescription": "Explore kitchen extension rooflight ideas, from narrow roof glazing to light above a dining table, with practical advice on layout, shading and cleaning.",
+    "image": {
+      "webp": "/assets/images/blogs/home/kitchen-extension-rooflight-ideas/kitchen-extension-rooflight-ideas-hero.webp",
+      "fallback": "/assets/images/blogs/home/kitchen-extension-rooflight-ideas/kitchen-extension-rooflight-ideas-hero.jpg",
+      "alt": "Long rectangular rooflight above an oak worktop in a narrow kitchen extension with a garden door",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Architecture",
+    "breadcrumbTopic": true
+  },
+  {
+    "title": "The Pocket Door Gives a Small Room Its Corner Back",
+    "seoTitle": "Pocket Doors for Small Rooms: Layout Ideas and Trade-Offs",
+    "department": "home",
+    "topic": "architecture",
+    "published": "2026-10-24",
+    "readingMinutes": 7,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/home/pocket-doors-small-rooms/",
+    "excerpt": "Losing the swing of a door can help a tight plan. The wall it slides into needs just as much thought.",
+    "metaDescription": "Are pocket doors right for a small room? Explore layout ideas, wall-space checks, handles, privacy and the details to resolve before choosing a system.",
+    "image": {
+      "webp": "/assets/images/blogs/home/pocket-doors-small-rooms/pocket-doors-small-rooms-hero.webp",
+      "fallback": "/assets/images/blogs/home/pocket-doors-small-rooms/pocket-doors-small-rooms-hero.jpg",
+      "alt": "Partly open oak pocket door connecting a compact living room to a warm plaster hallway",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Architecture",
+    "breadcrumbTopic": true
+  },
+  {
+    "title": "A Timber Slat Screen Can Give One Room Two Places to Be",
+    "seoTitle": "Timber Slat Room Divider Ideas for Small Open-Plan Homes",
+    "department": "home",
+    "topic": "architecture",
+    "published": "2026-10-24",
+    "readingMinutes": 8,
+    "readingWordsPerMinute": 195,
+    "url": "/blogs/home/timber-slat-room-divider-ideas/",
+    "excerpt": "A little separation can make an open room easier to live in. The gaps are as important as the timber.",
+    "metaDescription": "Explore timber slat room divider ideas for entrances, desks and living rooms, with advice on spacing, light, privacy, finishes and practical fixing details.",
+    "image": {
+      "webp": "/assets/images/blogs/home/timber-slat-room-divider-ideas/timber-slat-room-divider-ideas-hero.webp",
+      "fallback": "/assets/images/blogs/home/timber-slat-room-divider-ideas/timber-slat-room-divider-ideas-hero.jpg",
+      "alt": "Fixed oak slat room divider separating a small entrance bench from a linen sofa",
+      "width": 1536,
+      "height": 1024
+    },
+    "articleSection": "Architecture",
+    "breadcrumbTopic": true
+  },
+  {
     "title": "The Internal Window That Gives a Dark Hallway Some Daylight",
     "seoTitle": "Internal Windows for Dark Hallways: Ideas and What to Check",
     "department": "home",
@@ -89,7 +152,7 @@
     "department": "home",
     "topic": "architecture",
     "published": "2026-09-27",
-    "readingMinutes": 7,
+    "readingMinutes": 8,
     "readingWordsPerMinute": 195,
     "url": "/blogs/home/breeze-block-privacy-wall-ideas/",
     "excerpt": "A patterned wall can screen a terrace and still let the garden breathe. Start with the view through it.",
